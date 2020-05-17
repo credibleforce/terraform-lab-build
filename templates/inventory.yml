@@ -81,6 +81,10 @@ all:
                     ansible_winrm_server_cert_validation: "{{ windows.ansible_winrm_server_cert_validation }}"
                     ansible_winrm_read_timeout_sec: "{{ windows.ansible_winrm_read_timeout_sec }}"
 %{ endif ~}
+                    vars:
+                      splunk:
+                        hostname: "{{ inventory_hostname }}"
+                        role: ${role}
 %{ endfor ~}
 %{ endfor ~}
 %{ endif ~}

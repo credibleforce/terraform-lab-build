@@ -156,7 +156,10 @@ module "lab1_files" {
                                     user = local.ansible_user, 
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
-    files_copy              =   []
+    files_copy              =   [
+                                    source = "/tmp/splunk.lic",
+                                    destination = "/tmp/splunk.lic"
+                                ]
     files_content           =   [
                                     # { 
                                     #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
