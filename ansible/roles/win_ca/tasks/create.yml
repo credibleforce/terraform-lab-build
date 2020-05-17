@@ -1,0 +1,38 @@
+---
+- name: Install ADCS with sub features and management tools
+  win_feature:
+    name: 
+      - Adcs-Cert-Authority
+      - Adcs-Enroll-Web-Pol
+    state: present
+    include_management_tools: yes
+  register: windows_adcs
+
+- name: reboot if installing Adcs-Cert-Authority feature requires it
+  win_reboot:
+    shutdown_timeout: 600
+    reboot_timeout: 600
+    post_reboot_delay: 300
+  when: windows_adcs.reboot_required
+
+- name: Add ActiveDirectoryCSDsc
+  win_psmodule:
+    name: ActiveDirectoryCSDsc
+    state: present
+
+- name: Configure AdcsCertificationAuthority Powershell DSC
+  win_dsc:
+    resource_name: AdcsCertificationAuthority
+    IsSingleInstance: 'Yes'
+    CAType: 'EnterpriseRootCA'
+    CryptoProviderName: 'RSA#Microsoft Software Key Storage Provider'
+    CACommonName: "{{ windows_certificate_authority_info['CACommonName'] }}"
+    Ensure: 'Present'
+    KeyLength: "{{ windows_certificate_authority_info['KeyLength'] }}"
+    HashAlgorithmName: "{{ windows_certificate_authority_info['HashAlgorithmName'] }}"
+    ValidityPeriod: "{{ windows_certificate_authority_info['ValidityPeriod'] }}"
+    ValidityPeriodUnits: "{{ windows_certificate_authority_info['ValidityPeriodUnits'] }}"
+    PsDscRunAsCredential_username: "{{ windows_domain_controller_info['domain_admin_user'] }}"
+    PsDscRunAsCredential_password: "{{ windows_domain_controller_info['domain_admin_password'] }}"
+    Credential_username: "{{ windows_domain_controller_info['domain_admin_user'] }}"
+    Credential_password: "{{ windows_domain_controller_info['domain_admin_password'] }}"

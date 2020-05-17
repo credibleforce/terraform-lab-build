@@ -1,0 +1,24 @@
+all:
+    children:
+      local:
+        hosts:
+          localhost:
+        vars:
+          ansible_connection: local
+          ansible_python_interpreter: "{{ ansible_playbook_python }}"
+      lab:
+        children:
+          linux:
+            vars:
+              ansible_connection: ssh
+              ansible_system: Linux
+            children:
+%{ for role in distinct(split(",",join(",",[ for r in hosts: r.tags.Role ]))) ~}
+              ${role}:
+                vars:
+                  ansible_ssh_user: "{{ kali.ansible_ssh_user }}"
+                hosts:
+%{ for host in distinct([ for r in hosts: r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
+                    ${host}:
+%{ endfor ~}
+%{ endfor ~}

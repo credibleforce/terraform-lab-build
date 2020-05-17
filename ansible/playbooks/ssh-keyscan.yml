@@ -1,0 +1,7 @@
+---
+    - hosts: local:linux
+      gather_facts: True
+      tasks:
+        - name: Include all deployed hosts keys in known_hosts
+          connection: local
+          shell: "ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts"

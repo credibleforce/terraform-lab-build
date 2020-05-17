@@ -1,0 +1,88 @@
+---
+# Add windows features
+- name: features | Installing AD Domain Services
+  win_feature: 
+    name: 
+      - RSAT-AD-AdminCenter
+      - AD-Domain-Services
+    include_management_tools: yes
+    include_sub_features: yes
+    state: present
+  register: feature_check
+
+# Add powershell modules
+- name: Check for xDnsServer Powershell module
+  win_psmodule:
+    name: xDnsServer
+    state: present
+
+# Add powershell modules
+- name: Add xActiveDirectory
+  win_psmodule:
+    name: xActiveDirectory
+    state: present
+
+# Set static IP
+- name: Configure static IP address
+  win_shell: |
+    Set-DnsClientGlobalSetting -SuffixSearchList @("{{ windows_domain_controller_info['dns_domain_name'] }}")
+    function INT64-toIP() {   
+      param ([int64]$int)   
+      return (([math]::truncate($int/16777216)).tostring()+"."+([math]::truncate(($int%16777216)/65536)).tostring()+"."+([math]::truncate(($int%65536)/256)).tostring()+"."+([math]::truncate($int%256)).tostring() )  
+    }
+
+    $adapter = get-netadapter
+    $interface = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $adapter.InterfaceIndex
+    $gateway = get-netroute -DestinationPrefix '0.0.0.0/0' | select -ExpandProperty NextHop
+    $mask = [Net.IPAddress]::Parse((INT64-toIP -int ([convert]::ToInt64(("1"*$interface.PrefixLength+"0"*(32-$interface.PrefixLength)),2))))
+
+    $index = $adapter.InterfaceIndex
+    $NetInterface = Get-WmiObject Win32_NetworkAdapterConfiguration | where {$_.InterfaceIndex -eq $index}
+    $NetInterface.EnableStatic($interface.IPAddress, $mask)
+    $NetInterface.SetGateways($gateway) 
+  async: 30
+  poll: 0
+
+- name: Wait for the interface change to complete
+  wait_for_connection:
+    connect_timeout: 20
+    sleep: 5
+    delay: 120
+    timeout: 300
+
+- name: Reboot to complete feature setup and computer name change
+  win_reboot:
+    pre_reboot_delay: 120
+    reboot_timeout: 600
+    post_reboot_delay: 120
+
+- name: Set DNS server
+  win_dns_client:
+    adapter_names: "*"
+    ipv4_addresses: "127.0.0.1"
+
+- name: Configure xADDomain Powershell DSC
+  win_dsc:
+    resource_name: xADDomain
+    DomainName: "{{ windows_domain_controller_info['dns_domain_name'] }}"
+    DomainNetbiosName: "{{ windows_domain_controller_info['domain_netbios_name'] }}"
+    DomainAdministratorCredential_username: "{{ windows_domain_controller_info['domain_admin_user'] }}"
+    DomainAdministratorCredential_password: "{{ windows_domain_controller_info['domain_admin_password'] }}"
+    SafemodeAdministratorPassword_username: "{{ windows_domain_controller_info['safe_mode_username'] }}"
+    SafemodeAdministratorPassword_password: "{{ windows_domain_controller_info['safe_mode_password'] }}"
+
+- name: Reboot to complete domain controller setup (as required)
+  win_reboot:
+    pre_reboot_delay: 120
+    reboot_timeout: 600
+    post_reboot_delay: 120 # your mileage may vary
+
+- name: Wait for forest xWaitForADDomain
+  win_dsc:
+    resource_name: xWaitForADDomain
+    DomainName: "{{ windows_domain_controller_info['dns_domain_name'] }}"
+    DomainUserCredential_username: "{{ windows_domain_controller_info['domain_admin_user'] }}"
+    DomainUserCredential_password: "{{ windows_domain_controller_info['domain_admin_password'] }}"
+    RetryCount: 100
+    RetryIntervalSec: 5
+

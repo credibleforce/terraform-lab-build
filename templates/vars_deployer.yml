@@ -1,0 +1,14 @@
+kali:
+    ansible_ssh_user: ${ansible_deployment_user}
+centos:
+    ansible_ssh_user: ${ansible_deployment_user}
+ansible:
+    ansible_ssh_user: ${ansible_deployment_user}
+windows:
+    ansible_connection: winrm
+    ansible_ssh_port: 5986
+    ansible_ssh_user: ${win_user}
+    ansible_ssh_pass: ${win_password}
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+    ansible_winrm_read_timeout_sec: 600
