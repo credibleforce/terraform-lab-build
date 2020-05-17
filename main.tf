@@ -157,8 +157,11 @@ module "lab1_files" {
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
     files_copy              =   [
-                                    source = "/tmp/splunk.lic",
-                                    destination = "/tmp/splunk.lic"
+                                    {
+                                        source = "/tmp/splunk.lic",
+                                        destination = "/tmp/splunk.lic"
+                                        type = "file"
+                                    },
                                 ]
     files_content           =   [
                                     # { 
