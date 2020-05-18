@@ -26,9 +26,9 @@ locals {
     kali_hosts_override         = []
     centos_hosts                = 0
     centos_hosts_override       =   [
-                                        {name="splk-sh1", role="splunk_search_head,splunk_deployment_server,splunk_license_master", custom_security_group="splunk_security_group"},
-                                        #{name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
-                                        #{name="splk-dp1", role="splunk_deployment_server", custom_security_group="splunk_security_group"},
+                                        {name="splk-sh1", role="splunk_search_head", custom_security_group="splunk_security_group"},
+                                        {name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
+                                        {name="splk-dp1", role="splunk_deployment_server", custom_security_group="splunk_security_group"},
                                         #{name="splk-cm1", role="splunk_cluster_master", custom_security_group="splunk_security_group"},
                                         #{name="splk-sdp1", role="splunk_deployer", custom_security_group="splunk_security_group"},
                                         {name="splk-idx1", role="splunk_indexer", custom_security_group="splunk_security_group"},
