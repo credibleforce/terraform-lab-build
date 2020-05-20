@@ -10,7 +10,7 @@ locals {
     trusted_source              = trimspace(data.local_file.trusted-source.content)
     win_user                    = "administrator"
     win_password                = "myTempPassword123"
-    splunk_password             = "1-splunk-password"
+    
     win10_hosts                 = 0
     win10_hosts_override        =   [
                                         #{name="win10-dsk1", role="member_server"},
@@ -27,7 +27,7 @@ locals {
     centos_hosts_override       =   [
                                         {name="splk-sh1", role="splunk_search_head", custom_security_group="splunk_security_group"},
                                         #{name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
-                                        {name="splk-dp1", role="splunk_deployment_server", custom_security_group="splunk_security_group"},
+                                        {name="splk-dp1", role="splunk_deployment_server,splunk_license_master", custom_security_group="splunk_security_group"},
                                         {name="splk-cm1", role="splunk_cluster_master", custom_security_group="splunk_security_group"},
                                         #{name="splk-sdp1", role="splunk_deployer", custom_security_group="splunk_security_group"},
                                         {name="splk-idx1", role="splunk_indexer", custom_security_group="splunk_security_group"},
@@ -67,6 +67,7 @@ locals {
         win_admin_user          = local.win_user
         win_admin_password      = local.win_password
         win_ca_common_name      = "PKI"
+        splunk_password             = "1-splunk-password"
     }
 }
 
@@ -171,7 +172,7 @@ module "lab1_files" {
                                     #     type = "file"
                                     # },
                                     { 
-                                        content = file("${path.root}/templates/ansible_splunk_deployment.sh"),
+                                        content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
                                         destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
                                         mode = 0755
                                         type = "file"
