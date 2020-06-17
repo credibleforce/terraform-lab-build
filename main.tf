@@ -51,6 +51,7 @@ locals {
                                                                                             { source_port=22,destination_port=22,protocol="tcp" },
                                                                                             { source_port=443,destination_port=443,protocol="tcp" },
                                                                                             { source_port=8000,destination_port=8000,protocol="tcp" },
+                                                                                            { source_port=8000,destination_port=8088,protocol="tcp" },
                                                                                             { source_port=8089,destination_port=8089,protocol="tcp" },
                                                                                             { source_port=9997,destination_port=9997,protocol="tcp" },
                                                                                             { source_port=9998,destination_port=9998,protocol="tcp" },
