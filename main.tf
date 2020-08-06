@@ -148,56 +148,56 @@ module "lab1" {
 # }
 
 // copy over extended ansible setup
-module "lab1_files" {
-    module_name                 = "lab1_files"
-    module_dependency           = module.lab1.module_complete
+# module "lab1_files" {
+#     module_name                 = "lab1_files"
+#     module_dependency           = module.lab1.module_complete
 
-    source                  = "./modules/ec2_provision_file"
-    connection_settings     =   { 
-                                    host = local.ansible_public_ip,
-                                    user = local.ansible_user, 
-                                    private_key = file(replace(local.public_key_path,".pub","")) 
-                                }
-    files_copy              =   [
-                                    {
-                                        source = "/tmp/splunk.lic",
-                                        destination = "/tmp/splunk.lic"
-                                        type = "file"
-                                    },
-                                ]
-    files_content           =   [
-                                    # { 
-                                    #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
-                                    #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    #     mode = 0755
-                                    #     type = "file"
-                                    # },
-                                    { 
-                                        content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
-                                        destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
-                                        mode = 0755
-                                        type = "file"
-                                    },
-                                ]
-}
+#     source                  = "./modules/ec2_provision_file"
+#     connection_settings     =   { 
+#                                     host = local.ansible_public_ip,
+#                                     user = local.ansible_user, 
+#                                     private_key = file(replace(local.public_key_path,".pub","")) 
+#                                 }
+#     files_copy              =   [
+#                                     {
+#                                         source = "/tmp/splunk.lic",
+#                                         destination = "/tmp/splunk.lic"
+#                                         type = "file"
+#                                     },
+#                                 ]
+#     files_content           =   [
+#                                     # { 
+#                                     #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
+#                                     #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+#                                     #     mode = 0755
+#                                     #     type = "file"
+#                                     # },
+#                                     { 
+#                                         content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
+#                                         destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
+#                                         mode = 0755
+#                                         type = "file"
+#                                     },
+#                                 ]
+# }
 
 // execute extended ansible setup
-module "lab1_script_exec" {
-    module_name             = "lab1_script_exec"
-    module_dependency       = module.lab1_files.module_complete
+# module "lab1_script_exec" {
+#     module_name             = "lab1_script_exec"
+#     module_dependency       = module.lab1_files.module_complete
 
-    source                  = "./modules/ec2_provision_script"
-    connection_settings     =   { 
-                                    host = local.ansible_public_ip,
-                                    user = local.ansible_user, 
-                                    private_key = file(replace(local.public_key_path,".pub","")) 
-                                }
-    inlines                 =   [
-                                    # "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
-                                ]
-    scripts                 =   []
-}
+#     source                  = "./modules/ec2_provision_script"
+#     connection_settings     =   { 
+#                                     host = local.ansible_public_ip,
+#                                     user = local.ansible_user, 
+#                                     private_key = file(replace(local.public_key_path,".pub","")) 
+#                                 }
+#     inlines                 =   [
+#                                     # "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+#                                     "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
+#                                 ]
+#     scripts                 =   []
+# }
 
 /*###############################################
 LAB 2

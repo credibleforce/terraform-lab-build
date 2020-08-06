@@ -4,7 +4,7 @@ data "aws_ami" "kali" {
 
     filter {
         name   = "name"
-        values = ["Kali Linux 2019.*"]
+        values = ["kali-linux-2020.*"]
     }
 }
 
