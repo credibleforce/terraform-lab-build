@@ -6,7 +6,7 @@ rm -rf splunk-deployment
 mkdir splunk-deployment
 source ./ansible/hacking/env-setup
 cd splunk-deployment
-git clone --single-branch --branch 'develop' https://github.com/ps-sec-analytics/splunk-engagement-ansible.git
+git clone --single-branch --branch 'develop' https://github.com/mobia-security-services/splunk-engagement-ansible.git
 cd splunk-engagement-ansible
 git submodule update --init --recursive
 cd ansible
