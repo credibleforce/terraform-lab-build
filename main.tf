@@ -2,8 +2,8 @@
 locals {
     project_prefix              = "pslab"
     internal_domain             = "pslab.local"
-    public_domain               = "proserv-cloud.com"
-    win10_ami                   = "ami-0f9a8c9a37595c698"
+    public_domain               = "proservlab-cloud.com"
+    win10_ami                   = "ami-033b88e6083684a58"
     win16_ami                   = data.aws_ami.win16.image_id
     centos_ami                  = data.aws_ami.centos.image_id
     kali_ami                    = data.aws_ami.kali.image_id
@@ -17,9 +17,9 @@ locals {
                                     ]
     win16_hosts                 = 0
     win16_hosts_override        =   [
-                                        # {name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder"},
-                                        # {name="win16-wef1", role="wef_server,splunk_universal_forwarder"},
-                                        # {name="win16-svr1", role="member_server"},
+                                        {name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder"},
+                                        {name="win16-wef1", role="wef_server,splunk_universal_forwarder"},
+                                        {name="win16-svr1", role="member_server"},
                                     ]
     kali_hosts                  = 0
     kali_hosts_override         = []
@@ -166,12 +166,12 @@ module "lab1_files" {
                                     },
                                 ]
     files_content           =   [
-                                    # { 
-                                    #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
-                                    #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    #     mode = 0755
-                                    #     type = "file"
-                                    # },
+                                    { 
+                                        content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
+                                        destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                        mode = 0755
+                                        type = "file"
+                                    },
                                     { 
                                         content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
                                         destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
@@ -193,7 +193,7 @@ module "lab1_script_exec" {
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
-                                    # "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                    "/home/${local.ansible_user}/ansible_domain_deployment.sh",
                                     "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
                                 ]
     scripts                 =   []
