@@ -12,5 +12,5 @@ git submodule update --init --recursive
 cd ansible
 #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-standalone.yml --extra-vars @~/deployment/ansible/vars_base.yml
 #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-distributed.yml --extra-vars @~/deployment/ansible/vars_base.yml
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
-#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-searchcluster-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
+#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-searchcluster-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml

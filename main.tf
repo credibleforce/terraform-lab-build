@@ -1,7 +1,7 @@
 
 locals {
-    project_prefix              = "pslab"
-    internal_domain             = "pslab.local"
+    project_prefix              = "lab"
+    internal_domain             = "lab.local"
     public_domain               = "proservlab-cloud.com"
     win10_ami                   = "ami-033b88e6083684a58"
     win16_ami                   = data.aws_ami.win16.image_id
@@ -13,23 +13,25 @@ locals {
     
     win10_hosts                 = 0
     win10_hosts_override        =   [
-                                        #{name="win10-dsk1", role="member_server"},
+                                        { name="win10-dsk1", role="member_server" },
                                     ]
     win16_hosts                 = 0
     win16_hosts_override        =   [
-                                        {name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder"},
-                                        {name="win16-wef1", role="wef_server,splunk_universal_forwarder"},
-                                        {name="win16-svr1", role="member_server"},
+                                        { name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
+                                        { name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
+                                        { name="win16-svr1", role="member_server" },
                                     ]
     kali_hosts                  = 0
     kali_hosts_override         = []
     centos_hosts                = 0
     centos_hosts_override       =   [
                                         {name="splk-sh1", role="splunk_search_head", custom_security_group="splunk_security_group"},
-                                        #{name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
+                                        {name="splk-sh2", role="splunk_search_head", custom_security_group="splunk_security_group"},
+                                        {name="splk-sh3", role="splunk_search_head,splunk_search_head_captain", custom_security_group="splunk_security_group"},
+                                        {name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
                                         {name="splk-dp1", role="splunk_deployment_server,splunk_license_master", custom_security_group="splunk_security_group"},
                                         {name="splk-cm1", role="splunk_cluster_master", custom_security_group="splunk_security_group"},
-                                        #{name="splk-sdp1", role="splunk_deployer", custom_security_group="splunk_security_group"},
+                                        {name="splk-sdp1", role="splunk_deployer", custom_security_group="splunk_security_group"},
                                         {name="splk-idx1", role="splunk_indexer", custom_security_group="splunk_security_group"},
                                         {name="splk-idx2", role="splunk_indexer", custom_security_group="splunk_security_group"},
                                         {name="splk-hf1", role="splunk_heavy_forwarder", custom_security_group="splunk_security_group"},
@@ -64,10 +66,10 @@ locals {
 
     ansible_lab_vars = {
         win_dns_domain          = local.internal_domain
-        win_netbios_domain      = "PSLAB"
+        win_netbios_domain      = "LAB"
         win_admin_user          = local.win_user
         win_admin_password      = local.win_password
-        win_ca_common_name      = "PKI"
+        win_ca_common_name      = "LAB-PKI"
         splunk_password             = "1-splunk-password"
     }
 }
@@ -132,20 +134,20 @@ module "lab1" {
 #                                     }]
 # }
 
-# // add public dns records
-# module "lab1_public_dns" {
-#     module_name                 = "lab1_public_dns"
-#     module_dependency           = module.lab1_internal_dns.module_complete
+// add public dns records
+module "lab1_public_dns" {
+    module_name                 = "lab1_public_dns"
+    module_dependency           = module.lab1.module_complete
 
-#     source                      = "./modules/ec2_public_dns"
-#     public_domain               = local.public_domain
-#     subdomains                  =   [{
-#                                         name = format("%s-deployer-%s", local.project_prefix, module.lab1.student_id) 
-#                                         type = "A"
-#                                         target = local.ansible_public_ip
-#                                         cert = false
-#                                     }]
-# }
+    source                      = "./modules/ec2_public_dns"
+    public_domain               = local.public_domain
+    subdomains                  =   [{
+                                        name = format("%s-deployer-%s", local.project_prefix, module.lab1.student_id) 
+                                        type = "A"
+                                        target = local.ansible_public_ip
+                                        cert = false
+                                    }]
+}
 
 // copy over extended ansible setup
 module "lab1_files" {
