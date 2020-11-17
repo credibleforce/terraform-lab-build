@@ -4,7 +4,7 @@ rm -rf domain-deployment
 mkdir domain-deployment
 source ./ansible/hacking/env-setup
 cd domain-deployment
-git clone --single-branch --branch 'develop' https://github.com/mobia-security-services/splunk-lab
+git clone --recurse-submodules --single-branch --branch 'develop' https://github.com/mobia-security-services/splunk-lab
 cd splunk-lab
 cd ansible
 

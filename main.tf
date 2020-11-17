@@ -13,29 +13,30 @@ locals {
     
     win10_hosts                 = 0
     win10_hosts_override        =   [
-                                        { name="win10-dsk1", role="member_server" },
+                                        #{ name="win10-dsk1", role="member_server" },
                                     ]
     win16_hosts                 = 0
     win16_hosts_override        =   [
-                                        { name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
-                                        { name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
-                                        { name="win16-svr1", role="member_server" },
+                                        #{ name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
+                                        #{ name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
+                                        #{ name="win16-svr1", role="member_server" },
                                     ]
     kali_hosts                  = 0
     kali_hosts_override         = []
     centos_hosts                = 0
     centos_hosts_override       =   [
-                                        {name="splk-sh1", role="splunk_search_head", custom_security_group="splunk_security_group"},
-                                        {name="splk-sh2", role="splunk_search_head", custom_security_group="splunk_security_group"},
-                                        {name="splk-sh3", role="splunk_search_head,splunk_search_head_captain", custom_security_group="splunk_security_group"},
-                                        {name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
-                                        {name="splk-dp1", role="splunk_deployment_server,splunk_license_master", custom_security_group="splunk_security_group"},
-                                        {name="splk-cm1", role="splunk_cluster_master", custom_security_group="splunk_security_group"},
-                                        {name="splk-sdp1", role="splunk_deployer", custom_security_group="splunk_security_group"},
-                                        {name="splk-idx1", role="splunk_indexer", custom_security_group="splunk_security_group"},
-                                        {name="splk-idx2", role="splunk_indexer", custom_security_group="splunk_security_group"},
-                                        {name="splk-hf1", role="splunk_heavy_forwarder", custom_security_group="splunk_security_group"},
-                                        {name="splk-uf1", role="splunk_universal_forwarder", custom_security_group="splunk_security_group"},
+                                        {name="splk-sh1", role="splunk_standalone", custom_security_group="splunk_security_group"},
+                                        #{name="splk-sh1", role="splunk_search_head", custom_security_group="splunk_security_group"},
+                                        #{name="splk-sh2", role="splunk_search_head", custom_security_group="splunk_security_group"},
+                                        #{name="splk-sh3", role="splunk_search_head,splunk_search_head_captain", custom_security_group="splunk_security_group"},
+                                        #{name="splk-lm1", role="splunk_license_master", custom_security_group="splunk_security_group"},
+                                        #{name="splk-dp1", role="splunk_deployment_server,splunk_license_master", custom_security_group="splunk_security_group"},
+                                        #{name="splk-cm1", role="splunk_cluster_master", custom_security_group="splunk_security_group"},
+                                        #{name="splk-sdp1", role="splunk_deployer", custom_security_group="splunk_security_group"},
+                                        #{name="splk-idx1", role="splunk_indexer", custom_security_group="splunk_security_group"},
+                                        #{name="splk-idx2", role="splunk_indexer", custom_security_group="splunk_security_group"},
+                                        #{name="splk-hf1", role="splunk_heavy_forwarder", custom_security_group="splunk_security_group"},
+                                        #{name="splk-uf1", role="splunk_universal_forwarder", custom_security_group="splunk_security_group"},
                                     ]
     ansible_user                = "centos"
     ansible_group               = "centos"
@@ -45,8 +46,8 @@ locals {
     ansible_hosts_override      =   [
                                         #{name="ansible1", custom_security_group="splunk_security_group"},
                                     ]
-    ansible_private_dns         = length(module.lab1.ansible_hosts)>0? module.lab1.ansible_hosts[0].private_dns : null
-    ansible_public_ip           = length(module.lab1.ansible_hosts)>0? module.lab1.ansible_hosts[0].public_ip : null
+    ansible_private_dns         = length(module.lab1.ansible_instances)>0? module.lab1.ansible_instances[0].private_dns : null
+    ansible_public_ip           = length(module.lab1.ansible_instances)>0? module.lab1.ansible_instances[0].public_ip : null
     
     custom_security_groups      =   [
                                         { name="splunk_security_group", inbound_ports=  [ 
@@ -58,9 +59,41 @@ locals {
                                                                                             { source_port=9997,destination_port=9997,protocol="tcp" },
                                                                                             { source_port=9998,destination_port=9998,protocol="tcp" },
                                                                                         ]
+                                        },
+                                    ]
+
+    public_dns_mapping          =   [
+                                        {   
+                                            name="search", 
+                                            targets="splk-sh1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:8000", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=443, 
+                                            elb_destination_port=8000, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
+                                        {   name="forward", 
+                                            targets="splk-sh1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:8088", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=8088, 
+                                            elb_destination_port=8088, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
                                         }
                                     ]
-    
+
     key_name                    = "${local.project_prefix}-key"
     public_key_path             = "~/.ssh/id_rsa.pub"
 
@@ -98,7 +131,7 @@ module "lab1" {
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
     internal_domain             = local.internal_domain
-    student_id                  = "s001"
+    student_id                  = "lab1"
     win_user                    = local.win_user
     win_password                = local.win_password
     win10_hosts                 = local.win10_hosts
@@ -134,22 +167,23 @@ module "lab1" {
 #                                     }]
 # }
 
-// add public dns records
-module "lab1_public_dns" {
-    module_name                 = "lab1_public_dns"
-    module_dependency           = module.lab1.module_complete
+// add public dns records (in the format NAME.STUDENT_ID.PUBLIC_DOMAIN)
+module "lab1_public_dns_mapping" {
+    module_name                 =   "lab1_public_dns_mapping"
+    module_dependency           =   module.lab1.module_complete
 
-    source                      = "./modules/ec2_public_dns"
-    public_domain               = local.public_domain
-    subdomains                  =   [{
-                                        name = format("%s-deployer-%s", local.project_prefix, module.lab1.student_id) 
-                                        type = "A"
-                                        target = local.ansible_public_ip
-                                        cert = false
-                                    }]
+    source                      =   "./modules/ec2_public_dns_mapping"
+    public_domain               =   module.lab1.public_domain
+    vpc_id                      =   module.lab1.vpc_id
+    vpc_subnet                  =   module.lab1.vpc_subnet
+    subnet1_id                  =   module.lab1.subnet1_id
+    subnet2_id                  =   module.lab1.subnet2_id
+    student_id                  =   module.lab1.student_id
+    instances                   =   module.lab1.instances
+    subdomains                  =   local.public_dns_mapping
 }
 
-// copy over extended ansible setup
+# // copy over extended ansible setup
 module "lab1_files" {
     module_name                 = "lab1_files"
     module_dependency           = module.lab1.module_complete
@@ -168,12 +202,12 @@ module "lab1_files" {
                                     },
                                 ]
     files_content           =   [
-                                    { 
-                                        content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
-                                        destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                        mode = 0755
-                                        type = "file"
-                                    },
+                                    # { 
+                                    #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
+                                    #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                    #     mode = 0755
+                                    #     type = "file"
+                                    # },
                                     { 
                                         content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
                                         destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
@@ -183,7 +217,7 @@ module "lab1_files" {
                                 ]
 }
 
-// execute extended ansible setup
+# // execute extended ansible setup
 module "lab1_script_exec" {
     module_name             = "lab1_script_exec"
     module_dependency       = module.lab1_files.module_complete
@@ -195,7 +229,7 @@ module "lab1_script_exec" {
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
-                                    "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                    #"/home/${local.ansible_user}/ansible_domain_deployment.sh",
                                     "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
                                 ]
     scripts                 =   []

@@ -10,6 +10,6 @@ variable public_domain {
 }
 
 variable subdomains {
-    description  = "subdomains to configure, name (string), type (string - e.g. CNAME, A), target (string array) and cert (bool)"
+    description  = "subdomains to configure, name (string), type (string - e.g. CNAME, A), target (string array)"
     default = []
 }

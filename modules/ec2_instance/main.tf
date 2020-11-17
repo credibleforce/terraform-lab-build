@@ -12,6 +12,7 @@ locals {
     host_count              = local.override_hosts ? length(local.hosts_override): var.host_count
     host_role               = var.host_role
     custom_security_groups  = var.custom_security_groups
+    student_id              = var.student_id
 }
 
 resource "aws_route53_record" "internal_a" {
@@ -62,6 +63,7 @@ resource "aws_instance" "host" {
         Name                = local.override_hosts ? local.hosts_override[count.index].name : format("%s%d",var.host_prefix,count.index + 1)
         Role                = local.override_hosts ? join(",",concat([local.host_role],split(",",lookup(local.hosts_override[count.index],"role","")))): local.host_role
         Connection          = lookup(var.connection_settings, "type", "ssh")
+        StudentId          = local.student_id
     }
 
     user_data               = templatefile(var.provisioning_file, { "win_user" : "${var.win_user}", "win_password":"${var.win_password}", "short_name": "${local.override_hosts ? local.hosts_override[count.index].name : format("%s%d",var.host_prefix,count.index + 1)}", "full_name": "${local.override_hosts ? format("%s.%s",local.hosts_override[count.index].name, var.internal_domain) : format("%s%d.%s",var.host_prefix,count.index + 1,var.internal_domain)}"})

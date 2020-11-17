@@ -23,7 +23,7 @@ locals {
 
     subnet2_name            = "${var.project_prefix}-s${var.student_id}-subnet2"
     subnet2_prefix          = "${local.vpc_prefix}.2"
-    subnet2_az              =  "${var.subnet1_az}"
+    subnet2_az              =  "${var.subnet2_az}"
 
     trusted_source          = var.trusted_source
 
@@ -139,6 +139,13 @@ locals {
     ansible_public_ip       = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].public_ip : null
 
     aws_key_pair            = var.aws_key_pair
+
+    kali_instances              = [for h in module.kali_instances.hosts:   { name= h.tags.Name, student_id=h.tags.StudentId, instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+    centos_instances            = [for h in module.centos_instances.hosts:   { name= h.tags.Name, student_id=h.tags.StudentId, instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+    ansible_instances           = [for h in module.ansible_instances.hosts:   { name= h.tags.Name, student_id=h.tags.StudentId, instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+    win10_instances             = [for h in module.win10_instances.hosts:   { name= h.tags.Name, student_id=h.tags.StudentId, instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+    win16_instances             = [for h in module.win16_instances.hosts:   { name= h.tags.Name, student_id=h.tags.StudentId, instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+    instances               = concat(local.kali_instances,local.centos_instances,local.ansible_instances,local.win10_instances,local.win16_instances)
 }
   
 module "ec2_network" {
@@ -221,6 +228,7 @@ module "kali_instances" {
     volume_size             = local.kali_volume_size
     provisioning_file       = "${path.root}/templates/linux_provisioning.sh"
     custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
 }
 
 module "win10_instances" {
@@ -255,6 +263,7 @@ module "win10_instances" {
     win_user                = local.win_user
     win_password            = local.win_password
     custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
 }
 
 module "win16_instances" {
@@ -289,6 +298,7 @@ module "win16_instances" {
     win_user                = local.win_user
     win_password            = local.win_password
     custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
     
 }
 
@@ -316,6 +326,7 @@ module "ansible_instances" {
     volume_size             = local.ansible_volume_size
     provisioning_file       = "${path.root}/templates/centos_provisioning.sh"
     custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
 }
 
 module "centos_instances" {
@@ -342,6 +353,7 @@ module "centos_instances" {
     volume_size             = local.centos_volume_size
     provisioning_file       = "${path.root}/templates/centos_provisioning.sh"
     custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
 }
 
 // ensure instances exist before ansible provisioning

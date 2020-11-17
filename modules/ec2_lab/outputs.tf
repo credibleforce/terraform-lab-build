@@ -7,24 +7,28 @@ output "module_complete" {
   value = "${var.module_dependency}${var.module_dependency == "" ? "" : "->"}${var.module_name}(${null_resource.module_is_complete.id})"
 }
 
-output "kali_hosts" {
-    value = [for h in module.kali_instances.hosts:   { instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+output "kali_instances" {
+    value = local.kali_instances
 }
 
-output "centos_hosts" {
-    value = [for h in module.centos_instances.hosts:   { instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+output "centos_instances" {
+    value = local.centos_instances
 }
 
-output "ansible_hosts" {
-    value = [for h in module.ansible_instances.hosts:   { instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+output "ansible_instances" {
+    value = local.ansible_instances
 }
 
-output "win10_hosts" {
-    value = [for h in module.win10_instances.hosts:   { instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+output "win10_instances" {
+    value = local.win10_instances
 }
 
-output "win16_hosts" {
-    value = [for h in module.win16_instances.hosts:   { instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
+output "win16_instances" {
+    value = local.win16_instances
+}
+
+output "instances" {
+    value = local.instances
 }
 
 output "internal_zone_id" {
@@ -33,6 +37,22 @@ output "internal_zone_id" {
 
 output "vpc_id" {
     value = module.ec2_network.vpc_id
+}
+
+output "vpc_subnet" {
+    value = local.vpc_subnet
+}
+
+output subnet1_id {
+    value = module.ec2_network.subnet1_id
+}
+
+output subnet2_id {
+    value = module.ec2_network.subnet2_id
+}
+
+output "public_domain" {
+    value = local.public_domain
 }
 
 output "student_id" {

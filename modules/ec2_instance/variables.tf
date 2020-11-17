@@ -83,3 +83,7 @@ variable custom_security_groups {
     description = "custom security groups"
     default = []
 }
+
+variable student_id {
+    description = "student id"
+}
