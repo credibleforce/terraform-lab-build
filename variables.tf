@@ -14,9 +14,4 @@ variable "lab_base_name" {
     default     = "lab"
 }
 
-variable "internal_domain" {
-    description = "internal dns name for the lab"
-    default     = join(".", var.lab_base_name, var.lab_base_tld)
-}
-
 

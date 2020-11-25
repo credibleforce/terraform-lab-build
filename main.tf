@@ -3,7 +3,7 @@ locals {
     project_prefix              = "lab"
     lab_base_tld                = var.lab_base_tld
     lab_base_name               = var.lab_base_name
-    internal_domain             = var.internal_domain
+    internal_domain             = "${var.lab_base_name}.${var.lab_base_tld}"
     public_domain               = "proservlab-cloud.com"
     win10_ami                   = "ami-033b88e6083684a58"
     win16_ami                   = data.aws_ami.win16.image_id
@@ -137,7 +137,7 @@ locals {
         win_netbios_domain      = upper(local.lab_base_name)
         win_admin_user          = local.win_user
         win_admin_password      = local.win_password
-        win_ca_common_name      = join("-",upper(local.lab_base_name),"-PKI")
+        win_ca_common_name      = "${upper(local.lab_base_name)}-PKI"
         splunk_password             = "1-splunk-password"
     }
 }
