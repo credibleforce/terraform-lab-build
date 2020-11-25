@@ -174,13 +174,13 @@ resource "aws_lb_target_group" "tg" {
 resource "aws_lb_listener" "listener" {
   count                     = length(local.elbs)
   depends_on                = [null_resource.module_dependency,aws_lb_target_group.tg]
-  load_balancer_arn         = length([ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)])>0 ? [ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)][0]: ""
+  load_balancer_arn         = length([ for y in aws_lb.load_balancer: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)])>0 ? [ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)][0]: ""
   port                      = local.elbs[count.index].elb_source_port
   protocol                  = upper(local.elbs[count.index].elb_source_protocol)
-  certificate_arn           = length([ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)])>0 ? [ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)][0]: ""
+  certificate_arn           = length([ for y in aws_acm_certificate.cert: y.arn if y.arn == format("%s-%s",local.elbs[count.index].name, var.student_id)])>0 ? [ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)][0]: ""
   
   default_action {
-    target_group_arn        = element([ for y in aws_lb_target_group.tg: y.arn if y.name == format("%s-%s",local.elbs[count.index].name, var.student_id)],1)
+    target_group_arn        = element([ for y in aws_lb_target_group.tg: y.arn if y.tags.Name == format("%s-%s",local.elbs[count.index].name, var.student_id)],1)
     type                    = "forward"
   }
 }
