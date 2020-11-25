@@ -1,7 +1,9 @@
 
 locals {
     project_prefix              = "lab"
-    internal_domain             = "lab.local"
+    lab_base_tld                = var.lab_base_tld
+    lab_base_name               = var.lab_base_name
+    internal_domain             = var.internal_domain
     public_domain               = "proservlab-cloud.com"
     win10_ami                   = "ami-033b88e6083684a58"
     win16_ami                   = data.aws_ami.win16.image_id
@@ -63,6 +65,7 @@ locals {
                                     ]
 
     public_dns_mapping          =   [
+                                        # enable load balancing for 443 => 8000
                                         {   
                                             name="search", 
                                             targets="splk-sh1", 
@@ -78,6 +81,23 @@ locals {
                                             elb_source_protocol="https", 
                                             elb_destination_protocol="https" 
                                         },
+                                        # enable load balancing for 443 => 8089
+                                        {   
+                                            name="deploy", 
+                                            targets="splk-sh1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:8089", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=443, 
+                                            elb_destination_port=8089, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
+                                        # enable load balacing for 443 => 8088
                                         {   name="forward", 
                                             targets="splk-sh1", 
                                             cert=true, 
@@ -86,8 +106,23 @@ locals {
                                             elb_port_sticky_sessions=true, 
                                             elb_health_check_target="TCP:8088", 
                                             elb_source=local.trusted_source, 
-                                            elb_source_port=8088, 
+                                            elb_source_port=443, 
                                             elb_destination_port=8088, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
+                                        # disable load balancing for indexer
+                                        {   name="index", 
+                                            targets="splk-sh1", 
+                                            cert=false, 
+                                            elb=false,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:9997", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=9997, 
+                                            elb_destination_port=9997, 
                                             elb_protocol="tcp", 
                                             elb_source_protocol="https", 
                                             elb_destination_protocol="https" 
@@ -99,10 +134,10 @@ locals {
 
     ansible_lab_vars = {
         win_dns_domain          = local.internal_domain
-        win_netbios_domain      = "LAB"
+        win_netbios_domain      = upper(local.lab_base_name)
         win_admin_user          = local.win_user
         win_admin_password      = local.win_password
-        win_ca_common_name      = "LAB-PKI"
+        win_ca_common_name      = join("-",upper(local.lab_base_name),"-PKI")
         splunk_password             = "1-splunk-password"
     }
 }
@@ -239,120 +274,120 @@ module "lab1_script_exec" {
 LAB 2
 ###############################################*/
 
-module "lab2" {
-    module_name                 = "lab2"
-    module_dependency           = module.environment.module_complete
-    source                      = "./modules/ec2_lab"
-    trusted_source              = local.trusted_source
-    kali_ami                    = local.kali_ami
-    win10_ami                   = local.win10_ami
-    win16_ami                   = local.win16_ami
-    centos_ami                  = local.centos_ami
-    aws_region                  = var.aws_region
-    project_prefix              = local.project_prefix
-    public_domain               = local.public_domain
-    internal_domain             = local.internal_domain
-    student_id                  = "lab2"
-    win_user                    = local.win_user
-    win_password                = local.win_password
-    win10_hosts                 = local.win10_hosts
-    win10_hosts_override        = local.win10_hosts_override
-    win16_hosts                 = local.win16_hosts
-    win16_hosts_override        = local.win16_hosts_override
-    kali_hosts                  = local.kali_hosts
-    kali_hosts_override         = local.kali_hosts_override
-    centos_hosts                = local.centos_hosts
-    centos_hosts_override       = local.centos_hosts_override
-    ansible_hosts               = local.ansible_hosts
-    ansible_hosts_override      = local.ansible_hosts_override
-    aws_key_pair                = module.environment.key_pair
-    public_key_path             = local.public_key_path
-    ansible_user                = local.ansible_user
-    ansible_group               = local.ansible_group
-    ansible_deployment_user     = local.ansible_deployment_user
-    ansible_deployment_group    = local.ansible_deployment_user
-    custom_security_groups      = local.custom_security_groups
-}
-
-# // add additional dns records internally
-# module "lab2_internal_dns" {
-#     module_name                 = "lab2_internal_dns"
-#     module_dependency       = module.lab2.module_complete
-
-#     source                      = "./modules/ec2_internal_dns_record"
-#     zone_id                     = module.lab2.internal_zone_id
-#     records                     =   [{
-#                                     name = "deployer"
-#                                     type = "CNAME"
-#                                     target = module.lab2.ansible_instances[0].private_dns
-#                                     }]
+# module "lab2" {
+#     module_name                 = "lab2"
+#     module_dependency           = module.environment.module_complete
+#     source                      = "./modules/ec2_lab"
+#     trusted_source              = local.trusted_source
+#     kali_ami                    = local.kali_ami
+#     win10_ami                   = local.win10_ami
+#     win16_ami                   = local.win16_ami
+#     centos_ami                  = local.centos_ami
+#     aws_region                  = var.aws_region
+#     project_prefix              = local.project_prefix
+#     public_domain               = local.public_domain
+#     internal_domain             = local.internal_domain
+#     student_id                  = "lab2"
+#     win_user                    = local.win_user
+#     win_password                = local.win_password
+#     win10_hosts                 = local.win10_hosts
+#     win10_hosts_override        = local.win10_hosts_override
+#     win16_hosts                 = local.win16_hosts
+#     win16_hosts_override        = local.win16_hosts_override
+#     kali_hosts                  = local.kali_hosts
+#     kali_hosts_override         = local.kali_hosts_override
+#     centos_hosts                = local.centos_hosts
+#     centos_hosts_override       = local.centos_hosts_override
+#     ansible_hosts               = local.ansible_hosts
+#     ansible_hosts_override      = local.ansible_hosts_override
+#     aws_key_pair                = module.environment.key_pair
+#     public_key_path             = local.public_key_path
+#     ansible_user                = local.ansible_user
+#     ansible_group               = local.ansible_group
+#     ansible_deployment_user     = local.ansible_deployment_user
+#     ansible_deployment_group    = local.ansible_deployment_user
+#     custom_security_groups      = local.custom_security_groups
 # }
 
-// add public dns records (in the format NAME.STUDENT_ID.PUBLIC_DOMAIN)
-module "lab2_public_dns_mapping" {
-    module_name                 =   "lab2_public_dns_mapping"
-    module_dependency           =   module.lab2.module_complete
+# # // add additional dns records internally
+# # module "lab2_internal_dns" {
+# #     module_name                 = "lab2_internal_dns"
+# #     module_dependency       = module.lab2.module_complete
 
-    source                      =   "./modules/ec2_public_dns_mapping"
-    public_domain               =   module.lab2.public_domain
-    vpc_id                      =   module.lab2.vpc_id
-    vpc_subnet                  =   module.lab2.vpc_subnet
-    subnet1_id                  =   module.lab2.subnet1_id
-    subnet2_id                  =   module.lab2.subnet2_id
-    student_id                  =   module.lab2.student_id
-    instances                   =   module.lab2.instances
-    subdomains                  =   local.public_dns_mapping
-}
+# #     source                      = "./modules/ec2_internal_dns_record"
+# #     zone_id                     = module.lab2.internal_zone_id
+# #     records                     =   [{
+# #                                     name = "deployer"
+# #                                     type = "CNAME"
+# #                                     target = module.lab2.ansible_instances[0].private_dns
+# #                                     }]
+# # }
 
-# // copy over extended ansible setup
-module "lab2_files" {
-    module_name                 = "lab2_files"
-    module_dependency           = module.lab2.module_complete
+# // add public dns records (in the format NAME.STUDENT_ID.PUBLIC_DOMAIN)
+# module "lab2_public_dns_mapping" {
+#     module_name                 =   "lab2_public_dns_mapping"
+#     module_dependency           =   module.lab2.module_complete
 
-    source                  = "./modules/ec2_provision_file"
-    connection_settings     =   { 
-                                    host = module.lab2.ansible_instances[0].public_ip,
-                                    user = local.ansible_user, 
-                                    private_key = file(replace(local.public_key_path,".pub","")) 
-                                }
-    files_copy              =   [
-                                    {
-                                        source = "/tmp/splunk.lic",
-                                        destination = "/tmp/splunk.lic"
-                                        type = "file"
-                                    },
-                                ]
-    files_content           =   [
-                                    # { 
-                                    #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
-                                    #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    #     mode = 0755
-                                    #     type = "file"
-                                    # },
-                                    { 
-                                        content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
-                                        destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
-                                        mode = 0755
-                                        type = "file"
-                                    },
-                                ]
-}
+#     source                      =   "./modules/ec2_public_dns_mapping"
+#     public_domain               =   module.lab2.public_domain
+#     vpc_id                      =   module.lab2.vpc_id
+#     vpc_subnet                  =   module.lab2.vpc_subnet
+#     subnet1_id                  =   module.lab2.subnet1_id
+#     subnet2_id                  =   module.lab2.subnet2_id
+#     student_id                  =   module.lab2.student_id
+#     instances                   =   module.lab2.instances
+#     subdomains                  =   local.public_dns_mapping
+# }
 
-# // execute extended ansible setup
-module "lab2_script_exec" {
-    module_name             = "lab2_script_exec"
-    module_dependency       = module.lab2_files.module_complete
+# # // copy over extended ansible setup
+# module "lab2_files" {
+#     module_name                 = "lab2_files"
+#     module_dependency           = module.lab2.module_complete
 
-    source                  = "./modules/ec2_provision_script"
-    connection_settings     =   { 
-                                    host = module.lab2.ansible_instances[0].public_ip,
-                                    user = local.ansible_user, 
-                                    private_key = file(replace(local.public_key_path,".pub","")) 
-                                }
-    inlines                 =   [
-                                    #"/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
-                                ]
-    scripts                 =   []
-}
+#     source                  = "./modules/ec2_provision_file"
+#     connection_settings     =   { 
+#                                     host = module.lab2.ansible_instances[0].public_ip,
+#                                     user = local.ansible_user, 
+#                                     private_key = file(replace(local.public_key_path,".pub","")) 
+#                                 }
+#     files_copy              =   [
+#                                     {
+#                                         source = "/tmp/splunk.lic",
+#                                         destination = "/tmp/splunk.lic"
+#                                         type = "file"
+#                                     },
+#                                 ]
+#     files_content           =   [
+#                                     # { 
+#                                     #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
+#                                     #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+#                                     #     mode = 0755
+#                                     #     type = "file"
+#                                     # },
+#                                     { 
+#                                         content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
+#                                         destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
+#                                         mode = 0755
+#                                         type = "file"
+#                                     },
+#                                 ]
+# }
+
+# # // execute extended ansible setup
+# module "lab2_script_exec" {
+#     module_name             = "lab2_script_exec"
+#     module_dependency       = module.lab2_files.module_complete
+
+#     source                  = "./modules/ec2_provision_script"
+#     connection_settings     =   { 
+#                                     host = module.lab2.ansible_instances[0].public_ip,
+#                                     user = local.ansible_user, 
+#                                     private_key = file(replace(local.public_key_path,".pub","")) 
+#                                 }
+#     inlines                 =   [
+#                                     #"/home/${local.ansible_user}/ansible_domain_deployment.sh",
+#                                     "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
+#                                 ]
+#     scripts                 =   []
+# }
 
