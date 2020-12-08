@@ -65,7 +65,7 @@ EOF
 sudo ansible-playbook -i lab-inventory install.yml -e @vars.yml
 
 # sleep
-sleep 10
+sleep 60
 
 # exec migration task and restart the containers to ensure upgrade/migration completes before first run
 sudo docker exec -it awx_web /bin/bash -c "awx-manage migrate --noinput"
