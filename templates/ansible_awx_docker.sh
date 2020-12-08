@@ -25,6 +25,9 @@ sudo yum install -y docker-ce docker-ce-cli containerd.io
 # install python docker
 sudo pip3 install docker docker-compose
 
+# enable docker service at startup
+sudo systemctl enable docker
+
 # start docker
 sudo systemctl start docker
 
