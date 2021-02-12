@@ -5,7 +5,7 @@ locals {
     lab_base_name               = var.lab_base_name
     internal_domain             = "${var.lab_base_name}.${var.lab_base_tld}"
     public_domain               = "proservlab-cloud.com"
-    win10_ami                   = "ami-033b88e6083684a58"
+    win10_ami                   = "ami-059989fdd0ff18f55"
     win16_ami                   = data.aws_ami.win16.image_id
     centos_ami                  = data.aws_ami.centos.image_id
     kali_ami                    = data.aws_ami.kali.image_id
@@ -15,13 +15,13 @@ locals {
     
     win10_hosts                 = 0
     win10_hosts_override        =   [
-                                        #{ name="win10-dsk1", role="member_server" },
+                                        { name="win10-dsk1", role="member_server" },
                                     ]
     win16_hosts                 = 0
     win16_hosts_override        =   [
-                                        #{ name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
-                                        #{ name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
-                                        #{ name="win16-svr1", role="member_server" },
+                                        { name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
+                                        { name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
+                                        { name="win16-svr1", role="member_server" },
                                     ]
     kali_hosts                  = 0
     kali_hosts_override         = []
@@ -46,7 +46,7 @@ locals {
     ansible_deployment_group    = "deployer"
     ansible_hosts               = 1
     ansible_hosts_override      =   [
-                                        #{name="ansible1", custom_security_group="splunk_security_group"},
+                                        {name="ansible-srv1", custom_security_group="splunk_security_group"},
                                     ]
     ansible_private_dns         = length(module.lab1.ansible_instances)>0? module.lab1.ansible_instances[0].private_dns : null
     ansible_public_ip           = length(module.lab1.ansible_instances)>0? module.lab1.ansible_instances[0].public_ip : null
@@ -60,6 +60,11 @@ locals {
                                                                                             { source_port=8089,destination_port=8089,protocol="tcp" },
                                                                                             { source_port=9997,destination_port=9997,protocol="tcp" },
                                                                                             { source_port=9998,destination_port=9998,protocol="tcp" },
+                                                                                        ]
+                                        },
+                                        { name="ansible_security_group", inbound_ports=  [ 
+                                                                                            { source_port=22,destination_port=22,protocol="tcp" },
+                                                                                            { source_port=443,destination_port=443,protocol="tcp" }
                                                                                         ]
                                         },
                                     ]
@@ -237,12 +242,12 @@ module "lab1_files" {
                                     },
                                 ]
     files_content           =   [
-                                    # { 
-                                    #     content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
-                                    #     destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    #     mode = 0755
-                                    #     type = "file"
-                                    # },
+                                    { 
+                                        content = templatefile("${path.root}/templates/ansible_domain_deployment.sh", local.ansible_lab_vars),
+                                        destination = "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                        mode = 0755
+                                        type = "file"
+                                    },
                                     { 
                                         content = templatefile("${path.root}/templates/ansible_splunk_deployment.sh",  local.ansible_lab_vars),
                                         destination = "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
@@ -264,7 +269,7 @@ module "lab1_script_exec" {
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
-                                    #"/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                    "/home/${local.ansible_user}/ansible_domain_deployment.sh",
                                     "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
                                 ]
     scripts                 =   []
