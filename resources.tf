@@ -10,7 +10,7 @@ data "aws_ami" "kali" {
 
 data "aws_ami" "centos" {
   most_recent = true
-  owners      = ["aws-marketplace"]
+  owners      = ["125523088429"]
 
   filter {
     name   = "virtualization-type"
@@ -29,12 +29,7 @@ data "aws_ami" "centos" {
 
   filter {
     name   = "name"
-    values = ["CentOS Linux 7*"]
-  }
-
-  filter {
-    name = "product-code"
-    values = ["aw0evgkw8e5c1q413zgy5pjce"]
+    values = ["CentOS 8.* x86_64*"]
   }
 }
 

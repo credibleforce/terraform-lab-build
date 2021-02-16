@@ -1,0 +1,949 @@
+2021-02-14 20:48:54,862 p=65733 u=centos n=ansible | ansible-playbook 2.10.5
+  config file = /home/centos/domain-deployment/splunk-lab/ansible/ansible.cfg
+  configured module search path = ['/home/centos/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/local/lib/python3.6/site-packages/ansible
+  executable location = /usr/local/bin/ansible-playbook
+  python version = 3.6.8 (default, Aug 24 2020, 17:57:11) [GCC 8.3.1 20191121 (Red Hat 8.3.1-5)]
+2021-02-14 20:48:54,863 p=65733 u=centos n=ansible | Using /home/centos/domain-deployment/splunk-lab/ansible/ansible.cfg as config file
+2021-02-14 20:48:55,064 p=65733 u=centos n=ansible | Skipping callback 'default', as we already have a stdout callback.
+2021-02-14 20:48:55,064 p=65733 u=centos n=ansible | Skipping callback 'minimal', as we already have a stdout callback.
+2021-02-14 20:48:55,064 p=65733 u=centos n=ansible | Skipping callback 'oneline', as we already have a stdout callback.
+2021-02-14 20:48:55,064 p=65733 u=centos n=ansible | PLAYBOOK: build-env.yml ********************************************************
+2021-02-14 20:48:55,064 p=65733 u=centos n=ansible | 5 plays in playbooks/build-env.yml
+2021-02-14 20:48:55,068 p=65733 u=centos n=ansible | PLAY [local] *******************************************************************
+2021-02-14 20:48:55,078 p=65733 u=centos n=ansible | TASK [Gathering Facts] *********************************************************
+2021-02-14 20:48:55,988 p=65733 u=centos n=ansible | ok: [localhost]
+2021-02-14 20:48:55,997 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:48:56,005 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:48:56,013 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:48:56,016 p=65733 u=centos n=ansible | PLAY [all:!local] **************************************************************
+2021-02-14 20:48:56,022 p=65733 u=centos n=ansible | TASK [Gathering Facts] *********************************************************
+2021-02-14 20:48:56,147 p=65789 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:48:56,250 p=65790 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:48:56,273 p=65791 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:48:56,286 p=65792 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:48:56,986 p=65733 u=centos n=ansible | ok: [splk-sh1.lab.lan]
+2021-02-14 20:48:58,875 p=65733 u=centos n=ansible | ok: [ansible-srv1.lab.lan]
+2021-02-14 20:49:01,112 p=65733 u=centos n=ansible | ok: [win16-wef1.lab.lan]
+2021-02-14 20:49:01,258 p=65733 u=centos n=ansible | ok: [win10-dsk1.lab.lan]
+2021-02-14 20:49:01,259 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan]
+2021-02-14 20:49:01,408 p=65733 u=centos n=ansible | ok: [win16-svr1.lab.lan]
+2021-02-14 20:49:01,416 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:49:01,424 p=65733 u=centos n=ansible | TASK [Apply ansible base configuration (e.g. ssh key scan)] ********************
+2021-02-14 20:49:01,611 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/ansible_common/tasks/linux-sshkeys.yml
+2021-02-14 20:49:01,636 p=65733 u=centos n=ansible | TASK [../roles/ansible_common : Remove any existing host keys] *****************
+2021-02-14 20:49:01,786 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:01,856 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:01,905 p=65733 u=centos n=ansible | skipping: [win16-dc1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:01,909 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,261 p=65733 u=centos n=ansible | fatal: [ansible-srv1.lab.lan]: FAILED! => {"changed": true, "cmd": "ssh-keygen -f \"~/.ssh/known_hosts\" -R \"ansible-srv1.lab.lan\"\n", "delta": "0:00:00.009807", "end": "2021-02-14 20:49:02.235808", "msg": "non-zero return code", "rc": 255, "start": "2021-02-14 20:49:02.226001", "stderr": "mkstemp: No such file or directory", "stderr_lines": ["mkstemp: No such file or directory"], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:02,261 p=65733 u=centos n=ansible | ...ignoring
+2021-02-14 20:49:02,265 p=65733 u=centos n=ansible | fatal: [splk-sh1.lab.lan]: FAILED! => {"changed": true, "cmd": "ssh-keygen -f \"~/.ssh/known_hosts\" -R \"splk-sh1.lab.lan\"\n", "delta": "0:00:00.010031", "end": "2021-02-14 20:49:02.236287", "msg": "non-zero return code", "rc": 255, "start": "2021-02-14 20:49:02.226256", "stderr": "mkstemp: No such file or directory", "stderr_lines": ["mkstemp: No such file or directory"], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:02,266 p=65733 u=centos n=ansible | ...ignoring
+2021-02-14 20:49:02,283 p=65733 u=centos n=ansible | TASK [../roles/ansible_common : get port, default 22] **************************
+2021-02-14 20:49:02,418 p=65733 u=centos n=ansible | ok: [splk-sh1.lab.lan] => {"ansible_facts": {"ansible_ssh_port": "22"}, "changed": false}
+2021-02-14 20:49:02,472 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,476 p=65733 u=centos n=ansible | skipping: [win16-dc1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,477 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,494 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,540 p=65733 u=centos n=ansible | ok: [ansible-srv1.lab.lan] => {"ansible_facts": {"ansible_ssh_port": "22"}, "changed": false}
+2021-02-14 20:49:02,559 p=65733 u=centos n=ansible | TASK [../roles/ansible_common : Ensure ssh host key known] *********************
+2021-02-14 20:49:02,731 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,732 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,840 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:02,850 p=65733 u=centos n=ansible | skipping: [win16-dc1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:03,184 p=65733 u=centos n=ansible | changed: [splk-sh1.lab.lan] => {"backup": "", "changed": true, "msg": "line added"}
+2021-02-14 20:49:03,190 p=65733 u=centos n=ansible | changed: [ansible-srv1.lab.lan] => {"backup": "", "changed": true, "msg": "line added"}
+2021-02-14 20:49:03,199 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:49:03,207 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:49:03,210 p=65733 u=centos n=ansible | PLAY [all] *********************************************************************
+2021-02-14 20:49:03,221 p=65733 u=centos n=ansible | TASK [Gathering Facts] *********************************************************
+2021-02-14 20:49:03,325 p=66096 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:49:03,391 p=66097 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:49:03,414 p=66100 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:49:03,881 p=65733 u=centos n=ansible | ok: [localhost]
+2021-02-14 20:49:03,927 p=66142 u=centos n=ansible | redirecting (type: modules) ansible.builtin.setup to ansible.windows.setup
+2021-02-14 20:49:05,494 p=65733 u=centos n=ansible | ok: [splk-sh1.lab.lan]
+2021-02-14 20:49:06,592 p=65733 u=centos n=ansible | ok: [ansible-srv1.lab.lan]
+2021-02-14 20:49:06,782 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan]
+2021-02-14 20:49:06,910 p=65733 u=centos n=ansible | ok: [win16-svr1.lab.lan]
+2021-02-14 20:49:07,152 p=65733 u=centos n=ansible | ok: [win10-dsk1.lab.lan]
+2021-02-14 20:49:07,334 p=65733 u=centos n=ansible | ok: [win16-wef1.lab.lan]
+2021-02-14 20:49:07,343 p=65733 u=centos n=ansible | TASK [Universal Forwarder Variable] ********************************************
+2021-02-14 20:49:07,411 p=65733 u=centos n=ansible | skipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,478 p=65733 u=centos n=ansible | skipping: [win16-dc1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,479 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,487 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,488 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,513 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,515 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,524 p=65733 u=centos n=ansible | META: ran handlers
+2021-02-14 20:49:07,533 p=65733 u=centos n=ansible | TASK [Deploy common tasks to all] **********************************************
+2021-02-14 20:49:07,745 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/common/tasks/powershell-strong-crypto.yml
+2021-02-14 20:49:07,747 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:07,751 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/common/tasks/install-packageprovider-nuget.yml
+2021-02-14 20:49:07,751 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:07,754 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/common/tasks/add-psgallery-trusted-repo.yml
+2021-02-14 20:49:07,755 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:07,757 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/common/tasks/ensure-winrm-http-listener.yml
+2021-02-14 20:49:07,758 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:07,788 p=65733 u=centos n=ansible | TASK [../roles/common : Force Powerhsell Strong Cryptography] ******************
+2021-02-14 20:49:07,848 p=65733 u=centos n=ansible | skipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,899 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,922 p=66324 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:07,927 p=66325 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:07,976 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:07,983 p=66327 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:08,001 p=66328 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:10,176 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord\nSet-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord", "delta": "0:00:00.499996", "end": "2021-02-14 08:49:10.346217", "rc": 0, "start": "2021-02-14 08:49:09.846221", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:10,309 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord\nSet-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord", "delta": "0:00:00.406244", "end": "2021-02-14 08:49:10.199921", "rc": 0, "start": "2021-02-14 08:49:09.793676", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:10,407 p=65733 u=centos n=ansible | changed: [win16-wef1.lab.lan] => {"changed": true, "cmd": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord\nSet-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord", "delta": "0:00:00.468753", "end": "2021-02-14 08:49:10.307455", "rc": 0, "start": "2021-02-14 08:49:09.838701", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:10,412 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord\nSet-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\.NetFramework\\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord", "delta": "0:00:00.468749", "end": "2021-02-14 08:49:10.315189", "rc": 0, "start": "2021-02-14 08:49:09.846440", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:10,421 p=65733 u=centos n=ansible | TASK [../roles/common : Install NuGet Package Provider] ************************
+2021-02-14 20:49:10,512 p=66338 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:10,533 p=65733 u=centos n=ansible | skipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:10,578 p=66342 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:10,582 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:10,604 p=66341 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:10,598 p=66340 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:10,652 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:15,434 p=65733 u=centos n=ansible | changed: [win16-wef1.lab.lan] => {"changed": true, "cmd": "Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5 -Force", "delta": "0:00:03.156201", "end": "2021-02-14 08:49:15.323024", "rc": 0, "start": "2021-02-14 08:49:12.166823", "stderr": "", "stderr_lines": [], "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n", "stdout_lines": ["", "Name                           Version          Source           Summary                                               ", "----                           -------          ------           -------                                               ", "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ", "", ""]}
+2021-02-14 20:49:15,446 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5 -Force", "delta": "0:00:03.218686", "end": "2021-02-14 08:49:15.330711", "rc": 0, "start": "2021-02-14 08:49:12.112025", "stderr": "", "stderr_lines": [], "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n", "stdout_lines": ["", "Name                           Version          Source           Summary                                               ", "----                           -------          ------           -------                                               ", "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ", "", ""]}
+2021-02-14 20:49:15,456 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5 -Force", "delta": "0:00:03.203124", "end": "2021-02-14 08:49:15.627469", "rc": 0, "start": "2021-02-14 08:49:12.424345", "stderr": "", "stderr_lines": [], "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n", "stdout_lines": ["", "Name                           Version          Source           Summary                                               ", "----                           -------          ------           -------                                               ", "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ", "", ""]}
+2021-02-14 20:49:15,593 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5 -Force", "delta": "0:00:03.296749", "end": "2021-02-14 08:49:15.496588", "rc": 0, "start": "2021-02-14 08:49:12.199838", "stderr": "", "stderr_lines": [], "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n", "stdout_lines": ["", "Name                           Version          Source           Summary                                               ", "----                           -------          ------           -------                                               ", "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ", "", ""]}
+2021-02-14 20:49:15,602 p=65733 u=centos n=ansible | TASK [../roles/common : Add PSGallery as Trusted Powershell Repo] **************
+2021-02-14 20:49:15,688 p=65733 u=centos n=ansible | skipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:15,698 p=66352 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:15,716 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:15,747 p=66353 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:15,782 p=66355 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:15,816 p=66356 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:15,818 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:19,753 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.374877", "end": "2021-02-14 08:49:19.652629", "rc": 0, "start": "2021-02-14 08:49:17.277752", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:19,788 p=65733 u=centos n=ansible | changed: [win16-wef1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.312488", "end": "2021-02-14 08:49:19.666799", "rc": 0, "start": "2021-02-14 08:49:17.354310", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:19,971 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.453065", "end": "2021-02-14 08:49:19.877488", "rc": 0, "start": "2021-02-14 08:49:17.424423", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:20,163 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.624998", "end": "2021-02-14 08:49:20.330595", "rc": 0, "start": "2021-02-14 08:49:17.705597", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:20,173 p=65733 u=centos n=ansible | TASK [../roles/common : Verify the WSMan HTTP listener is active and configured correctly] ***
+2021-02-14 20:49:20,315 p=66366 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:20,322 p=65733 u=centos n=ansible | skipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:20,324 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:20,326 p=66367 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:20,361 p=66368 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:20,371 p=66370 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:20,399 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:22,378 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "# basic auth required for DC promotion as all other auth types fail (https://github.com/ansible/ansible/issues/39235)\nSet-Item -Path WSMan:\\localhost\\Service\\Auth\\Basic -Value $true\n\n$port = (Get-Item -LiteralPath WSMan:\\localhost\\Client\\DefaultPorts\\HTTP).Value\n$onlinePorts = @(Get-ChildItem -LiteralPath WSMan:\\localhost\\Listener |\n    Where-Object { 'Transport=HTTP' -in $_.Keys } |\n    Get-ChildItem |\n    Where-Object Name -eq Port |\n    Select-Object -ExpandProperty Value)\n\nif ($port -notin $onlinePorts) {\n    Write-Output \"Adding required HTTP listener\"\n    Enable-PSRemoting -Force\n\n    \n}", "delta": "0:00:00.453121", "end": "2021-02-14 08:49:22.283696", "rc": 0, "start": "2021-02-14 08:49:21.830575", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:22,385 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "# basic auth required for DC promotion as all other auth types fail (https://github.com/ansible/ansible/issues/39235)\nSet-Item -Path WSMan:\\localhost\\Service\\Auth\\Basic -Value $true\n\n$port = (Get-Item -LiteralPath WSMan:\\localhost\\Client\\DefaultPorts\\HTTP).Value\n$onlinePorts = @(Get-ChildItem -LiteralPath WSMan:\\localhost\\Listener |\n    Where-Object { 'Transport=HTTP' -in $_.Keys } |\n    Get-ChildItem |\n    Where-Object Name -eq Port |\n    Select-Object -ExpandProperty Value)\n\nif ($port -notin $onlinePorts) {\n    Write-Output \"Adding required HTTP listener\"\n    Enable-PSRemoting -Force\n\n    \n}", "delta": "0:00:00.484375", "end": "2021-02-14 08:49:22.293170", "rc": 0, "start": "2021-02-14 08:49:21.808794", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:22,572 p=65733 u=centos n=ansible | changed: [win16-wef1.lab.lan] => {"changed": true, "cmd": "# basic auth required for DC promotion as all other auth types fail (https://github.com/ansible/ansible/issues/39235)\nSet-Item -Path WSMan:\\localhost\\Service\\Auth\\Basic -Value $true\n\n$port = (Get-Item -LiteralPath WSMan:\\localhost\\Client\\DefaultPorts\\HTTP).Value\n$onlinePorts = @(Get-ChildItem -LiteralPath WSMan:\\localhost\\Listener |\n    Where-Object { 'Transport=HTTP' -in $_.Keys } |\n    Get-ChildItem |\n    Where-Object Name -eq Port |\n    Select-Object -ExpandProperty Value)\n\nif ($port -notin $onlinePorts) {\n    Write-Output \"Adding required HTTP listener\"\n    Enable-PSRemoting -Force\n\n    \n}", "delta": "0:00:00.515625", "end": "2021-02-14 08:49:22.463671", "rc": 0, "start": "2021-02-14 08:49:21.948045", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:22,683 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "# basic auth required for DC promotion as all other auth types fail (https://github.com/ansible/ansible/issues/39235)\nSet-Item -Path WSMan:\\localhost\\Service\\Auth\\Basic -Value $true\n\n$port = (Get-Item -LiteralPath WSMan:\\localhost\\Client\\DefaultPorts\\HTTP).Value\n$onlinePorts = @(Get-ChildItem -LiteralPath WSMan:\\localhost\\Listener |\n    Where-Object { 'Transport=HTTP' -in $_.Keys } |\n    Get-ChildItem |\n    Where-Object Name -eq Port |\n    Select-Object -ExpandProperty Value)\n\nif ($port -notin $onlinePorts) {\n    Write-Output \"Adding required HTTP listener\"\n    Enable-PSRemoting -Force\n\n    \n}", "delta": "0:00:00.640623", "end": "2021-02-14 08:49:22.863305", "rc": 0, "start": "2021-02-14 08:49:22.222681", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:49:22,692 p=65733 u=centos n=ansible | TASK [Build serverclasses inventory] *******************************************
+2021-02-14 20:49:22,938 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/create_serverclasses_csv/tasks/create.yml
+2021-02-14 20:49:22,998 p=65733 u=centos n=ansible | TASK [create_serverclasses_csv : Build serverclasses inventory] ****************
+2021-02-14 20:49:23,783 p=65733 u=centos n=ansible | changed: [localhost] => {"changed": true, "checksum": "4b27233a188a2f323ff427465bc24f86d1ac84e7", "dest": "/tmp/lab_inventory.csv", "gid": 1000, "group": "centos", "md5sum": "c281777666cc6c00e5ab6eb19b0985f2", "mode": "0664", "owner": "centos", "secontext": "unconfined_u:object_r:user_home_t:s0", "size": 1458, "src": "/home/centos/.ansible/tmp/ansible-tmp-1613335763.0399778-66391-280448279199553/source", "state": "file", "uid": 1000}
+2021-02-14 20:49:23,792 p=65733 u=centos n=ansible | TASK [Windows Domain Controllers Setup] ****************************************
+2021-02-14 20:49:23,883 p=65733 u=centos n=ansible | skipping: [localhost] => (item=win_dc)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dc", "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:23,939 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=win_dc)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dc", "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:23,942 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => (item=win_dc)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dc", "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:23,951 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => (item=win_dc)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dc", "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:23,970 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => (item=win_dc)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dc", "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:23,981 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=win_dc)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dc", "skip_reason": "Conditional result was False"}
+2021-02-14 20:49:24,017 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/win_dc/tasks/create.yml
+2021-02-14 20:49:24,018 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_feature to ansible.windows.win_feature
+2021-02-14 20:49:24,019 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:24,020 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:24,021 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:24,022 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:49:24,024 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:49:24,025 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dns_client to ansible.windows.win_dns_client
+2021-02-14 20:49:24,026 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 20:49:24,028 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:49:24,029 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 20:49:24,031 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+2021-02-14 20:49:24,032 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:49:24,094 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:49:24,101 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:49:24,106 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:49:24,110 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:49:24,115 p=65733 u=centos n=ansible | TASK [win_dc : features | Installing AD Domain Services] ***********************
+2021-02-14 20:49:24,126 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:49:24,135 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:49:24,143 p=66431 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_feature to ansible.windows.win_feature
+2021-02-14 20:51:32,049 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "exitcode": "Success", "feature_result": [{"display_name": "Active Directory Domain Services", "id": 10, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Group Policy Management", "id": 69, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Remote Server Administration Tools", "id": 67, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Active Directory Administrative Center", "id": 330, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Active Directory module for Windows PowerShell", "id": 331, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "AD DS and AD LDS Tools", "id": 329, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "AD DS Tools", "id": 257, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "AD DS Snap-Ins and Command-Line Tools", "id": 299, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Role Administration Tools", "id": 256, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}], "reboot_required": false, "success": true}
+2021-02-14 20:51:32,058 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:32,066 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:32,070 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:32,075 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:32,081 p=65733 u=centos n=ansible | TASK [win_dc : Add PSGallery as Trusted Powershell Repo] ***********************
+2021-02-14 20:51:32,092 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:32,101 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:32,108 p=66437 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:51:36,368 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.530884", "end": "2021-02-14 08:51:36.274306", "rc": 0, "start": "2021-02-14 08:51:33.743422", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:51:36,377 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:36,385 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:36,389 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:36,394 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:36,399 p=65733 u=centos n=ansible | TASK [win_dc : Check for xDnsServer Powershell module] *************************
+2021-02-14 20:51:36,410 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:36,420 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:36,428 p=66439 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:51:46,353 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xDnsServer", "delta": "0:00:08.186324", "end": "2021-02-14 08:51:46.257235", "rc": 0, "start": "2021-02-14 08:51:38.070911", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:51:46,361 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:46,369 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:46,374 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:46,378 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:46,383 p=65733 u=centos n=ansible | TASK [win_dc : Add xActiveDirectory] *******************************************
+2021-02-14 20:51:46,395 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:46,404 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:46,412 p=66441 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:51:57,226 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xActiveDirectory", "delta": "0:00:09.030052", "end": "2021-02-14 08:51:57.115132", "rc": 0, "start": "2021-02-14 08:51:48.085080", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 20:51:57,234 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:57,242 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:57,247 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:57,251 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:57,256 p=65733 u=centos n=ansible | TASK [win_dc : Configure static IP address] ************************************
+2021-02-14 20:51:57,268 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:57,277 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:57,330 p=66443 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 20:51:59,344 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_async_watchdog_pid": 4036, "ansible_job_id": "823941653960.3744", "changed": false, "finished": 0, "results_file": "C:\\Users\\Administrator\\.ansible_async\\823941653960.3744", "started": 1}
+2021-02-14 20:51:59,352 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:59,359 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:59,364 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:59,368 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:59,374 p=65733 u=centos n=ansible | TASK [win_dc : Wait for the interface change to complete] **********************
+2021-02-14 20:51:59,386 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:51:59,394 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,411 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"changed": false, "elapsed": 122}
+2021-02-14 20:54:01,420 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,428 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,433 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,438 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,443 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:54:01,444 p=65733 u=centos n=ansible | TASK [win_dc : Reboot to complete feature setup and computer name change] ******
+2021-02-14 20:54:01,457 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,467 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:54:01,472 p=66447 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:54:01,473 p=66447 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:57:04,460 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "elapsed": 181, "rebooted": true}
+2021-02-14 20:57:04,468 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:04,476 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:04,481 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:04,486 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:04,491 p=65733 u=centos n=ansible | TASK [win_dc : Set DNS server] *************************************************
+2021-02-14 20:57:04,502 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:04,512 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:04,519 p=66453 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dns_client to ansible.windows.win_dns_client
+2021-02-14 20:57:09,998 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true}
+2021-02-14 20:57:10,006 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:10,014 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:10,019 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:10,024 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:10,029 p=65733 u=centos n=ansible | TASK [win_dc : Configure xADDomain Powershell DSC] *****************************
+2021-02-14 20:57:10,040 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:10,049 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:57:10,316 p=66455 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 20:58:47,688 p=65733 u=centos n=ansible | [WARNING]: [WIN16-DC1]:
+[[xADDomain]DirectResourceAccess] Windows Server 2016 domain controllers have a
+default for the security setting named "Allow cryptography algorithms
+compatible with Windows NT 4.0" that prevents weaker cryptography algorithms
+when establishing security channel sessions.    For more information about this
+setting, see Knowledge Base article 942564
+(http://go.microsoft.com/fwlink/?LinkId=104751).
+
+2021-02-14 20:58:47,689 p=65733 u=centos n=ansible | [WARNING]: [WIN16-DC1]:
+[[xADDomain]DirectResourceAccess] A delegation for this DNS server cannot be
+created because the authoritative parent zone cannot be found or it does not
+run Windows DNS server. If you are integrating with an existing DNS
+infrastructure, you should manually create a delegation to this DNS server in
+the parent zone to ensure reliable name resolution from outside the domain
+"lab.lan". Otherwise, no action is required.
+
+2021-02-14 20:58:47,689 p=65733 u=centos n=ansible | [WARNING]: [WIN16-DC1]:                            [] A reboot is required to
+progress further. Please reboot the system.
+
+2021-02-14 20:58:47,689 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "module_version": "3.0.0.0", "reboot_required": true}
+2021-02-14 20:58:47,698 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,705 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,710 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,714 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,719 p=65733 u=centos n=ansible | TASK [win_dc : Display current winrm transport] ********************************
+2021-02-14 20:58:47,731 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,740 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,751 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {
+    "msg": [
+        "ansible_winrm_transport: basic"
+    ]
+}
+2021-02-14 20:58:47,759 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,767 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,771 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,776 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,781 p=65733 u=centos n=ansible | TASK [win_dc : Force winrm auth type to basic] *********************************
+2021-02-14 20:58:47,792 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,801 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,811 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"ansible_winrm_transport": "basic", "temp_winrm_transport": "basic"}, "changed": false}
+2021-02-14 20:58:47,820 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,828 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,833 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,837 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,842 p=65733 u=centos n=ansible | TASK [win_dc : Display modified winrm transport] *******************************
+2021-02-14 20:58:47,853 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,862 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,872 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {
+    "msg": [
+        "ansible_winrm_transport: basic",
+        "temp_winrm_transport: basic"
+    ]
+}
+2021-02-14 20:58:47,881 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,888 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,893 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,897 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,902 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:58:47,903 p=65733 u=centos n=ansible | TASK [win_dc : Reboot to complete domain controller setup (as required)] *******
+2021-02-14 20:58:47,914 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,923 p=65733 u=centos n=ansible | META: noop
+2021-02-14 20:58:47,928 p=66463 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 20:58:47,928 p=66463 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:02:57,807 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "elapsed": 249, "rebooted": true}
+2021-02-14 21:02:57,815 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,822 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,827 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,832 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,837 p=65733 u=centos n=ansible | TASK [win_dc : Reset winrm to post promo config] *******************************
+2021-02-14 21:02:57,848 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,857 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,865 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"ansible_winrm_transport": "basic"}, "changed": false}
+2021-02-14 21:02:57,874 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,882 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,887 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,891 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,896 p=65733 u=centos n=ansible | TASK [win_dc : Wait for forest xWaitForADDomain] *******************************
+2021-02-14 21:02:57,911 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:57,919 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:02:58,049 p=66480 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:07:40,708 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "module_version": "3.0.0.0", "reboot_required": false}
+2021-02-14 21:07:40,716 p=65733 u=centos n=ansible | TASK [Setup Windows DNS server forwarding and hostnames] ***********************
+2021-02-14 21:07:40,750 p=65733 u=centos n=ansible | skipping: [localhost] => (item=win_dns)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dns", "skip_reason": "Conditional result was False"}
+2021-02-14 21:07:40,834 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=win_dns)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dns", "skip_reason": "Conditional result was False"}
+2021-02-14 21:07:40,836 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => (item=win_dns)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dns", "skip_reason": "Conditional result was False"}
+2021-02-14 21:07:40,839 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => (item=win_dns)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dns", "skip_reason": "Conditional result was False"}
+2021-02-14 21:07:40,843 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => (item=win_dns)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dns", "skip_reason": "Conditional result was False"}
+2021-02-14 21:07:40,854 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=win_dns)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_dns", "skip_reason": "Conditional result was False"}
+2021-02-14 21:07:40,883 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/win_dns/tasks/create.yml
+2021-02-14 21:07:40,886 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:07:40,887 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:07:40,888 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:07:40,889 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:07:40,890 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:07:40,892 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+2021-02-14 21:07:40,893 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:07:40,971 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:40,979 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:40,984 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:40,989 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:40,994 p=65733 u=centos n=ansible | TASK [win_dns : Set ansible user for role] *************************************
+2021-02-14 21:07:41,005 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,014 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,106 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"ansible_ssh_pass": "myTempPassword123", "ansible_ssh_user": "administrator@lab.lan"}, "changed": false}
+2021-02-14 21:07:41,116 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,124 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,128 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,133 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,138 p=65733 u=centos n=ansible | TASK [win_dns : Debug variables] ***********************************************
+2021-02-14 21:07:41,150 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,159 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,190 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => (item=splk-sh1.lab.lan) => {
+    "msg": "172.16.1.31"
+}
+2021-02-14 21:07:41,201 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,209 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,213 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,218 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,223 p=65733 u=centos n=ansible | TASK [win_dns : Add PSGallery as Trusted Powershell Repo] **********************
+2021-02-14 21:07:41,234 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,244 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:41,247 p=66512 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:07:47,571 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:04.201852", "end": "2021-02-14 09:07:47.480970", "rc": 0, "start": "2021-02-14 09:07:43.279118", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:07:47,580 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:47,587 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:47,592 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:47,596 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:47,601 p=65733 u=centos n=ansible | TASK [win_dns : Check for xDnsServer Powershell module] ************************
+2021-02-14 21:07:47,613 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:47,622 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:07:47,625 p=66514 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:01,182 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xDnsServer", "delta": "0:00:11.840182", "end": "2021-02-14 09:08:01.086211", "rc": 0, "start": "2021-02-14 09:07:49.246028", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:08:01,190 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:01,198 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:01,202 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:01,207 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:01,213 p=65733 u=centos n=ansible | TASK [win_dns : Configure DNS Forwarders] **************************************
+2021-02-14 21:08:01,224 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:01,233 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:01,245 p=66516 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:08:07,543 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "module_version": "1.16.0.0", "reboot_required": false}
+2021-02-14 21:08:07,552 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:07,560 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:07,565 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:07,569 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:07,575 p=65733 u=centos n=ansible | TASK [win_dns : Configure Splunk DNS] ******************************************
+2021-02-14 21:08:07,586 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:07,595 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:07,710 p=66518 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:08:14,277 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => (item=splk-sh1.lab.lan) => {"ansible_loop_var": "item", "changed": true, "item": "splk-sh1.lab.lan", "module_version": "1.16.0.0", "reboot_required": false}
+2021-02-14 21:08:14,290 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:14,297 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:14,301 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:14,306 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:14,311 p=65733 u=centos n=ansible | TASK [win_dns : Enable DNS debug logging] **************************************
+2021-02-14 21:08:14,322 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:14,331 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:14,336 p=66520 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:17,907 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "New-Item -ErrorAction SilentlyContinue -Type Directory C:\\DNS\nSet-DnsServerDiagnostics `\n  -LogFilePath C:\\DNS\\dns.log `\n  -UdpPackets $true `\n  -TcpPackets $true `\n  -Queries $true `\n  -SendPackets $true `\n  -ReceivePackets $true `\n  -Answers $true `\n  -UnmatchedResponse $true `\n  -Updates $true `\n  -Notifications $true `\n  -QuestionTransactions $true `\n  -EnableLoggingForLocalLookupEvent $true `\n  -EnableLoggingForPluginDLLEvent $true `\n  -EnableLoggingForRecursiveLookupEvent $true `\n  -EnableLoggingForRemoteServerEvent $true `\n  -EnableLoggingForServerStartStopEvent $true `\n  -EnableLoggingForTombstoneEvent $true `\n  -EnableLoggingForZoneDataWriteEvent $true `\n  -EnableLoggingForZoneLoadingEvent $true", "delta": "0:00:01.983812", "end": "2021-02-14 09:08:17.815701", "rc": 0, "start": "2021-02-14 09:08:15.831889", "stderr": "", "stderr_lines": [], "stdout": "\r\n\r\n    Directory: C:\\\r\n\r\n\r\nMode                LastWriteTime         Length Name                                                                  \r\n----                -------------         ------ ----                                                                  \r\nd-----        2/14/2021   9:08 PM                DNS                                                                   \r\n\r\n\r\n", "stdout_lines": ["", "", "    Directory: C:\\", "", "", "Mode                LastWriteTime         Length Name                                                                  ", "----                -------------         ------ ----                                                                  ", "d-----        2/14/2021   9:08 PM                DNS                                                                   ", "", ""]}
+2021-02-14 21:08:17,916 p=65733 u=centos n=ansible | TASK [Windows Enterprise PKI] **************************************************
+2021-02-14 21:08:17,950 p=65733 u=centos n=ansible | skipping: [localhost] => (item=win_ca)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca", "skip_reason": "Conditional result was False"}
+2021-02-14 21:08:17,972 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=win_ca)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca", "skip_reason": "Conditional result was False"}
+2021-02-14 21:08:18,036 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => (item=win_ca)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca", "skip_reason": "Conditional result was False"}
+2021-02-14 21:08:18,037 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => (item=win_ca)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca", "skip_reason": "Conditional result was False"}
+2021-02-14 21:08:18,040 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => (item=win_ca)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca", "skip_reason": "Conditional result was False"}
+2021-02-14 21:08:18,053 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=win_ca)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca", "skip_reason": "Conditional result was False"}
+2021-02-14 21:08:18,087 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/win_ca/tasks/create.yml
+2021-02-14 21:08:18,089 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,090 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_feature to ansible.windows.win_feature
+2021-02-14 21:08:18,091 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:08:18,092 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,093 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,094 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:08:18,095 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,097 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,098 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:08:18,099 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,100 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,101 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,104 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:18,108 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+2021-02-14 21:08:18,109 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:08:18,240 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,248 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,252 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,256 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,261 p=65733 u=centos n=ansible | TASK [win_ca : Set ansible user for role] **************************************
+2021-02-14 21:08:18,272 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,281 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,372 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"ansible_ssh_pass": "myTempPassword123", "ansible_ssh_user": "administrator@lab.lan"}, "changed": false}
+2021-02-14 21:08:18,380 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,388 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,392 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,397 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,402 p=65733 u=centos n=ansible | TASK [win_ca : Stage CAPolicy.inf] *********************************************
+2021-02-14 21:08:18,414 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:18,423 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,025 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "checksum": "d1ee5ad25b0626fd16c021b46686a5b130d5ac65"}
+2021-02-14 21:08:23,034 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,042 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,047 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,051 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,056 p=65733 u=centos n=ansible | TASK [win_ca : Create PKI Virtual Directory] ***********************************
+2021-02-14 21:08:23,069 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,077 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:23,126 p=66540 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:08:26,233 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "$path = \"c:\\pki\"\n$share = Get-SmbShare -Name \"pki\" -ErrorAction SilentlyContinue\n\n# remove share if exists\nif($share -ne $null){\n    write-output \"Removing existing share\"\n    Remove-SmbShare -Name \"pki\" -Force\n}\n\n# remove directory if exists\nif([System.IO.Directory]::Exists($path)){\n    write-output \"Removing existing directory\"\n    Remove-Item $path -Recurse -Force\n}\n\n# create directory and share\nNew-item -path $path –type directory\nWrite-Output \"Example CPS statement\" | Out-File $path\\cps.txt\nNew-SMBShare -Name pki $path -FullAccess SYSTEM,\"LAB\\Domain Admins\" -ChangeAccess \"LAB\\Cert Publishers\"", "delta": "0:00:01.468320", "end": "2021-02-14 09:08:26.141450", "rc": 0, "start": "2021-02-14 09:08:24.673130", "stderr": "", "stderr_lines": [], "stdout": "\r\n\r\n    Directory: C:\\\r\n\r\n\r\nMode                LastWriteTime         Length Name                                                                  \r\n----                -------------         ------ ----                                                                  \r\nd-----        2/14/2021   9:08 PM                pki                                                                   \r\n\r\nAvailabilityType      : NonClustered\r\nCachingMode           : Manual\r\nCATimeout             : 0\r\nConcurrentUserLimit   : 0\r\nContinuouslyAvailable : False\r\nCurrentUsers          : 0\r\nDescription           : \r\nEncryptData           : False\r\nFolderEnumerationMode : Unrestricted\r\nName                  : pki\r\nPath                  : c:\\pki\r\nScoped                : False\r\nScopeName             : *\r\nSecurityDescriptor    : O:SYG:SYD:(A;;FA;;;SY)(A;;FA;;;DA)(A;;0x1301bf;;;CA)\r\nShadowCopy            : False\r\nShareState            : Online\r\nShareType             : FileSystemDirectory\r\nSmbInstance           : Default\r\nSpecial               : False\r\nTemporary             : False\r\nVolume                : \\\\?\\Volume{20fed10e-0000-0000-0000-100000000000}\\\r\nPSComputerName        : \r\nPresetPathAcl         : System.Security.AccessControl.DirectorySecurity\r\n\r\n\r\n\r\n", "stdout_lines": ["", "", "    Directory: C:\\", "", "", "Mode                LastWriteTime         Length Name                                                                  ", "----                -------------         ------ ----                                                                  ", "d-----        2/14/2021   9:08 PM                pki                                                                   ", "", "AvailabilityType      : NonClustered", "CachingMode           : Manual", "CATimeout             : 0", "ConcurrentUserLimit   : 0", "ContinuouslyAvailable : False", "CurrentUsers          : 0", "Description           : ", "EncryptData           : False", "FolderEnumerationMode : Unrestricted", "Name                  : pki", "Path                  : c:\\pki", "Scoped                : False", "ScopeName             : *", "SecurityDescriptor    : O:SYG:SYD:(A;;FA;;;SY)(A;;FA;;;DA)(A;;0x1301bf;;;CA)", "ShadowCopy            : False", "ShareState            : Online", "ShareType             : FileSystemDirectory", "SmbInstance           : Default", "Special               : False", "Temporary             : False", "Volume                : \\\\?\\Volume{20fed10e-0000-0000-0000-100000000000}\\", "PSComputerName        : ", "PresetPathAcl         : System.Security.AccessControl.DirectorySecurity", "", "", ""]}
+2021-02-14 21:08:26,242 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:26,250 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:26,254 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:26,259 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:26,264 p=65733 u=centos n=ansible | TASK [win_ca : Install ADCS with sub features and management tools] ************
+2021-02-14 21:08:26,275 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:26,284 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:08:26,288 p=66542 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_feature to ansible.windows.win_feature
+2021-02-14 21:10:08,739 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "exitcode": "Success", "feature_result": [{"display_name": "Active Directory Certificate Services", "id": 16, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Certification Authority", "id": 200, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Certificate Enrollment Policy Web Service", "id": 319, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "ASP.NET 4.6", "id": 429, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "HTTP Activation", "id": 421, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Active Directory Certificate Services Tools", "id": 259, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Certification Authority Management Tools", "id": 292, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Windows Process Activation Service", "id": 41, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Configuration APIs", "id": 217, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Process Model", "id": 219, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Application Development", "id": 147, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "ASP.NET 4.6", "id": 413, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "IIS Client Certificate Mapping Authentication", "id": 167, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Client Certificate Mapping Authentication", "id": 166, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Common HTTP Features", "id": 141, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Default Document", "id": 143, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Directory Browsing", "id": 144, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Request Filtering", "id": 169, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Health and Diagnostics", "id": 155, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "HTTP Errors", "id": 145, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "HTTP Logging", "id": 156, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "ISAPI Extensions", "id": 152, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "ISAPI Filters", "id": 153, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "IIS Management Console", "id": 175, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Management Tools", "id": 174, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": ".NET Extensibility 4.6", "id": 414, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Performance", "id": 171, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Request Monitor", "id": 158, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "IIS Management Scripts and Tools", "id": 176, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Security", "id": 162, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Web Server (IIS)", "id": 2, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Static Content Compression", "id": 172, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Static Content", "id": 142, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Web Server", "id": 140, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}, {"display_name": "Windows Authentication", "id": 164, "message": [], "reboot_required": false, "restart_needed": false, "skip_reason": "NotSkipped", "success": true}], "reboot_required": false, "success": true}
+2021-02-14 21:10:08,749 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,757 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,761 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,766 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,771 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:10:08,772 p=65733 u=centos n=ansible | TASK [win_ca : Reboot if installing Adcs-Cert-Authority feature requires it] ***
+2021-02-14 21:10:08,783 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,792 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,794 p=65733 u=centos n=ansible | skipping: [win16-dc1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:08,803 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,811 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,816 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,820 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,825 p=65733 u=centos n=ansible | TASK [win_ca : Add PSGallery as Trusted Powershell Repo] ***********************
+2021-02-14 21:10:08,836 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,846 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:08,850 p=66546 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:12,977 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.515115", "end": "2021-02-14 09:10:12.866875", "rc": 0, "start": "2021-02-14 09:10:10.351759", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:10:12,986 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:12,993 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:12,998 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:13,002 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:13,007 p=65733 u=centos n=ansible | TASK [win_ca : Check for xDnsServer Powershell module] *************************
+2021-02-14 21:10:13,019 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:13,027 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:13,032 p=66548 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:19,357 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xDnsServer", "delta": "0:00:04.780379", "end": "2021-02-14 09:10:19.240758", "rc": 0, "start": "2021-02-14 09:10:14.460379", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:10:19,366 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:19,373 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:19,378 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:19,382 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:19,387 p=65733 u=centos n=ansible | TASK [win_ca : Configure pki CNAME] ********************************************
+2021-02-14 21:10:19,398 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:19,407 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:19,498 p=66550 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:10:26,741 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "module_version": "1.16.0.0", "reboot_required": false}
+2021-02-14 21:10:26,750 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:26,758 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:26,763 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:26,767 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:26,772 p=65733 u=centos n=ansible | TASK [win_ca : Add PKI Virtual Directory] **************************************
+2021-02-14 21:10:26,783 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:26,793 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:26,797 p=66552 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:29,314 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Import-Module WebAdministration\n$FolderPath = \"c:\\pki\"\nNew-WebVirtualDirectory -Site \"Default Web Site\" -Name \"pki\" -PhysicalPath $FolderPath\n$apppoolsid = (Get-ItemProperty IIS:\\AppPools\\DefaultAppPool).applicationPoolSid\n$acl = Get-Acl $FolderPath\n$colRights = [System.Security.AccessControl.FileSystemRights]\"Read,ExecuteFile,ListDirectory\"\n$permission = \"IIS AppPool\\DefaultAppPool\",$colRights,\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\n$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission  \n$acl.AddAccessRule($accessRule) \n$acl | Set-Acl $FolderPath", "delta": "0:00:00.937325", "end": "2021-02-14 09:10:29.207711", "rc": 0, "start": "2021-02-14 09:10:28.270386", "stderr": "", "stderr_lines": [], "stdout": "\r\nName PhysicalPath\r\n---- ------------\r\npki  c:\\pki      \r\n\r\n\r\n", "stdout_lines": ["", "Name PhysicalPath", "---- ------------", "pki  c:\\pki      ", "", ""]}
+2021-02-14 21:10:29,323 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:29,331 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:29,335 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:29,340 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:29,345 p=65733 u=centos n=ansible | TASK [win_ca : Add ActiveDirectoryCSDsc] ***************************************
+2021-02-14 21:10:29,357 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:29,365 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:29,369 p=66554 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:38,532 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name ActiveDirectoryCSDsc", "delta": "0:00:07.608028", "end": "2021-02-14 09:10:38.409193", "rc": 0, "start": "2021-02-14 09:10:30.801165", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:10:38,541 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:38,549 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:38,553 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:38,558 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:38,563 p=65733 u=centos n=ansible | TASK [win_ca : Configure ActiveDirectoryCSDsc Powershell DSC] ******************
+2021-02-14 21:10:38,575 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:38,583 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:38,823 p=66556 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:10:46,388 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "module_version": "5.0.0", "reboot_required": false}
+2021-02-14 21:10:46,396 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:46,404 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:46,409 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:46,414 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:46,419 p=65733 u=centos n=ansible | TASK [win_ca : Add CRL Extension] **********************************************
+2021-02-14 21:10:46,430 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:46,439 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:46,488 p=66558 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:49,487 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "$crllist = Get-CACrlDistributionPoint; \nforeach ($crl in $crllist) {\n  Remove-CACrlDistributionPoint $crl.uri -Force\n}; \nAdd-CACRLDistributionPoint -Uri C:\\Windows\\System32\\CertSrv\\CertEnroll\\%3%8%9.crl -PublishToServer -PublishDeltaToServer -Force\nAdd-CACRLDistributionPoint -Uri http://pki.lab.lan/pki/%3%8%9.crl -AddToCertificateCDP -Force\nAdd-CACRLDistributionPoint -Uri file://\\\\win16-dc1.lab.lan\\pki\\%3%8%9.crl -PublishToServer -PublishDeltaToServer -Force\nrestart-service certsvc", "delta": "0:00:01.171687", "end": "2021-02-14 09:10:49.376031", "rc": 0, "start": "2021-02-14 09:10:48.204344", "stderr": "", "stderr_lines": [], "stdout": "\r\nRestartCA\r\n---------\r\n     True\r\n     True\r\n     True\r\n     True\r\n     True\r\n     True\r\n     True\r\n\r\n\r\n", "stdout_lines": ["", "RestartCA", "---------", "     True", "     True", "     True", "     True", "     True", "     True", "     True", "", ""]}
+2021-02-14 21:10:49,496 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:49,504 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:49,508 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:49,513 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:49,518 p=65733 u=centos n=ansible | TASK [win_ca : Add AIA Extension] **********************************************
+2021-02-14 21:10:49,529 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:49,538 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:49,586 p=66560 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:52,358 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "$aialist = Get-CAAuthorityInformationAccess; \nforeach ($aia in $aialist) {\n  Remove-CAAuthorityInformationAccess $aia.uri -Force\n}; \nAdd-CAAuthorityInformationAccess -AddToCertificateAia http://pki.lab.lan/pki/%1_%3%4.crt -Force\nrestart-service certsvc", "delta": "0:00:01.062333", "end": "2021-02-14 09:10:52.234907", "rc": 0, "start": "2021-02-14 09:10:51.172574", "stderr": "", "stderr_lines": [], "stdout": "\r\nRestartCA\r\n---------\r\n     True\r\n     True\r\n     True\r\n     True\r\n     True\r\n\r\n\r\n", "stdout_lines": ["", "RestartCA", "---------", "     True", "     True", "     True", "     True", "     True", "", ""]}
+2021-02-14 21:10:52,367 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:52,375 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:52,379 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:52,384 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:52,389 p=65733 u=centos n=ansible | TASK [win_ca : Copy crt and crl to pki directory] ******************************
+2021-02-14 21:10:52,401 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:52,409 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:52,413 p=66562 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:54,338 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Copy-Item C:\\Windows\\system32\\certsrv\\certenroll\\*.cr* \\\\localhost\\pki", "delta": "0:00:00.406115", "end": "2021-02-14 09:10:54.218945", "rc": 0, "start": "2021-02-14 09:10:53.812830", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:10:54,346 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:54,354 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:54,359 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:54,363 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:54,368 p=65733 u=centos n=ansible | TASK [win_ca : Configure Client-Server Authentication and IAS RAS Server Templates for Autoenroll] ***
+2021-02-14 21:10:54,380 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:54,390 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:54,394 p=66564 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:58,197 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "Function newOid {\n  param ($ConfigContext)\n  $Hex = '0123456789ABCDEF'\n  do {\n      $oid = [ADSI]\"LDAP://CN=OID,CN=Public Key Services,CN=Services,$ConfigContext\" \n      $oidforest = $oid.'msPKI-Cert-Template-OID'\n      $oid1 = Get-Random -Minimum 1000000  -Maximum 99999999\n      $oid2 = Get-Random -Minimum 10000000 -Maximum 99999999\n      $oid3 = $null\n      For ($i=1;$i -le 32;$i++) {$oid3 += $Hex.Substring((Get-Random -Minimum 0 -Maximum 16),1)}\n      $Name = \"$oid2.$oid3\"\n      $msPKICertTemplateOID = \"$oidforest.$oid1.$oid2\"\n  } until (($($oid.psbase.children | where { $_.cn -eq $Name -and $_.'msPKI-Cert-Template-OID' -eq $msPKICertTemplateOID }).Count -eq 0))\n  Return @{\n      oid  = $msPKICertTemplateOID\n      name = $Name\n  }\n}\nFunction addTemplateAcl{\nparam($Template, $User, $Read, $Enroll, $AutoEnroll)\n    $user = New-Object System.Security.Principal.NTAccount($User)\n    $enrollGuid = [GUID]'0e10c968-78fb-11d2-90d4-00c04f79dc55'\n    $autoenrollGuid = [GUID]'a05b8cc2-17bc-4802-a710-e7c15ab866a2'\n    $readGuid = [System.DirectoryServices.ActiveDirectoryRights] \"GenericRead\"\n    $inheritedType = [GUID]'00000000-0000-0000-0000-000000000000'\n    $allow = [System.Security.AccessControl.AccessControlType]\"Allow\"\n    if($Enroll) { $Template.ObjectSecurity.AddAccessRule((New-Object System.DirectoryServices.ActiveDirectoryAccessRule $user, 'ExtendedRight', $allow, $enrollGuid, 'None', $inheritedType)) }\n    if($AutoEnroll) { $Template.ObjectSecurity.AddAccessRule((New-Object System.DirectoryServices.ActiveDirectoryAccessRule $user, 'ExtendedRight', $allow, $autoenrollGuid, 'None', $inheritedType)) }\n    if($Read) { $Template.ObjectSecurity.AddAccessRule((New-Object System.DirectoryServices.ActiveDirectoryAccessRule $user, $readGuid, $allow, $inheritedType)) }\n    $Template.commitchanges()\n\n    return @{\n        Template = $Template\n    }\n}\nFunction copyTemplate{\nparam($NewTemplateName, $SourceTemplateName, $ConfigContext)\n    $ADSI = [ADSI]\"LDAP://CN=Certificate Templates,CN=Public Key Services,CN=Services,$ConfigContext\"\n    $st = $ADSI.psbase.children | where {$_.displayName -eq $SourceTemplateName}\n    $oid = newOid -ConfigContext $ConfigContext\n    $t = $ADSI.Create(\"pKICertificateTemplate\", (\"CN={0}\" -f $oid.name)) \n    $t.put(\"distinguishedName\",(\"CN={0},CN=Certificate Templates,CN=Public Key Services,CN=Services,{1}\" -f $oid.name,$ConfigContext))         \n    $t.put(\"flags\",\"131680\")\n    $t.put(\"displayName\",$NewTemplateName)\n    $t.put(\"revision\",\"100\")\n    $t.put(\"pKIDefaultKeySpec\",\"1\")\n    $t.SetInfo()\n    $t.put(\"pKIMaxIssuingDepth\",\"0\")\n    $t.put(\"pKIDefaultCSPs\",\"1,Microsoft RSA SChannel Cryptographic Provider\")\n    $t.put(\"msPKI-RA-Signature\",\"0\")\n    $t.put(\"msPKI-Minimal-Key-Size\",\"2048\")\n    $t.put(\"msPKI-Template-Schema-Version\",\"2\")\n    $t.put(\"msPKI-Template-Minor-Revision\",\"0\")\n    $t.put(\"msPKI-Cert-Template-OID\",$oid.oid)\n    $t.putex(3,\"msPKI-Certificate-Application-Policy\",@(\"1.3.6.1.5.5.7.3.1\",\"1.3.6.1.5.5.7.3.2\"))\n    $t.SetInfo()\n    $t.ObjectSecurity.SetAccessRuleProtection($st.ObjectSecurity.AreAccessRulesProtected, $false)\n    $t.ObjectSecurity.Access | % {\n        $t.ObjectSecurity.RemoveAccessRule($_)\n    }\n    $t.commitchanges()\n    $st.ObjectSecurity.Access | % {\n        $t.ObjectSecurity.AddAccessRule($_)\n    }\n    $t.commitchanges()\n    $t.pKIKeyUsage = $st.pKIKeyUsage\n    $t.pKIExpirationPeriod = $st.pKIExpirationPeriod\n    $t.pKIOverlapPeriod = $st.pKIOverlapPeriod\n    $t.SetInfo()\n\n    return @{\n        Template = $t\n    }\n}\nFunction publishTemplate{\nparam($Template, $ConfigContext)\n    $adsi = [ADSI]\"LDAP://CN=Enrollment Services,CN=Public Key Services,CN=Services,$ConfigContext\"\n    $adsi.psbase.children | % { \n        $_.putex(3,'certificateTemplates',@($Template.Name))\n        $_.commitchanges()\n    }\n}\n\n$cc = ([ADSI]\"LDAP://RootDSE\").ConfigurationNamingContext \n$t = copyTemplate -NewTemplateName \"Web Server Policy\" -SourceTemplateName \"Web Server\" -ConfigContext $cc\n$t.Template.putex(3,\"pKICriticalExtensions\",@(\"2.5.29.7\",\"2.5.29.15\"))\n$t.Template.putex(3,\"pKIExtendedKeyUsage\",@(\"1.3.6.1.5.5.7.3.1\",\"1.3.6.1.5.5.7.3.2\"))\n$t.Template.put(\"msPKI-Enrollment-Flag\",\"0\")\n$t.Template.put(\"msPKI-Private-Key-Flag\",\"16842752\")\n$t.Template.put(\"msPKI-Certificate-Name-Flag\",\"1\")\n$t.Template.SetInfo()\npublishTemplate -Template $t.Template -ConfigContext $cc\n\n$t = copyTemplate -NewTemplateName \"RAS and IAS Server Policy\" -SourceTemplateName \"RAS and IAS Server\" -ConfigContext $cc\n$t.Template.put(\"pKICriticalExtensions\",\"2.5.29.15\")\n$t.Template.putex(3,\"pKIExtendedKeyUsage\",@(\"1.3.6.1.5.5.7.3.1\",\"1.3.6.1.5.5.7.3.2\"))\n$t.Template.put(\"msPKI-Enrollment-Flag\",\"32\")\n$t.Template.put(\"msPKI-Private-Key-Flag\",\"0\")\n$t.Template.put(\"msPKI-Certificate-Name-Flag\",\"-2013265920\")\n$t.Template.SetInfo()\n$t = addTemplateAcl -Template $t.Template -User \"RAS and IAS Servers\" -Read $true -Enroll $true -AutoEnroll $true\npublishTemplate -Template $t.Template -ConfigContext $cc\n\n\"Workstation Authentication\",\"Domain Controller Authentication\" | % { \n  $t = copyTemplate -NewTemplateName \"$_ Policy\" -SourceTemplateName $_ -ConfigContext $cc\n  $t.Template.put(\"pKICriticalExtensions\",$p)\n  $t.Template.putex(3,\"pKIExtendedKeyUsage\",@(\"1.3.6.1.5.5.7.3.1\",\"1.3.6.1.5.5.7.3.2\"))\n  $t.Template.put(\"msPKI-Enrollment-Flag\",\"32\")\n  $t.Template.put(\"msPKI-Private-Key-Flag\",\"67371264\")\n  $t.Template.put(\"msPKI-Certificate-Name-Flag\",\"-2013265920\")\n  $t.Template.SetInfo()\n  if($_ -eq \"Workstation Authentication\") { $t = addTemplateAcl -Template $t.Template -User \"Domain Computers\" -Read $true -Enroll $true -AutoEnroll $true }\n  publishTemplate -Template $t.Template -ConfigContext $cc\n}\n\nrestart-service certsvc", "delta": "0:00:02.218365", "end": "2021-02-14 09:10:58.077634", "rc": 0, "start": "2021-02-14 09:10:55.859269", "stderr": "Exception calling \"put\" with \"2\" argument(s): \"Unspecified error (Exception from HRESULT: 0x80004005 (E_FAIL))\"\r\nAt line:106 char:3\r\n+   $t.Template.put(\"pKICriticalExtensions\",$p)\r\n+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\r\n    + FullyQualifiedErrorId : CatchFromBaseAdapterMethodInvokeTI\r\n \r\nException calling \"put\" with \"2\" argument(s): \"Unspecified error (Exception from HRESULT: 0x80004005 (E_FAIL))\"\r\nAt line:106 char:3\r\n+   $t.Template.put(\"pKICriticalExtensions\",$p)\r\n+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\r\n    + FullyQualifiedErrorId : CatchFromBaseAdapterMethodInvokeTI", "stderr_lines": ["Exception calling \"put\" with \"2\" argument(s): \"Unspecified error (Exception from HRESULT: 0x80004005 (E_FAIL))\"", "At line:106 char:3", "+   $t.Template.put(\"pKICriticalExtensions\",$p)", "+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException", "    + FullyQualifiedErrorId : CatchFromBaseAdapterMethodInvokeTI", " ", "Exception calling \"put\" with \"2\" argument(s): \"Unspecified error (Exception from HRESULT: 0x80004005 (E_FAIL))\"", "At line:106 char:3", "+   $t.Template.put(\"pKICriticalExtensions\",$p)", "+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException", "    + FullyQualifiedErrorId : CatchFromBaseAdapterMethodInvokeTI"], "stdout": "", "stdout_lines": []}
+2021-02-14 21:10:58,206 p=65733 u=centos n=ansible | TASK [Run windows certificate authority policy setup] **************************
+2021-02-14 21:10:58,242 p=65733 u=centos n=ansible | skipping: [localhost] => (item=win_ca_policy)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca_policy", "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:58,301 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=win_ca_policy)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca_policy", "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:58,320 p=65733 u=centos n=ansible | skipping: [win10-dsk1.lab.lan] => (item=win_ca_policy)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca_policy", "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:58,321 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => (item=win_ca_policy)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca_policy", "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:58,335 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => (item=win_ca_policy)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca_policy", "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:58,345 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=win_ca_policy)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_ca_policy", "skip_reason": "Conditional result was False"}
+2021-02-14 21:10:58,383 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/win_ca_policy/tasks/create.yml
+2021-02-14 21:10:58,385 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_copy to ansible.windows.win_copy
+2021-02-14 21:10:58,385 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:58,387 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:10:58,389 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+2021-02-14 21:10:58,390 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:10:58,555 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,563 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,567 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,572 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,576 p=65733 u=centos n=ansible | TASK [win_ca_policy : Set ansible user for role] *******************************
+2021-02-14 21:10:58,587 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,597 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,738 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"ansible_ssh_pass": "myTempPassword123", "ansible_ssh_user": "administrator@lab.lan"}, "changed": false}
+2021-02-14 21:10:58,747 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,754 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,758 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,763 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,768 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_copy to ansible.windows.win_copy
+2021-02-14 21:10:58,769 p=65733 u=centos n=ansible | TASK [win_ca_policy : Copy GPO policy to domain controller] ********************
+2021-02-14 21:10:58,780 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,788 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:10:58,790 p=66582 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_copy to ansible.windows.win_copy
+2021-02-14 21:10:58,791 p=66582 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_copy to ansible.windows.win_copy
+2021-02-14 21:11:02,676 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "dest": "c:\\", "operation": "folder_copy", "src": "../files/GPO"}
+2021-02-14 21:11:02,684 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:02,692 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:02,697 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:02,702 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:02,707 p=65733 u=centos n=ansible | TASK [win_ca_policy : Add PSGallery as Trusted Powershell Repo] ****************
+2021-02-14 21:11:02,718 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:02,727 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:02,731 p=66584 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:06,644 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.390216", "end": "2021-02-14 09:11:06.529301", "rc": 0, "start": "2021-02-14 09:11:04.139085", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:11:06,653 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:06,661 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:06,665 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:06,670 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:06,676 p=65733 u=centos n=ansible | TASK [win_ca_policy : Configure Certificate Authority Autoenroll Policies] *****
+2021-02-14 21:11:06,687 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:06,696 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:06,747 p=66586 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,225 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "$Domain_OU = \"DC=lab,DC=lan\"\n$DC_OU = \"OU=Domain Controllers,DC=lab,DC=lan\"\n\n$GPOName = 'Machine Certificate Autoenroll'\nImport-GPO -BackupGpoName $GPOName -Path \"c:\\GPO\\machine_certificate_autoenroll\" -TargetName $GPOName -CreateIfNeeded\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $Domain_OU\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $DC_OU\n\n$GPOName = 'User Certificate Autoenroll'\nImport-GPO -BackupGpoName $GPOName -Path \"c:\\GPO\\user_certificate_autoenroll\" -TargetName $GPOName -CreateIfNeeded\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $DC_OU\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $Domain_OU", "delta": "0:00:01.796522", "end": "2021-02-14 09:11:10.106758", "rc": 0, "start": "2021-02-14 09:11:08.310235", "stderr": "", "stderr_lines": [], "stdout": "\r\n\r\nDisplayName      : Machine Certificate Autoenroll\r\nDomainName       : lab.lan\r\nOwner            : LAB\\Domain Admins\r\nId               : 2810f9f3-a572-4100-9e25-623e6610c91a\r\nGpoStatus        : AllSettingsEnabled\r\nDescription      : \r\nCreationTime     : 2/14/2021 9:11:09 PM\r\nModificationTime : 2/14/2021 9:11:09 PM\r\nUserVersion      : AD Version: 1, SysVol Version: 1\r\nComputerVersion  : AD Version: 1, SysVol Version: 1\r\nWmiFilter        : \r\n\r\n\r\nDisplayName   : Machine Certificate Autoenroll\r\nGpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 2\r\nTarget        : DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\n\r\nDisplayName   : Machine Certificate Autoenroll\r\nGpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 2\r\nTarget        : OU=Domain Controllers,DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\nDisplayName      : User Certificate Autoenroll\r\nDomainName       : lab.lan\r\nOwner            : LAB\\Domain Admins\r\nId               : f33549db-5f07-4a40-8e4c-05fa2e3d4109\r\nGpoStatus        : AllSettingsEnabled\r\nDescription      : \r\nCreationTime     : 2/14/2021 9:11:09 PM\r\nModificationTime : 2/14/2021 9:11:09 PM\r\nUserVersion      : AD Version: 1, SysVol Version: 1\r\nComputerVersion  : AD Version: 1, SysVol Version: 1\r\nWmiFilter        : \r\n\r\n\r\nDisplayName   : User Certificate Autoenroll\r\nGpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 3\r\nTarget        : OU=Domain Controllers,DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\n\r\nDisplayName   : User Certificate Autoenroll\r\nGpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 3\r\nTarget        : DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\n\r\n\r\n", "stdout_lines": ["", "", "DisplayName      : Machine Certificate Autoenroll", "DomainName       : lab.lan", "Owner            : LAB\\Domain Admins", "Id               : 2810f9f3-a572-4100-9e25-623e6610c91a", "GpoStatus        : AllSettingsEnabled", "Description      : ", "CreationTime     : 2/14/2021 9:11:09 PM", "ModificationTime : 2/14/2021 9:11:09 PM", "UserVersion      : AD Version: 1, SysVol Version: 1", "ComputerVersion  : AD Version: 1, SysVol Version: 1", "WmiFilter        : ", "", "", "DisplayName   : Machine Certificate Autoenroll", "GpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a", "Enabled       : True", "Enforced      : False", "Order         : 2", "Target        : DC=lab,DC=lan", "GpoDomainName : lab.lan", "", "", "DisplayName   : Machine Certificate Autoenroll", "GpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a", "Enabled       : True", "Enforced      : False", "Order         : 2", "Target        : OU=Domain Controllers,DC=lab,DC=lan", "GpoDomainName : lab.lan", "", "DisplayName      : User Certificate Autoenroll", "DomainName       : lab.lan", "Owner            : LAB\\Domain Admins", "Id               : f33549db-5f07-4a40-8e4c-05fa2e3d4109", "GpoStatus        : AllSettingsEnabled", "Description      : ", "CreationTime     : 2/14/2021 9:11:09 PM", "ModificationTime : 2/14/2021 9:11:09 PM", "UserVersion      : AD Version: 1, SysVol Version: 1", "ComputerVersion  : AD Version: 1, SysVol Version: 1", "WmiFilter        : ", "", "", "DisplayName   : User Certificate Autoenroll", "GpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109", "Enabled       : True", "Enforced      : False", "Order         : 3", "Target        : OU=Domain Controllers,DC=lab,DC=lan", "GpoDomainName : lab.lan", "", "", "DisplayName   : User Certificate Autoenroll", "GpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109", "Enabled       : True", "Enforced      : False", "Order         : 3", "Target        : DC=lab,DC=lan", "GpoDomainName : lab.lan", "", "", ""]}
+2021-02-14 21:11:10,234 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,242 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,246 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,251 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,256 p=65733 u=centos n=ansible | TASK [win_ca_policy : Script result] *******************************************
+2021-02-14 21:11:10,267 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,276 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,285 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {
+    "script_result": {
+        "changed": true,
+        "cmd": "$Domain_OU = \"DC=lab,DC=lan\"\n$DC_OU = \"OU=Domain Controllers,DC=lab,DC=lan\"\n\n$GPOName = 'Machine Certificate Autoenroll'\nImport-GPO -BackupGpoName $GPOName -Path \"c:\\GPO\\machine_certificate_autoenroll\" -TargetName $GPOName -CreateIfNeeded\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $Domain_OU\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $DC_OU\n\n$GPOName = 'User Certificate Autoenroll'\nImport-GPO -BackupGpoName $GPOName -Path \"c:\\GPO\\user_certificate_autoenroll\" -TargetName $GPOName -CreateIfNeeded\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $DC_OU\nNew-GPLink -Name $GPOName -ErrorAction Ignore -Target $Domain_OU",
+        "delta": "0:00:01.796522",
+        "end": "2021-02-14 09:11:10.106758",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-02-14 09:11:08.310235",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "\r\n\r\nDisplayName      : Machine Certificate Autoenroll\r\nDomainName       : lab.lan\r\nOwner            : LAB\\Domain Admins\r\nId               : 2810f9f3-a572-4100-9e25-623e6610c91a\r\nGpoStatus        : AllSettingsEnabled\r\nDescription      : \r\nCreationTime     : 2/14/2021 9:11:09 PM\r\nModificationTime : 2/14/2021 9:11:09 PM\r\nUserVersion      : AD Version: 1, SysVol Version: 1\r\nComputerVersion  : AD Version: 1, SysVol Version: 1\r\nWmiFilter        : \r\n\r\n\r\nDisplayName   : Machine Certificate Autoenroll\r\nGpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 2\r\nTarget        : DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\n\r\nDisplayName   : Machine Certificate Autoenroll\r\nGpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 2\r\nTarget        : OU=Domain Controllers,DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\nDisplayName      : User Certificate Autoenroll\r\nDomainName       : lab.lan\r\nOwner            : LAB\\Domain Admins\r\nId               : f33549db-5f07-4a40-8e4c-05fa2e3d4109\r\nGpoStatus        : AllSettingsEnabled\r\nDescription      : \r\nCreationTime     : 2/14/2021 9:11:09 PM\r\nModificationTime : 2/14/2021 9:11:09 PM\r\nUserVersion      : AD Version: 1, SysVol Version: 1\r\nComputerVersion  : AD Version: 1, SysVol Version: 1\r\nWmiFilter        : \r\n\r\n\r\nDisplayName   : User Certificate Autoenroll\r\nGpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 3\r\nTarget        : OU=Domain Controllers,DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\n\r\nDisplayName   : User Certificate Autoenroll\r\nGpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109\r\nEnabled       : True\r\nEnforced      : False\r\nOrder         : 3\r\nTarget        : DC=lab,DC=lan\r\nGpoDomainName : lab.lan\r\n\r\n\r\n\r\n",
+        "stdout_lines": [
+            "",
+            "",
+            "DisplayName      : Machine Certificate Autoenroll",
+            "DomainName       : lab.lan",
+            "Owner            : LAB\\Domain Admins",
+            "Id               : 2810f9f3-a572-4100-9e25-623e6610c91a",
+            "GpoStatus        : AllSettingsEnabled",
+            "Description      : ",
+            "CreationTime     : 2/14/2021 9:11:09 PM",
+            "ModificationTime : 2/14/2021 9:11:09 PM",
+            "UserVersion      : AD Version: 1, SysVol Version: 1",
+            "ComputerVersion  : AD Version: 1, SysVol Version: 1",
+            "WmiFilter        : ",
+            "",
+            "",
+            "DisplayName   : Machine Certificate Autoenroll",
+            "GpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a",
+            "Enabled       : True",
+            "Enforced      : False",
+            "Order         : 2",
+            "Target        : DC=lab,DC=lan",
+            "GpoDomainName : lab.lan",
+            "",
+            "",
+            "DisplayName   : Machine Certificate Autoenroll",
+            "GpoId         : 2810f9f3-a572-4100-9e25-623e6610c91a",
+            "Enabled       : True",
+            "Enforced      : False",
+            "Order         : 2",
+            "Target        : OU=Domain Controllers,DC=lab,DC=lan",
+            "GpoDomainName : lab.lan",
+            "",
+            "DisplayName      : User Certificate Autoenroll",
+            "DomainName       : lab.lan",
+            "Owner            : LAB\\Domain Admins",
+            "Id               : f33549db-5f07-4a40-8e4c-05fa2e3d4109",
+            "GpoStatus        : AllSettingsEnabled",
+            "Description      : ",
+            "CreationTime     : 2/14/2021 9:11:09 PM",
+            "ModificationTime : 2/14/2021 9:11:09 PM",
+            "UserVersion      : AD Version: 1, SysVol Version: 1",
+            "ComputerVersion  : AD Version: 1, SysVol Version: 1",
+            "WmiFilter        : ",
+            "",
+            "",
+            "DisplayName   : User Certificate Autoenroll",
+            "GpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109",
+            "Enabled       : True",
+            "Enforced      : False",
+            "Order         : 3",
+            "Target        : OU=Domain Controllers,DC=lab,DC=lan",
+            "GpoDomainName : lab.lan",
+            "",
+            "",
+            "DisplayName   : User Certificate Autoenroll",
+            "GpoId         : f33549db-5f07-4a40-8e4c-05fa2e3d4109",
+            "Enabled       : True",
+            "Enforced      : False",
+            "Order         : 3",
+            "Target        : DC=lab,DC=lan",
+            "GpoDomainName : lab.lan",
+            "",
+            "",
+            ""
+        ]
+    }
+}
+2021-02-14 21:11:10,294 p=65733 u=centos n=ansible | TASK [Windows Member Server] ***************************************************
+2021-02-14 21:11:10,405 p=65733 u=centos n=ansible | skipping: [localhost] => (item=win_member)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_member", "skip_reason": "Conditional result was False"}
+2021-02-14 21:11:10,406 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=win_member)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_member", "skip_reason": "Conditional result was False"}
+2021-02-14 21:11:10,408 p=65733 u=centos n=ansible | skipping: [win16-dc1.lab.lan] => (item=win_member)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_member", "skip_reason": "Conditional result was False"}
+2021-02-14 21:11:10,418 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => (item=win_member)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_member", "skip_reason": "Conditional result was False"}
+2021-02-14 21:11:10,429 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=win_member)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_member", "skip_reason": "Conditional result was False"}
+2021-02-14 21:11:10,511 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/win_member/tasks/create.yml
+2021-02-14 21:11:10,512 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,514 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dns_client to ansible.windows.win_dns_client
+2021-02-14 21:11:10,514 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:11:10,515 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,516 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,517 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,518 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,519 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,520 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,521 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:11:10,522 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:11:10,523 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,524 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:11:10,526 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,528 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:11:10,529 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_service to ansible.windows.win_service
+2021-02-14 21:11:10,530 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:11:10,748 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,755 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,760 p=65733 u=centos n=ansible | TASK [win_member : Configure static IP address] ********************************
+2021-02-14 21:11:10,787 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,792 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,815 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:10,851 p=66604 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:10,855 p=66605 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:11:12,453 p=65733 u=centos n=ansible | ok: [win10-dsk1.lab.lan] => {"ansible_async_watchdog_pid": 720, "ansible_job_id": "983997204712.5152", "changed": false, "finished": 0, "results_file": "C:\\Users\\Administrator\\.ansible_async\\983997204712.5152", "started": 1}
+2021-02-14 21:11:12,454 p=65733 u=centos n=ansible | ok: [win16-svr1.lab.lan] => {"ansible_async_watchdog_pid": 2816, "ansible_job_id": "224256905711.3844", "changed": false, "finished": 0, "results_file": "C:\\Users\\Administrator\\.ansible_async\\224256905711.3844", "started": 1}
+2021-02-14 21:11:12,462 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:12,469 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:12,474 p=65733 u=centos n=ansible | TASK [win_member : Wait for the interface change to complete] ******************
+2021-02-14 21:11:12,506 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:12,511 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:11:12,519 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:14,191 p=65733 u=centos n=ansible | ok: [win16-svr1.lab.lan] => {"changed": false, "elapsed": 121}
+2021-02-14 21:13:14,302 p=65733 u=centos n=ansible | ok: [win10-dsk1.lab.lan] => {"changed": false, "elapsed": 121}
+2021-02-14 21:13:14,311 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:14,318 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:14,323 p=65733 u=centos n=ansible | TASK [win_member : Setting DNS Servers] ****************************************
+2021-02-14 21:13:14,354 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:14,361 p=66612 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dns_client to ansible.windows.win_dns_client
+2021-02-14 21:13:14,361 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:14,377 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:14,397 p=66613 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dns_client to ansible.windows.win_dns_client
+2021-02-14 21:13:17,185 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true}
+2021-02-14 21:13:17,785 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true}
+2021-02-14 21:13:17,794 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:17,802 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:17,807 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:13:17,807 p=65733 u=centos n=ansible | TASK [win_member : Reboot to complete computer name change] ********************
+2021-02-14 21:13:17,819 p=65733 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:13:17,835 p=66616 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:13:17,835 p=66616 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:13:17,838 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:17,851 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:17,860 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:13:17,869 p=66617 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:13:17,869 p=66617 u=centos n=ansible | redirecting (type: action) ansible.builtin.win_reboot to ansible.windows.win_reboot
+2021-02-14 21:16:16,479 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "elapsed": 177, "rebooted": true}
+2021-02-14 21:17:51,033 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "elapsed": 272, "rebooted": true}
+2021-02-14 21:17:51,041 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:51,049 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:51,053 p=65733 u=centos n=ansible | TASK [win_member : Add PSGallery as Trusted Powershell Repo] *******************
+2021-02-14 21:17:51,082 p=66620 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:17:51,077 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:51,090 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:51,109 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:51,116 p=66621 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:17:55,702 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:02.765607", "end": "2021-02-14 09:17:55.266332", "rc": 0, "start": "2021-02-14 09:17:52.500725", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:17:57,988 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "if ($false -eq (get-packagesource | Where-Object { $_.Name -eq \"PSGallery\" } | % { $_.istrusted })){ \n  Set-PackageSource -Name PSGallery -Trusted -Force \n}", "delta": "0:00:03.577973", "end": "2021-02-14 09:17:57.383675", "rc": 0, "start": "2021-02-14 09:17:53.805701", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:17:57,997 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:58,004 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:58,009 p=65733 u=centos n=ansible | TASK [win_member : Add xActiveDirectory] ***************************************
+2021-02-14 21:17:58,039 p=66624 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:17:58,033 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:58,046 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:58,067 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:17:58,075 p=66625 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:03,497 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xActiveDirectory", "delta": "0:00:03.921732", "end": "2021-02-14 09:18:02.883485", "rc": 0, "start": "2021-02-14 09:17:58.961753", "stderr": "PackageManagement\\Install-Package : No match was found for the specified search criteria and module name \r\n'xActiveDirectory'. Try Get-PSRepository to see all available registered module repositories.\r\nAt C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1772 char:21\r\n+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters\r\n+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex \r\n   ception\r\n    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage", "stderr_lines": ["PackageManagement\\Install-Package : No match was found for the specified search criteria and module name ", "'xActiveDirectory'. Try Get-PSRepository to see all available registered module repositories.", "At C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1772 char:21", "+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters", "+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex ", "   ception", "    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage"], "stdout": "", "stdout_lines": []}
+2021-02-14 21:18:03,565 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xActiveDirectory", "delta": "0:00:03.984370", "end": "2021-02-14 09:18:03.141354", "rc": 0, "start": "2021-02-14 09:17:59.156983", "stderr": "PackageManagement\\Install-Package : No match was found for the specified search criteria and module name \r\n'xActiveDirectory'. Try Get-PSRepository to see all available registered module repositories.\r\nAt C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1809 char:21\r\n+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters\r\n+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex \r\n   ception\r\n    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage", "stderr_lines": ["PackageManagement\\Install-Package : No match was found for the specified search criteria and module name ", "'xActiveDirectory'. Try Get-PSRepository to see all available registered module repositories.", "At C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1809 char:21", "+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters", "+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex ", "   ception", "    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage"], "stdout": "", "stdout_lines": []}
+2021-02-14 21:18:03,574 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:03,582 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:03,587 p=65733 u=centos n=ansible | TASK [win_member : Add xComputerManagement] ************************************
+2021-02-14 21:18:03,617 p=66628 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:03,620 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:03,625 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:03,647 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:03,653 p=66629 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:08,763 p=65733 u=centos n=ansible | changed: [win16-svr1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xComputerManagement", "delta": "0:00:03.609266", "end": "2021-02-14 09:18:08.148933", "rc": 0, "start": "2021-02-14 09:18:04.539666", "stderr": "PackageManagement\\Install-Package : No match was found for the specified search criteria and module name \r\n'xComputerManagement'. Try Get-PSRepository to see all available registered module repositories.\r\nAt C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1772 char:21\r\n+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters\r\n+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex \r\n   ception\r\n    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage", "stderr_lines": ["PackageManagement\\Install-Package : No match was found for the specified search criteria and module name ", "'xComputerManagement'. Try Get-PSRepository to see all available registered module repositories.", "At C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1772 char:21", "+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters", "+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex ", "   ception", "    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage"], "stdout": "", "stdout_lines": []}
+2021-02-14 21:18:09,092 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "Install-Module -Name xComputerManagement", "delta": "0:00:03.921881", "end": "2021-02-14 09:18:08.672603", "rc": 0, "start": "2021-02-14 09:18:04.750722", "stderr": "PackageManagement\\Install-Package : No match was found for the specified search criteria and module name \r\n'xComputerManagement'. Try Get-PSRepository to see all available registered module repositories.\r\nAt C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1809 char:21\r\n+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters\r\n+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex \r\n   ception\r\n    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage", "stderr_lines": ["PackageManagement\\Install-Package : No match was found for the specified search criteria and module name ", "'xComputerManagement'. Try Get-PSRepository to see all available registered module repositories.", "At C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:1809 char:21", "+ ...          $null = PackageManagement\\Install-Package @PSBoundParameters", "+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "    + CategoryInfo          : ObjectNotFound: (Microsoft.Power....InstallPackage:InstallPackage) [Install-Package], Ex ", "   ception", "    + FullyQualifiedErrorId : NoMatchFoundForCriteria,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage"], "stdout": "", "stdout_lines": []}
+2021-02-14 21:18:09,100 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:09,108 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:09,114 p=65733 u=centos n=ansible | TASK [win_member : Force Allow Powershell Unrestricted Execution (required for xWaitForADDomain on Windows 10)] ***
+2021-02-14 21:18:09,145 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:09,146 p=66632 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:09,162 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:09,173 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:09,177 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 21:18:11,130 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "Set-Executionpolicy -ExecutionPolicy Unrestricted -Force -Scope LocalMachine", "delta": "0:00:00.453157", "end": "2021-02-14 09:18:10.719514", "rc": 0, "start": "2021-02-14 09:18:10.266357", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:18:11,139 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:11,147 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:11,152 p=65733 u=centos n=ansible | TASK [win_member : Fix start menu for "administrator" account on the domain] ***
+2021-02-14 21:18:11,184 p=66636 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:11,186 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:11,192 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:11,208 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:11,215 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 21:18:13,143 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "New-ItemProperty -Path HKLM:Software\\Microsoft\\Windows\\CurrentVersion\\policies\\system -Name FilterAdministratorToken -PropertyType DWord -Value 1 -Force", "delta": "0:00:00.421885", "end": "2021-02-14 09:18:12.719483", "rc": 0, "start": "2021-02-14 09:18:12.297597", "stderr": "", "stderr_lines": [], "stdout": "\r\n\r\nFilterAdministratorToken : 1\r\nPSPath                   : Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVer\r\n                           sion\\policies\\system\r\nPSParentPath             : Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVer\r\n                           sion\\policies\r\nPSChildName              : system\r\nPSDrive                  : HKLM\r\nPSProvider               : Microsoft.PowerShell.Core\\Registry\r\n\r\n\r\n\r\n", "stdout_lines": ["", "", "FilterAdministratorToken : 1", "PSPath                   : Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVer", "                           sion\\policies\\system", "PSParentPath             : Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVer", "                           sion\\policies", "PSChildName              : system", "PSDrive                  : HKLM", "PSProvider               : Microsoft.PowerShell.Core\\Registry", "", "", ""]}
+2021-02-14 21:18:13,152 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:13,159 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:13,164 p=65733 u=centos n=ansible | TASK [win_member : Fix desktop background double print] ************************
+2021-02-14 21:18:13,196 p=66640 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:13,201 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:13,206 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:13,222 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:13,228 p=65733 u=centos n=ansible | skipping: [win16-svr1.lab.lan] => {"changed": false, "skip_reason": "Conditional result was False"}
+2021-02-14 21:18:15,155 p=65733 u=centos n=ansible | changed: [win10-dsk1.lab.lan] => {"changed": true, "cmd": "Remove-Item 'C:\\Users\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\RunWallpaperSetupInit.cmd'", "delta": "0:00:00.421893", "end": "2021-02-14 09:18:14.735118", "rc": 0, "start": "2021-02-14 09:18:14.313224", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2021-02-14 21:18:15,164 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:15,172 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:15,177 p=65733 u=centos n=ansible | TASK [win_member : Wait for forest xWaitForADDomain] ***************************
+2021-02-14 21:18:15,201 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:15,217 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:15,237 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:15,332 p=66644 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:18:15,374 p=66645 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_dsc to ansible.windows.win_dsc
+2021-02-14 21:18:21,343 p=65733 u=centos n=ansible | fatal: [win10-dsk1.lab.lan]: FAILED! => {"changed": false, "msg": "Resource 'xWaitForADDomain' not found."}
+2021-02-14 21:18:29,168 p=65733 u=centos n=ansible | fatal: [win16-svr1.lab.lan]: FAILED! => {"changed": false, "msg": "Resource 'xWaitForADDomain' not found."}
+2021-02-14 21:18:29,177 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,185 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,190 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,194 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,202 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,211 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,218 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,223 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,228 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,236 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,244 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,251 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,256 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,261 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,268 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,276 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,284 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,289 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,293 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,301 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,310 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,317 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,322 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,326 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,334 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,342 p=65733 u=centos n=ansible | TASK [Splunk Universal Forwarder on WEC and Domain Controller] *****************
+2021-02-14 21:18:29,406 p=65733 u=centos n=ansible | skipping: [localhost] => (item=splunk_uf)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "splunk_uf", "skip_reason": "Conditional result was False"}
+2021-02-14 21:18:29,416 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=splunk_uf)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "splunk_uf", "skip_reason": "Conditional result was False"}
+2021-02-14 21:18:29,435 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=splunk_uf)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "splunk_uf", "skip_reason": "Conditional result was False"}
+2021-02-14 21:18:29,523 p=65733 u=centos n=ansible | statically imported: /home/centos/domain-deployment/splunk-lab/ansible/roles/splunk_uf/tasks/create.yml
+2021-02-14 21:18:29,525 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:29,739 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,747 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,752 p=65733 u=centos n=ansible | TASK [splunk_uf : Set deployment_server variable] ******************************
+2021-02-14 21:18:29,781 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,788 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"deployment_server": "splk-sh1.lab.lan"}, "changed": false}
+2021-02-14 21:18:29,806 p=65733 u=centos n=ansible | ok: [win16-wef1.lab.lan] => {"ansible_facts": {"deployment_server": "splk-sh1.lab.lan"}, "changed": false}
+2021-02-14 21:18:29,815 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,823 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,828 p=65733 u=centos n=ansible | TASK [splunk_uf : Configure Windows Universal Forwarder] ***********************
+2021-02-14 21:18:29,855 p=66662 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:29,868 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:18:29,885 p=66663 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:18:56,883 p=65733 u=centos n=ansible | changed: [win16-dc1.lab.lan] => {"changed": true, "cmd": "# ensure we have the FQDN for the deployment server\n$deployment_server = [System.Net.Dns]::GetHostByName('splk-sh1.lab.lan').Hostname\n$deployment_server_port = \"8089\"\n\nIf (-not (Test-Path \"C:\\Program Files\\SplunkUniversalForwarder\\bin\\splunk.exe\")) {\n    Write-Host \"Downloading Splunk Universal Forwarder\"\n    $msiFile = $env:Temp + \"\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\"\n\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Installing & Starting Splunk\"\n    [Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"\n    #(New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=7.3.4.2/windows/splunkforwarder-7.3.4.2-cb574b3d103e-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=7.3.4.2&product=universalforwarder&typed=release', $msiFile)\n    (New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=8.0.2/windows/splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=8.0.2&product=universalforwarder&typed=release', $msiFile)\n    $args = ('/i \"{0}\" DEPLOYMENT_SERVER={1}:{2}  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD={3} /quiet /l*v \"{4}\\splunk_universalforwarder_install.txt\"' -f $msifile, \"$deployment_server\", \"$deployment_server_port\", \"changeme\", $env:Temp)\n    $program = \"c:\\windows\\system32\\msiexec.exe\"\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Running: $program $args\"\n    Start-Process $program $args -Wait\n} Else {\n    Write-Host \"Splunk is already installed. Moving on.\"\n}\nIf ((Get-Service -name \"splunkforwarder\").Status -ne \"Running\")\n{\n    throw \"Splunk forwarder service not running\"\n}\nWrite-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Splunk installation complete!\"", "delta": "0:00:25.449691", "end": "2021-02-14 09:18:56.711301", "rc": 0, "start": "2021-02-14 09:18:31.261609", "stderr": "", "stderr_lines": [], "stdout": "Downloading Splunk Universal Forwarder\n[21:18] Installing & Starting Splunk\n[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"\n[21:18] Splunk installation complete!\n", "stdout_lines": ["Downloading Splunk Universal Forwarder", "[21:18] Installing & Starting Splunk", "[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"", "[21:18] Splunk installation complete!"]}
+2021-02-14 21:19:00,115 p=65733 u=centos n=ansible | changed: [win16-wef1.lab.lan] => {"changed": true, "cmd": "# ensure we have the FQDN for the deployment server\n$deployment_server = [System.Net.Dns]::GetHostByName('splk-sh1.lab.lan').Hostname\n$deployment_server_port = \"8089\"\n\nIf (-not (Test-Path \"C:\\Program Files\\SplunkUniversalForwarder\\bin\\splunk.exe\")) {\n    Write-Host \"Downloading Splunk Universal Forwarder\"\n    $msiFile = $env:Temp + \"\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\"\n\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Installing & Starting Splunk\"\n    [Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"\n    #(New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=7.3.4.2/windows/splunkforwarder-7.3.4.2-cb574b3d103e-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=7.3.4.2&product=universalforwarder&typed=release', $msiFile)\n    (New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=8.0.2/windows/splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=8.0.2&product=universalforwarder&typed=release', $msiFile)\n    $args = ('/i \"{0}\" DEPLOYMENT_SERVER={1}:{2}  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD={3} /quiet /l*v \"{4}\\splunk_universalforwarder_install.txt\"' -f $msifile, \"$deployment_server\", \"$deployment_server_port\", \"changeme\", $env:Temp)\n    $program = \"c:\\windows\\system32\\msiexec.exe\"\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Running: $program $args\"\n    Start-Process $program $args -Wait\n} Else {\n    Write-Host \"Splunk is already installed. Moving on.\"\n}\nIf ((Get-Service -name \"splunkforwarder\").Status -ne \"Running\")\n{\n    throw \"Splunk forwarder service not running\"\n}\nWrite-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Splunk installation complete!\"", "delta": "0:00:28.577883", "end": "2021-02-14 09:18:59.971566", "rc": 0, "start": "2021-02-14 09:18:31.393682", "stderr": "", "stderr_lines": [], "stdout": "Downloading Splunk Universal Forwarder\n[21:18] Installing & Starting Splunk\n[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"\n[21:18] Splunk installation complete!\n", "stdout_lines": ["Downloading Splunk Universal Forwarder", "[21:18] Installing & Starting Splunk", "[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"", "[21:18] Splunk installation complete!"]}
+2021-02-14 21:19:00,124 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,131 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,136 p=65733 u=centos n=ansible | TASK [splunk_uf : Script result] ***********************************************
+2021-02-14 21:19:00,167 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,170 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {
+    "script_result": {
+        "changed": true,
+        "cmd": "# ensure we have the FQDN for the deployment server\n$deployment_server = [System.Net.Dns]::GetHostByName('splk-sh1.lab.lan').Hostname\n$deployment_server_port = \"8089\"\n\nIf (-not (Test-Path \"C:\\Program Files\\SplunkUniversalForwarder\\bin\\splunk.exe\")) {\n    Write-Host \"Downloading Splunk Universal Forwarder\"\n    $msiFile = $env:Temp + \"\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\"\n\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Installing & Starting Splunk\"\n    [Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"\n    #(New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=7.3.4.2/windows/splunkforwarder-7.3.4.2-cb574b3d103e-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=7.3.4.2&product=universalforwarder&typed=release', $msiFile)\n    (New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=8.0.2/windows/splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=8.0.2&product=universalforwarder&typed=release', $msiFile)\n    $args = ('/i \"{0}\" DEPLOYMENT_SERVER={1}:{2}  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD={3} /quiet /l*v \"{4}\\splunk_universalforwarder_install.txt\"' -f $msifile, \"$deployment_server\", \"$deployment_server_port\", \"changeme\", $env:Temp)\n    $program = \"c:\\windows\\system32\\msiexec.exe\"\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Running: $program $args\"\n    Start-Process $program $args -Wait\n} Else {\n    Write-Host \"Splunk is already installed. Moving on.\"\n}\nIf ((Get-Service -name \"splunkforwarder\").Status -ne \"Running\")\n{\n    throw \"Splunk forwarder service not running\"\n}\nWrite-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Splunk installation complete!\"",
+        "delta": "0:00:25.449691",
+        "end": "2021-02-14 09:18:56.711301",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-02-14 09:18:31.261609",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "Downloading Splunk Universal Forwarder\n[21:18] Installing & Starting Splunk\n[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"\n[21:18] Splunk installation complete!\n",
+        "stdout_lines": [
+            "Downloading Splunk Universal Forwarder",
+            "[21:18] Installing & Starting Splunk",
+            "[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"",
+            "[21:18] Splunk installation complete!"
+        ]
+    }
+}
+2021-02-14 21:19:00,195 p=65733 u=centos n=ansible | ok: [win16-wef1.lab.lan] => {
+    "script_result": {
+        "changed": true,
+        "cmd": "# ensure we have the FQDN for the deployment server\n$deployment_server = [System.Net.Dns]::GetHostByName('splk-sh1.lab.lan').Hostname\n$deployment_server_port = \"8089\"\n\nIf (-not (Test-Path \"C:\\Program Files\\SplunkUniversalForwarder\\bin\\splunk.exe\")) {\n    Write-Host \"Downloading Splunk Universal Forwarder\"\n    $msiFile = $env:Temp + \"\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\"\n\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Installing & Starting Splunk\"\n    [Net.ServicePointManager]::SecurityProtocol = \"tls12, tls11, tls\"\n    #(New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=7.3.4.2/windows/splunkforwarder-7.3.4.2-cb574b3d103e-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=7.3.4.2&product=universalforwarder&typed=release', $msiFile)\n    (New-Object System.Net.WebClient).DownloadFile('https://www.splunk.com/page/download_track?file=8.0.2/windows/splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi&ac=&wget=true&name=wget&platform=Windows&architecture=x86_64&version=8.0.2&product=universalforwarder&typed=release', $msiFile)\n    $args = ('/i \"{0}\" DEPLOYMENT_SERVER={1}:{2}  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD={3} /quiet /l*v \"{4}\\splunk_universalforwarder_install.txt\"' -f $msifile, \"$deployment_server\", \"$deployment_server_port\", \"changeme\", $env:Temp)\n    $program = \"c:\\windows\\system32\\msiexec.exe\"\n    Write-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Running: $program $args\"\n    Start-Process $program $args -Wait\n} Else {\n    Write-Host \"Splunk is already installed. Moving on.\"\n}\nIf ((Get-Service -name \"splunkforwarder\").Status -ne \"Running\")\n{\n    throw \"Splunk forwarder service not running\"\n}\nWrite-Host \"$('[{0:HH:mm}]' -f (Get-Date)) Splunk installation complete!\"",
+        "delta": "0:00:28.577883",
+        "end": "2021-02-14 09:18:59.971566",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-02-14 09:18:31.393682",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "Downloading Splunk Universal Forwarder\n[21:18] Installing & Starting Splunk\n[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"\n[21:18] Splunk installation complete!\n",
+        "stdout_lines": [
+            "Downloading Splunk Universal Forwarder",
+            "[21:18] Installing & Starting Splunk",
+            "[21:18] Running: c:\\windows\\system32\\msiexec.exe /i \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunkforwarder-8.0.2-a7f645ddaf91-x64-release.msi\" DEPLOYMENT_SERVER=splk-sh1.lab.lan:8089  AGREETOLICENSE=Yes SERVICESTARTTYPE=auto LAUNCHSPLUNK=1 SPLUNKPASSWORD=changeme /quiet /l*v \"C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\splunk_universalforwarder_install.txt\"",
+            "[21:18] Splunk installation complete!"
+        ]
+    }
+}
+2021-02-14 21:19:00,203 p=65733 u=centos n=ansible | TASK [Request and export required certificates from the CA] ********************
+2021-02-14 21:19:00,258 p=65733 u=centos n=ansible | skipping: [localhost] => (item=win_certreq)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_certreq", "skip_reason": "Conditional result was False"}
+2021-02-14 21:19:00,276 p=65733 u=centos n=ansible | skipping: [splk-sh1.lab.lan] => (item=win_certreq)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_certreq", "skip_reason": "Conditional result was False"}
+2021-02-14 21:19:00,289 p=65733 u=centos n=ansible | skipping: [win16-wef1.lab.lan] => (item=win_certreq)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_certreq", "skip_reason": "Conditional result was False"}
+2021-02-14 21:19:00,299 p=65733 u=centos n=ansible | skipping: [ansible-srv1.lab.lan] => (item=win_certreq)  => {"ansible_loop_var": "rolevar", "changed": false, "rolevar": "win_certreq", "skip_reason": "Conditional result was False"}
+2021-02-14 21:19:00,566 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,574 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,579 p=65733 u=centos n=ansible | TASK [win_certreq : include_tasks] *********************************************
+2021-02-14 21:19:00,590 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,599 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,611 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:19:00,615 p=65733 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell
+2021-02-14 21:19:00,617 p=65733 u=centos n=ansible | included: /home/centos/domain-deployment/splunk-lab/ansible/roles/win_certreq/tasks/create.yml for win16-dc1.lab.lan
+2021-02-14 21:19:00,628 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,635 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,640 p=65733 u=centos n=ansible | TASK [win_certreq : Set ansible user for role] *********************************
+2021-02-14 21:19:00,652 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,661 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,752 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {"ansible_facts": {"ansible_ssh_pass": "myTempPassword123", "ansible_ssh_user": "administrator@lab.lan"}, "changed": false}
+2021-02-14 21:19:00,760 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,768 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,773 p=65733 u=centos n=ansible | TASK [win_certreq : Show target groups] ****************************************
+2021-02-14 21:19:00,786 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,794 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,801 p=65733 u=centos n=ansible | ok: [win16-dc1.lab.lan] => {
+    "<class 'list'>": "VARIABLE IS NOT DEFINED!: "
+}
+2021-02-14 21:19:00,810 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,817 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,822 p=65733 u=centos n=ansible | TASK [win_certreq : Issue a cert for the CSR] **********************************
+2021-02-14 21:19:00,833 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,843 p=65733 u=centos n=ansible | META: noop
+2021-02-14 21:19:00,899 p=66687 u=centos n=ansible | redirecting (type: modules) ansible.builtin.win_shell to ansible.windows.win_shell

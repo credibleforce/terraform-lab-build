@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# use local git repo for ansible
-source ./ansible/hacking/env-setup
-
 # change working directory
 cd deployment/ansible
 

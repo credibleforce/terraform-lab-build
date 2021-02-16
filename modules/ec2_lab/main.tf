@@ -75,7 +75,7 @@ locals {
     win10_instance_type     = "t2.medium"
     win10_prefix            = "win10"
     win10_role              = "win10"
-    win10_volume_size       = "30"
+    win10_volume_size       = "60"
     win10_last_octet_base   = 100
     win10_hosts_override    = var.win10_hosts_override
 
@@ -84,7 +84,7 @@ locals {
     win16_instance_type     = "t2.medium"
     win16_prefix            = "win16"
     win16_role              = "win16"
-    win16_volume_size       = "30"
+    win16_volume_size       = "60"
     win16_last_octet_base   = 10
     win16_hosts_override    = var.win16_hosts_override
 
