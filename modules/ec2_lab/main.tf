@@ -249,7 +249,8 @@ module "win10_instances" {
                                     https = true, 
                                     insecure = true, 
                                     timeout = "20m", 
-                                    port = "5986" 
+                                    port = "5986",
+                                    use_ntlm = true
                                 }
     instance_type           = local.win10_instance_type
     image_id                = local.win10_ami
@@ -284,7 +285,8 @@ module "win16_instances" {
                                     https = true, 
                                     insecure = true, 
                                     timeout = "20m", 
-                                    port = "5986" 
+                                    port = "5986",
+                                    use_ntlm = true
                                 }
     instance_type           = local.win16_instance_type
     image_id                = local.win16_ami

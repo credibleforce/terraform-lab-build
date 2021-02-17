@@ -39,6 +39,7 @@ resource "aws_instance" "host" {
         timeout             = lookup(var.connection_settings, "timeout", "5m")
         port                = lookup(var.connection_settings, "port", "22")
         https               = lookup(var.connection_settings, "https", false)
+        use_ntlm            = lookup(var.connection_settings, "use_ntlm", false)
     }
 
     instance_type           = var.instance_type
