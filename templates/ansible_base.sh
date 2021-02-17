@@ -7,9 +7,10 @@ sudo alternatives --set python /usr/bin/python3
 
 # Install local Ansible.
 sudo pip3 install ansible
-sudo yum install -y python3-pip
+sudo yum install -y gcc python3-pip python3-devel krb5-devel krb5-libs krb5-workstation
 sudo pip3 install --upgrade pip
 sudo pip3 install pywinrm requests
+sudo pip3 install pywinrm[kerberos] pywinrm[credssp]
 
 # Install awx
 # remove existing docker configuration
