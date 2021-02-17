@@ -215,10 +215,12 @@ $admin = [adsi]("WinNT://./${win_user}, user")
 $admin.PSBase.Invoke("SetPassword", "${win_password}")
 Rename-computer -force –computername "$env:COMPUTERNAME" –newname "${short_name}"
 
-Import-Module PowerShellGet
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
 Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
-Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Import-Module PowerShellGet
+Install-Module PackageManagement -Force -Repository PSGallery
+Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
+
 
 </powershell>
