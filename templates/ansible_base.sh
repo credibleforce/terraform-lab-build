@@ -97,6 +97,8 @@ sudo git clone --branch develop --recursive https://github.com/mobia-security-se
 sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-lab /opt/repo/splunk-lab
 
 # sym link doesn't work (needs further test) just copy ansible directory - ideally structure of repo include ansible.cfg at the root for awx
+sudo mkdir -p /opt/awx/projects/splunk
+sudo mkdir -p /opt/awx/projects/lab
 sudo cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk
 sudo cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
 
