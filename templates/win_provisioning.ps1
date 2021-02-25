@@ -214,6 +214,9 @@ try{
     # remove any other certs
     Get-ChildItem  -Path Cert:\LocalMachine\MY | Where-Object {$_.Thumbprint -NotMatch $thumbprint } | Remove-Item
 
+    Write-output $("Restart WinRM") | Out-File -Append -FilePath $logFile
+    Restart-Service WinRM
+
     Write-output $("Setting user password computer: {0}" -f "${win_user}") | Out-File -Append -FilePath $logFile
     $admin = [adsi]("WinNT://./${win_user}, user")
     $admin.PSBase.Invoke("SetPassword", "${win_password}")
@@ -224,5 +227,7 @@ try{
 }
 
 Write-output $("Done.") | Out-File -Append -FilePath $logFile
+
+Start-Process shutdown /r /f /t 60 /c "Rename required."
 
 </powershell>
