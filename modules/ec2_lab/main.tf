@@ -57,11 +57,14 @@ locals {
     key_name                = "${var.project_prefix}-key"
 
     kali_ami                = var.kali_ami
+    win08_ami               = var.win08_ami
     win10_ami               = var.win10_ami
+    win12_ami               = var.win12_ami
     win16_ami               = var.win16_ami
+    win19_ami               = var.win19_ami
     centos_ami              = var.centos_ami
 
-    kali_user               = "ec2-user"
+    kali_user               = "kali"
     kali_hosts              = var.kali_hosts
     kali_instance_type      = "t2.micro"
     kali_prefix             = "kali"
@@ -69,6 +72,15 @@ locals {
     kali_volume_size        = "25"
     kali_last_octet_base    = 200
     kali_hosts_override     = var.kali_hosts_override
+
+    win08_user              = "administrator"
+    win08_hosts             = var.win08_hosts
+    win08_instance_type     = "t2.medium"
+    win08_prefix            = "win08"
+    win08_role              = "win08"
+    win08_volume_size       = "60"
+    win08_last_octet_base   = 100
+    win08_hosts_override    = var.win08_hosts_override
 
     win10_user              = "administrator"
     win10_hosts             = var.win10_hosts
@@ -79,6 +91,15 @@ locals {
     win10_last_octet_base   = 100
     win10_hosts_override    = var.win10_hosts_override
 
+    win12_user              = "administrator"
+    win12_hosts             = var.win12_hosts
+    win12_instance_type     = "t2.medium"
+    win12_prefix            = "win12"
+    win12_role              = "win12"
+    win12_volume_size       = "60"
+    win12_last_octet_base   = 100
+    win12_hosts_override    = var.win12_hosts_override
+
     win16_user              = "administrator"
     win16_hosts             = var.win16_hosts
     win16_instance_type     = "t2.medium"
@@ -87,6 +108,15 @@ locals {
     win16_volume_size       = "60"
     win16_last_octet_base   = 10
     win16_hosts_override    = var.win16_hosts_override
+
+    win19_user              = "administrator"
+    win19_hosts             = var.win19_hosts
+    win19_instance_type     = "t2.medium"
+    win19_prefix            = "win19"
+    win19_role              = "win19"
+    win19_volume_size       = "60"
+    win19_last_octet_base   = 100
+    win19_hosts_override    = var.win19_hosts_override
 
     ansible_deployment_user = var.ansible_deployment_user
     ansible_deployment_group = var.ansible_deployment_user
@@ -117,8 +147,11 @@ locals {
         win_password            = local.win_password, 
         internal_domain         = local.internal_domain, 
         kali_hosts              = module.kali_instances.hosts, 
+        win08_hosts             = module.win08_instances.hosts, 
         win10_hosts             = module.win10_instances.hosts, 
+        win12_hosts             = module.win12_instances.hosts, 
         win16_hosts             = module.win16_instances.hosts, 
+        win19_hosts             = module.win19_instances.hosts, 
         ansible_hosts           = module.ansible_instances.hosts, 
         centos_hosts            = module.centos_instances.hosts 
         ansible_deployment_user = local.ansible_deployment_user
@@ -126,6 +159,7 @@ locals {
         centos_user             = local.centos_user
         kali_user               = local.kali_user
     }
+
     ansible_inventory       = templatefile("${path.root}/templates/inventory.yml", local.ansible_template_vars)
     ansible_vars_base       = templatefile("${path.root}/templates/vars_base.yml", local.ansible_template_vars)
     ansible_vars_deployer   = templatefile("${path.root}/templates/vars_deployer.yml", local.ansible_template_vars)
@@ -231,6 +265,43 @@ module "kali_instances" {
     student_id              = var.student_id
 }
 
+module "win08_instances" {
+    module_name             = "win08_instances"
+    module_dependency       = module.ec2_network.module_complete
+    source                  = "../../modules/ec2_instance"
+    host_count              = length(local.win08_hosts_override) > 0 ? length(local.win08_hosts_override) : local.win08_hosts
+    hosts_override          = local.win08_hosts_override
+    host_prefix             = local.win08_prefix
+    host_role               = local.win08_role
+    zone_id                 = module.ec2_internal_dns.zone_id
+    internal_domain         = local.internal_domain
+    connection_settings     =   { 
+                                    type = "winrm", 
+                                    user = local.win_user, 
+                                    password = local.win_password, 
+                                    agent = false, 
+                                    https = true, 
+                                    insecure = true, 
+                                    timeout = "20m", 
+                                    port = "5986",
+                                    use_ntlm = true
+                                }
+    instance_type           = local.win08_instance_type
+    image_id                = local.win08_ami
+    security_group_id       = module.win_security_group.security_group_id
+    key_id                  = local.aws_key_pair.id
+    subnet_id               = module.ec2_network.subnet1_id
+    subnet_prefix           = local.subnet1_prefix
+    last_octet_base         = local.win08_last_octet_base
+    volume_size             = local.win08_volume_size
+    provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
+    win_user                = local.win_user
+    win_password            = local.win_password
+    custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
+    
+}
+
 module "win10_instances" {
     module_name             = "win10_instances"
     module_dependency       = module.ec2_network.module_complete
@@ -267,6 +338,43 @@ module "win10_instances" {
     student_id              = var.student_id
 }
 
+module "win12_instances" {
+    module_name             = "win12_instances"
+    module_dependency       = module.ec2_network.module_complete
+    source                  = "../../modules/ec2_instance"
+    host_count              = length(local.win12_hosts_override) > 0 ? length(local.win12_hosts_override) : local.win12_hosts
+    hosts_override          = local.win12_hosts_override
+    host_prefix             = local.win12_prefix
+    host_role               = local.win12_role
+    zone_id                 = module.ec2_internal_dns.zone_id
+    internal_domain         = local.internal_domain
+    connection_settings     =   { 
+                                    type = "winrm", 
+                                    user = local.win_user, 
+                                    password = local.win_password, 
+                                    agent = false, 
+                                    https = true, 
+                                    insecure = true, 
+                                    timeout = "20m", 
+                                    port = "5986",
+                                    use_ntlm = true
+                                }
+    instance_type           = local.win12_instance_type
+    image_id                = local.win12_ami
+    security_group_id       = module.win_security_group.security_group_id
+    key_id                  = local.aws_key_pair.id
+    subnet_id               = module.ec2_network.subnet1_id
+    subnet_prefix           = local.subnet1_prefix
+    last_octet_base         = local.win12_last_octet_base
+    volume_size             = local.win12_volume_size
+    provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
+    win_user                = local.win_user
+    win_password            = local.win_password
+    custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
+    
+}
+
 module "win16_instances" {
     module_name             = "win16_instances"
     module_dependency       = module.ec2_network.module_complete
@@ -296,6 +404,43 @@ module "win16_instances" {
     subnet_prefix           = local.subnet1_prefix
     last_octet_base         = local.win16_last_octet_base
     volume_size             = local.win16_volume_size
+    provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
+    win_user                = local.win_user
+    win_password            = local.win_password
+    custom_security_groups  = module.custom_security_groups.security_groups
+    student_id              = var.student_id
+    
+}
+
+module "win19_instances" {
+    module_name             = "win19_instances"
+    module_dependency       = module.ec2_network.module_complete
+    source                  = "../../modules/ec2_instance"
+    host_count              = length(local.win19_hosts_override) > 0 ? length(local.win19_hosts_override) : local.win19_hosts
+    hosts_override          = local.win19_hosts_override
+    host_prefix             = local.win19_prefix
+    host_role               = local.win19_role
+    zone_id                 = module.ec2_internal_dns.zone_id
+    internal_domain         = local.internal_domain
+    connection_settings     =   { 
+                                    type = "winrm", 
+                                    user = local.win_user, 
+                                    password = local.win_password, 
+                                    agent = false, 
+                                    https = true, 
+                                    insecure = true, 
+                                    timeout = "20m", 
+                                    port = "5986",
+                                    use_ntlm = true
+                                }
+    instance_type           = local.win19_instance_type
+    image_id                = local.win19_ami
+    security_group_id       = module.win_security_group.security_group_id
+    key_id                  = local.aws_key_pair.id
+    subnet_id               = module.ec2_network.subnet1_id
+    subnet_prefix           = local.subnet1_prefix
+    last_octet_base         = local.win19_last_octet_base
+    volume_size             = local.win19_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
     win_user                = local.win_user
     win_password            = local.win_password

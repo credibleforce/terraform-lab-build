@@ -36,6 +36,16 @@ variable "kali_hosts_override" {
     default = []
 }
 
+variable "win08_hosts" {
+  description = "Number of hosts"
+  default     = 0
+}
+
+variable "win08_hosts_override" {
+    description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
+    default = []
+}
+
 variable "win10_hosts" {
   description = "Number of hosts"
   default     = 0
@@ -46,12 +56,32 @@ variable "win10_hosts_override" {
     default = []
 }
 
+variable "win12_hosts" {
+  description = "Number of hosts"
+  default     = 0
+}
+
+variable "win12_hosts_override" {
+    description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
+    default = []
+}
+
 variable "win16_hosts" {
   description = "Number of hosts"
   default     = 0
 }
 
 variable "win16_hosts_override" {
+    description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
+    default = []
+}
+
+variable "win19_hosts" {
+  description = "Number of hosts"
+  default     = 0
+}
+
+variable "win19_hosts_override" {
     description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
     default = []
 }
@@ -131,13 +161,26 @@ variable kali_ami {
     description = "kali ami"
 }
 
+variable win08_ami {
+    description = "win08 ami"
+}
+
 variable win10_ami {
     description = "win10 ami"
+}
+
+variable win12_ami {
+    description = "win12 ami"
 }
 
 variable win16_ami {
     description = "win16 ami"
 }
+
+variable win19_ami {
+    description = "win19 ami"
+}
+
 variable centos_ami {
     description = "centos ami"
 }

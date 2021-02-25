@@ -33,11 +33,11 @@ all:
 %{ endif ~}
           windows:
             children:
-%{ if length(win10_hosts) > 0 || length(win16_hosts) > 0 ~}
-%{ for role in [for r1 in distinct(concat(distinct(split(",",join(",",[ for r2 in win10_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win16_hosts: r2.tags.Role ]))))): r1 if length(regexall("^splunk_", r1)) == 0 && length(r1) > 0 ] ~}
+%{ if length(win08_hosts) > 0 || length(win10_hosts) > 0  || length(win12_hosts) > 0 || length(win16_hosts) > 0 || length(win19_hosts) > 0 ~}
+%{ for role in [for r1 in distinct(concat(distinct(split(",",join(",",[ for r2 in win08_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win10_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win12_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win16_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win19_hosts: r2.tags.Role ]))))): r1 if length(regexall("^splunk_", r1)) == 0 && length(r1) > 0 ] ~}
               ${role}:
                 hosts:
-%{ for host in distinct([ for r in concat(win10_hosts,win16_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
+%{ for host in distinct([ for r in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
                     ${host}.${internal_domain}:
                       ansible_connection: "{{ windows.ansible_connection }}"
                       ansible_ssh_port: "{{ windows.ansible_ssh_port }}"
@@ -76,7 +76,7 @@ all:
                     ansible_system: Linux
                     ansible_ssh_user: "{{ centos.ansible_ssh_user }}"
 %{ endif ~}
-%{ if contains([ for h in concat(win10_hosts,win16_hosts): h.tags.Name], host) ~}
+%{ if contains([ for h in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): h.tags.Name], host) ~}
                     ansible_connection: "{{ windows.ansible_connection }}"
                     ansible_ssh_port: "{{ windows.ansible_ssh_port }}"
                     ansible_ssh_user: "{{ windows.ansible_ssh_user }}"

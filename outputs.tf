@@ -34,21 +34,21 @@ output "lab1_vpc_id" {
     value = module.lab1.vpc_id
 }
 
-output "lab1_elb_certs" {
-    value = module.lab1_public_dns_mapping.elb_certs
-}
+# output "lab1_elb_certs" {
+#     value = module.lab1_public_dns_mapping.elb_certs
+# }
 
-output "lab1_elb" {
-    value = module.lab1_public_dns_mapping.elb
-}
+# output "lab1_elb" {
+#     value = module.lab1_public_dns_mapping.elb
+# }
 
-output "lab1_instance_record" {
-    value = module.lab1_public_dns_mapping.instance_record
-}
+# output "lab1_instance_record" {
+#     value = module.lab1_public_dns_mapping.instance_record
+# }
 
-output "lab1_elb_record" {
-    value = module.lab1_public_dns_mapping.elb_record
-}
+# output "lab1_elb_record" {
+#     value = module.lab1_public_dns_mapping.elb_record
+# }
 
 /*###############################################
 LAB 2
