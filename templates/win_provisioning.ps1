@@ -11,7 +11,7 @@ try{
     Write-output "Starting provisiong..." | Out-File -FilePath $logFile
 
     Write-output $("Renaming computer: {0}" -f "${short_name}") | Out-File -Append -FilePath $logFile
-    Rename-computer -force -newname "${short_name}"
+    Rename-computer -ComputerName . -NewName "${short_name}" -force
 
     Function New-LegacySelfSignedCert
     {
@@ -215,7 +215,8 @@ try{
     Get-ChildItem  -Path Cert:\LocalMachine\MY | Where-Object {$_.Thumbprint -NotMatch $thumbprint } | Remove-Item
 
     Write-output $("Restart WinRM") | Out-File -Append -FilePath $logFile
-    Restart-Service WinRM
+    Stop-Service WinRM
+    Start-Service WinRM
 
     Write-output $("Setting user password computer: {0}" -f "${win_user}") | Out-File -Append -FilePath $logFile
     $admin = [adsi]("WinNT://./${win_user}, user")
@@ -228,6 +229,6 @@ try{
 
 Write-output $("Done.") | Out-File -Append -FilePath $logFile
 
-Start-Process shutdown /r /f /t 60 /c "Rename required."
+Start-Process cmd -WindowStyle Hidden -ArgumentList "'/c shutdown /r /t 60 /f /d p:4:1 /c Provisioning_Restart'"
 
 </powershell>
