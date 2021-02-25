@@ -190,7 +190,7 @@ try{
 
     Write-Output "Enable WinRM HTTPS Listener" | Out-File -Append -FilePath $logFile
     $Hostname = [System.Net.Dns]::GetHostByName((hostname)).HostName.ToUpper()
-    $thumbprint = New-LegacySelfSignedCert -SubjectName $Hostname
+    $thumbprint = New-LegacySelfSignedCert -SubjectName ${short_name}
     # check existing listeners
     $listener = Get-ChildItem -Path WSMan:\localhost\Listener | Where-Object { $_.Keys -contains "Transport=HTTPS" } | select-object *
     
@@ -218,7 +218,7 @@ try{
     $admin = [adsi]("WinNT://./${win_user}, user")
     $admin.PSBase.Invoke("SetPassword", "${win_password}")
         
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers
 }catch{
     Write-output $("Error: {0}" -f $_) | Out-File -Append -FilePath $logFile
 }
