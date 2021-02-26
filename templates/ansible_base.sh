@@ -81,7 +81,7 @@ secret_key: 'awxsecret'
 EOF
 
 # install awx
-sudo ansible-playbook -i lab-inventory install.yml -e @vars.yml
+sudo ansible-playbook -vvv -i lab-inventory install.yml -e @vars.yml
 
 # sleep
 sleep 60
