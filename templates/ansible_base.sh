@@ -1,3 +1,8 @@
+# ensure /usr/local/bin is in global path for /bin/sh (awx requirement)
+sudo /bin/bash -c 'cat >>/etc/environment<<EOF
+PATH=$PATH:/usr/local/bin
+EOF'
+
 # install ansible and git
 sudo yum install -y \
     epel-release \
@@ -25,7 +30,7 @@ sudo yum remove docker \
                   docker-latest \
                   docker-latest-logrotate \
                   docker-logrotate \
-                  docker-engine
+                  docker-engine 
 
 # install yum-utils
 sudo yum install -y yum-utils
@@ -39,8 +44,8 @@ sudo yum-config-manager \
 # install docker
 sudo yum install -y docker-ce docker-ce-cli containerd.io
 
-# install python docker
-sudo pip3 install docker docker-compose
+# install python docker-compose
+sudo python3 -m pip install docker-compose
 
 # enable docker service at startup
 sudo systemctl enable docker
