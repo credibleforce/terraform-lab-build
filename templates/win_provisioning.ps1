@@ -229,6 +229,6 @@ try{
 
 Write-output $("Done.") | Out-File -Append -FilePath $logFile
 
-Start-Process cmd -WindowStyle Hidden -ArgumentList "'/c shutdown /r /t 60 /f /d p:4:1 /c Provisioning_Restart'"
+#Start-Process cmd -WindowStyle Hidden -ArgumentList "'/c shutdown /r /t 60 /f /d p:4:1 /c Provisioning_Restart'"
 
 </powershell>

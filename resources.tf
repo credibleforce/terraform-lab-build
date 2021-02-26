@@ -34,6 +34,33 @@ data "aws_ami" "centos" {
 }
 
 # Discover latest windows 2016 ami
+data "aws_ami" "win12" {
+  most_recent = true
+  owners      = ["amazon","microsoft"]
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "image-type"
+    values = ["machine"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2012-RTM-English-64Bit-Base-*"]
+  }
+}
+
+
+# Discover latest windows 2016 ami
 data "aws_ami" "win16" {
   most_recent = true
   owners      = ["amazon","microsoft"]
@@ -56,6 +83,32 @@ data "aws_ami" "win16" {
   filter {
     name   = "name"
     values = ["Windows_Server-2016-English-Full-Base-*"]
+  }
+}
+
+# Discover latest windows 2016 ami
+data "aws_ami" "win19" {
+  most_recent = true
+  owners      = ["amazon","microsoft"]
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "image-type"
+    values = ["machine"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-Base-*"]
   }
 }
 
