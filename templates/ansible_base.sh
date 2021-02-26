@@ -1,16 +1,21 @@
 # install ansible and git
-sudo yum install -y epel-release
-sudo yum install -y git
-sudo yum install -y patch
-sudo yum -y install python3 python3-pip
-sudo alternatives --set python /usr/bin/python3
+sudo yum install -y \
+    epel-release \
+    git \
+    patch \
+    python3 \
+    python3-pip
+#sudo alternatives --set python /usr/bin/python3
 
 # Install local Ansible.
-sudo pip3 install ansible
+#sudo pip3 install ansible
 sudo yum install -y gcc python3-pip python3-devel krb5-devel krb5-libs krb5-workstation
-sudo pip3 install --upgrade pip
-sudo pip3 install pywinrm requests
-sudo pip3 install pywinrm[kerberos] pywinrm[credssp]
+sudo python3 -m pip install --upgrade pip
+sudo python3 -m pip install \
+    pywinrm \
+    requests \
+    pywinrm[kerberos] \
+    pywinrm[credssp]
 
 # Install awx
 # remove existing docker configuration
@@ -45,7 +50,8 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 # clone aws repository
-git clone --branch 15.0.1 --recursive https://github.com/ansible/awx.git
+rm -rf ./awx
+git clone --branch 17.0.1 --recursive https://github.com/ansible/awx.git
 
 cd awx/installer
 
@@ -150,5 +156,4 @@ awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=passwo
 cd ~/deployment/ansible
 
 # all ssh keys to known hosts
-ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --limit "local" --extra-vars "@vars_base.yml"
-ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --limit "linux" --extra-vars "@vars_base.yml"
+ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --extra-vars "@vars_base.yml"
