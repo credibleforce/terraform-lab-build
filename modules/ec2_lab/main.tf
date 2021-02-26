@@ -73,15 +73,6 @@ locals {
     kali_last_octet_base    = 200
     kali_hosts_override     = var.kali_hosts_override
 
-    win08_user              = "administrator"
-    win08_hosts             = var.win08_hosts
-    win08_instance_type     = "t2.medium"
-    win08_prefix            = "win08"
-    win08_role              = "win08"
-    win08_volume_size       = "60"
-    win08_last_octet_base   = 100
-    win08_hosts_override    = var.win08_hosts_override
-
     win10_user              = "administrator"
     win10_hosts             = var.win10_hosts
     win10_instance_type     = "t2.medium"
@@ -91,13 +82,22 @@ locals {
     win10_last_octet_base   = 100
     win10_hosts_override    = var.win10_hosts_override
 
+    win08_user              = "administrator"
+    win08_hosts             = var.win08_hosts
+    win08_instance_type     = "t2.medium"
+    win08_prefix            = "win08"
+    win08_role              = "win08"
+    win08_volume_size       = "60"
+    win08_last_octet_base   = 40
+    win08_hosts_override    = var.win08_hosts_override
+
     win12_user              = "administrator"
     win12_hosts             = var.win12_hosts
     win12_instance_type     = "t2.medium"
     win12_prefix            = "win12"
     win12_role              = "win12"
     win12_volume_size       = "60"
-    win12_last_octet_base   = 100
+    win12_last_octet_base   = 30
     win12_hosts_override    = var.win12_hosts_override
 
     win16_user              = "administrator"
@@ -106,7 +106,7 @@ locals {
     win16_prefix            = "win16"
     win16_role              = "win16"
     win16_volume_size       = "60"
-    win16_last_octet_base   = 10
+    win16_last_octet_base   = 20
     win16_hosts_override    = var.win16_hosts_override
 
     win19_user              = "administrator"
@@ -115,7 +115,7 @@ locals {
     win19_prefix            = "win19"
     win19_role              = "win19"
     win19_volume_size       = "60"
-    win19_last_octet_base   = 100
+    win19_last_octet_base   = 10
     win19_hosts_override    = var.win19_hosts_override
 
     ansible_deployment_user = var.ansible_deployment_user
@@ -127,7 +127,7 @@ locals {
     ansible_prefix          = "ansible"
     ansible_role            = "ansible"
     ansible_volume_size     = "25"
-    ansible_last_octet_base = 20
+    ansible_last_octet_base = 50
     ansible_hosts_override  = var.ansible_hosts_override
 
     centos_user             = "centos"
@@ -136,7 +136,7 @@ locals {
     centos_prefix           = "centos"
     centos_role             = "centos"
     centos_volume_size      = "25"
-    centos_last_octet_base  = 30
+    centos_last_octet_base  = 60
     centos_hosts_override   = var.centos_hosts_override
 
     win_user                = var.win_user
