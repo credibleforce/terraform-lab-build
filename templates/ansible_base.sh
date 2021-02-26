@@ -8,8 +8,7 @@ sudo yum install -y \
 #sudo alternatives --set python /usr/bin/python3
 
 # Install local Ansible.
-#sudo pip3 install ansible
-sudo yum install -y gcc python3-pip python3-devel krb5-devel krb5-libs krb5-workstation
+sudo yum install -y ansible gcc python3-pip python3-devel krb5-devel krb5-libs krb5-workstation
 sudo python3 -m pip install --upgrade pip
 sudo python3 -m pip install \
     pywinrm \
