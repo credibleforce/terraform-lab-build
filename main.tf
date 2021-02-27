@@ -154,7 +154,22 @@ locals {
                                             elb_protocol="tcp", 
                                             elb_source_protocol="https", 
                                             elb_destination_protocol="https" 
-                                        }
+                                        },
+                                        # enable load balacing for 443 => 8088
+                                        {   name="manage", 
+                                            targets="ansible-srv1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:80", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=443, 
+                                            elb_destination_port=8088, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="http" 
+                                        },
                                     ]
 
     key_name                    = "${local.project_prefix}-key"
