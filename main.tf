@@ -155,7 +155,7 @@ locals {
                                         #     elb_source_protocol="https", 
                                         #     elb_destination_protocol="https" 
                                         # },
-                                        # enable load balacing for 443 => 8088
+                                        # enable load balacing for 443 => 80
                                         {   name="manage", 
                                             targets="ansible-srv1", 
                                             cert=true, 
@@ -177,7 +177,7 @@ locals {
                                             elb=false,
                                             elb_type="application",
                                             elb_port_sticky_sessions=false, 
-                                            elb_health_check_target="", 
+                                            elb_health_check_target="TCP:80", 
                                             elb_source=local.trusted_source, 
                                             elb_source_port=2222, 
                                             elb_destination_port=22, 
