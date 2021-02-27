@@ -4,6 +4,10 @@ resource "null_resource" "module_dependency" {
   }
 }
 
+locals {
+    cert_subdomains = [for sg in var.subdomains: sg if sg.cert == true]
+}
+
 data "aws_route53_zone" "public" {
     depends_on = [null_resource.module_dependency]
     name         = format("%s.",var.public_domain)
@@ -12,8 +16,8 @@ data "aws_route53_zone" "public" {
 
 resource "aws_acm_certificate" "cert" {
     depends_on = [null_resource.module_dependency,aws_route53_zone.public]
-    count = length(var.subdomains)
-    domain_name       = format("%s.%s",var.subdomains[count.index],var.public_domain)
+    count = length(local.cert_domains)
+    domain_name       = format("%s.%s",local.cert_domains[count.index],var.public_domain)
     validation_method = "DNS"
 }
 
