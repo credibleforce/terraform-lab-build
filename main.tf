@@ -23,7 +23,7 @@ locals {
 
     win10_hosts                 = 0
     win10_hosts_override        =   [
-                                        #{ name="win10-dsk1", role="member_server" },
+                                        { name="win10-dsk1", role="member_server" },
                                     ]
 
     win12_hosts                 = 0
@@ -33,8 +33,8 @@ locals {
 
     win16_hosts                 = 0
     win16_hosts_override        =   [
-                                        #{ name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
-                                        #{ name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
+                                        { name="win16-dc1", role="domain_controller,certificate_authority,splunk_universal_forwarder" },
+                                        { name="win16-wef1", role="wef_server,splunk_universal_forwarder" },
                                         #{ name="win16-svr1", role="member_server" },
                                     ]
 
@@ -50,7 +50,7 @@ locals {
 
     centos_hosts                = 0
     centos_hosts_override       =   [
-                                        #{name="splk-sh1", role="splunk_standalone", custom_security_group="splunk_security_group"},
+                                        {name="splk-sh1", role="splunk_standalone", custom_security_group="splunk_security_group"},
                                         #{name="splk-sh1", role="splunk_search_head", custom_security_group="splunk_security_group"},
                                         #{name="splk-sh2", role="splunk_search_head", custom_security_group="splunk_security_group"},
                                         #{name="splk-sh3", role="splunk_search_head,splunk_search_head_captain", custom_security_group="splunk_security_group"},
@@ -87,74 +87,74 @@ locals {
                                         },
                                         { name="ansible_security_group", inbound_ports=  [ 
                                                                                             { source_port=22,destination_port=22,protocol="tcp" },
-                                                                                            { source_port=443,destination_port=443,protocol="tcp" }
+                                                                                            #{ source_port=443,destination_port=443,protocol="tcp" }
                                                                                         ]
                                         },
                                     ]
 
     public_dns_mapping          =   [
-                                        # # enable load balancing for 443 => 8000
-                                        # {   
-                                        #     name="search", 
-                                        #     targets="splk-sh1", 
-                                        #     cert=true, 
-                                        #     elb=true,
-                                        #     elb_type="application",
-                                        #     elb_port_sticky_sessions=true, 
-                                        #     elb_health_check_target="TCP:8000", 
-                                        #     elb_source=local.trusted_source, 
-                                        #     elb_source_port=443, 
-                                        #     elb_destination_port=8000, 
-                                        #     elb_protocol="tcp", 
-                                        #     elb_source_protocol="https", 
-                                        #     elb_destination_protocol="https" 
-                                        # },
-                                        # # enable load balancing for 443 => 8089
-                                        # {   
-                                        #     name="deploy", 
-                                        #     targets="splk-sh1", 
-                                        #     cert=true, 
-                                        #     elb=true,
-                                        #     elb_type="application",
-                                        #     elb_port_sticky_sessions=true, 
-                                        #     elb_health_check_target="TCP:8089", 
-                                        #     elb_source=local.trusted_source, 
-                                        #     elb_source_port=443, 
-                                        #     elb_destination_port=8089, 
-                                        #     elb_protocol="tcp", 
-                                        #     elb_source_protocol="https", 
-                                        #     elb_destination_protocol="https" 
-                                        # },
-                                        # # enable load balacing for 443 => 8088
-                                        # {   name="forward", 
-                                        #     targets="splk-sh1", 
-                                        #     cert=true, 
-                                        #     elb=true,
-                                        #     elb_type="application",
-                                        #     elb_port_sticky_sessions=true, 
-                                        #     elb_health_check_target="TCP:8088", 
-                                        #     elb_source=local.trusted_source, 
-                                        #     elb_source_port=443, 
-                                        #     elb_destination_port=8088, 
-                                        #     elb_protocol="tcp", 
-                                        #     elb_source_protocol="https", 
-                                        #     elb_destination_protocol="https" 
-                                        # },
-                                        # # disable load balancing for indexer
-                                        # {   name="index", 
-                                        #     targets="splk-sh1", 
-                                        #     cert=false, 
-                                        #     elb=false,
-                                        #     elb_type="application",
-                                        #     elb_port_sticky_sessions=true, 
-                                        #     elb_health_check_target="TCP:9997", 
-                                        #     elb_source=local.trusted_source, 
-                                        #     elb_source_port=9997, 
-                                        #     elb_destination_port=9997, 
-                                        #     elb_protocol="tcp", 
-                                        #     elb_source_protocol="https", 
-                                        #     elb_destination_protocol="https" 
-                                        # },
+                                        # enable load balancing for 443 => 8000
+                                        {   
+                                            name="search", 
+                                            targets="splk-sh1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:8000", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=443, 
+                                            elb_destination_port=8000, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
+                                        # enable load balancing for 443 => 8089
+                                        {   
+                                            name="deploy", 
+                                            targets="splk-sh1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:8089", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=443, 
+                                            elb_destination_port=8089, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
+                                        # enable load balacing for 443 => 8088
+                                        {   name="forward", 
+                                            targets="splk-sh1", 
+                                            cert=true, 
+                                            elb=true,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:8088", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=443, 
+                                            elb_destination_port=8088, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
+                                        # disable load balancing for indexer
+                                        {   name="index", 
+                                            targets="splk-sh1", 
+                                            cert=false, 
+                                            elb=false,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=true, 
+                                            elb_health_check_target="TCP:9997", 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=9997, 
+                                            elb_destination_port=9997, 
+                                            elb_protocol="tcp", 
+                                            elb_source_protocol="https", 
+                                            elb_destination_protocol="https" 
+                                        },
                                         # enable load balacing for 443 => 80
                                         {   name="manage", 
                                             targets="ansible-srv1", 
@@ -170,20 +170,20 @@ locals {
                                             elb_source_protocol="https", 
                                             elb_destination_protocol="http" 
                                         },
-                                        # enable load balacing for 443 => 8088
+                                        # public dns mapping for ansible
                                         {   name="admin", 
                                             targets="ansible-srv1", 
                                             cert=false, 
                                             elb=false,
                                             elb_type="application",
-                                            elb_port_sticky_sessions=false, 
-                                            elb_health_check_target="TCP:80", 
+                                            elb_port_sticky_sessions=null, 
+                                            elb_health_check_target=null, 
                                             elb_source=local.trusted_source, 
-                                            elb_source_port=2222, 
-                                            elb_destination_port=22, 
-                                            elb_protocol="tcp", 
-                                            elb_source_protocol="https", 
-                                            elb_destination_protocol="http" 
+                                            elb_source_port=null, 
+                                            elb_destination_port=null, 
+                                            elb_protocol=null, 
+                                            elb_source_protocol=null, 
+                                            elb_destination_protocol=null 
                                         },
                                     ]
 
