@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # install ansible and git
 sudo yum install -y \
     epel-release \
@@ -40,7 +42,7 @@ sudo yum-config-manager \
 sudo yum install -y docker-ce docker-ce-cli containerd.io
 
 # install python docker-compose and link
-sudo python3 -m pip install docker-compose
+sudo python3 -m pip install docker docker-compose
 sudo ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # enable docker service at startup
@@ -65,7 +67,7 @@ awx_web_hostname=awxweb
 postgres_data_dir="/opt/awx/pgdocker"
 host_port=80
 host_port_ssl=443
-docker_compose_dir="/opt/awx/awxcompose"
+docker_compose_dir="~/.awx/awxcompose"
 pg_username=awx
 pg_database=awx
 pg_port=5432
@@ -80,80 +82,83 @@ pg_password: 'awxpass'
 secret_key: 'awxsecret'
 EOF
 
-# install awx
-sudo ansible-playbook -vvv -i lab-inventory install.yml -e @vars.yml
-
-# sleep
-sleep 60
-
-# exec migration task and restart the containers to ensure upgrade/migration completes before first run
+#sed -i 's/shell: docker-compose run --rm --service-ports task awx-manage migrate --no-input/command: docker exec awx_web bash -c "awx-manage migrate --noinput"/' ~/awx/installer/roles/local_docker/tasks/compose.yml
 #sudo docker exec -it awx_web /bin/bash -c "awx-manage migrate --noinput"
-#sudo docker stop awx_task awx_web
-#sudo docker start awx_task awx_web
+#docker-compose --verbose --log-level DEBUG --ansi never  run --rm --service-ports task awx-manage migrate --no-input > /tmp/compose.txt 2>&1
+# install awx
+# sudo ansible-playbook -vvv -i lab-inventory install.yml -e @vars.yml
 
-# sleep
-sleep 30
+# # sleep
+# sleep 60
 
-# awxcli (optional)
-sudo pip3 install awxkit
+# # exec migration task and restart the containers to ensure upgrade/migration completes before first run
+# sudo docker exec -it awx_web /bin/bash -c "awx-manage migrate --noinput"
+# sudo docker stop awx_task awx_web
+# sudo docker start awx_task awx_web
 
-# sync splunk repo
-sudo mkdir /opt/repo
-sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-engagement-ansible /opt/repo/splunk-engagement-ansible
-sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-lab /opt/repo/splunk-lab
+# # sleep
+# sleep 30
 
-# sym link doesn't work (needs further test) just copy ansible directory - ideally structure of repo include ansible.cfg at the root for awx
-sudo mkdir -p /opt/awx/projects/splunk
-sudo mkdir -p /opt/awx/projects/lab
-sudo cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk
-sudo cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
+# # awxcli (optional)
+# sudo pip3 install awxkit
 
-# create an inventory place holder
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure inventory create --name "lab-inventory" --organization "Default"
+# # sync splunk repo
+# sudo mkdir /opt/repo
+# sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-engagement-ansible /opt/repo/splunk-engagement-ansible
+# sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-lab /opt/repo/splunk-lab
 
-# copy inventory to awx_task container
-sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
+# # sym link doesn't work (needs further test) just copy ansible directory - ideally structure of repo include ansible.cfg at the root for awx
+# sudo mkdir -p /opt/awx/projects/splunk
+# sudo mkdir -p /opt/awx/projects/lab
+# sudo cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk
+# sudo cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
 
-# import inventory using awx-manage
-sudo docker exec -it awx_task /bin/bash -c "awx-manage inventory_import --source=lab.yml --inventory-name=lab-inventory --overwrite --overwrite-vars"
+# # create an inventory place holder
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure inventory create --name "lab-inventory" --organization "Default"
 
-# create a lab project
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "lab-project" --organization "Default" --scm_type "" --local_path "lab"
+# # copy inventory to awx_task container
+# sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
 
-# create a splunk project
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "splunk-project" --organization "Default" --scm_type "" --local_path "splunk"
+# # import inventory using awx-manage
+# sudo docker exec -it awx_task /bin/bash -c "awx-manage inventory_import --source=lab.yml --inventory-name=lab-inventory --overwrite --overwrite-vars"
 
-# add ssh key credentials to awx 
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-linux" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
+# # create a lab project
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "lab-project" --organization "Default" --scm_type "" --local_path "lab"
 
-# add windows non-domain credentials to awx
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-local" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"password\":\"vagrant\"}"
+# # create a splunk project
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "splunk-project" --organization "Default" --scm_type "" --local_path "splunk"
 
-# add windows domain credentials to awx
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-domain" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"administrator\",\"password\":\"myTempPassword123\"}"
+# # add ssh key credentials to awx 
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-linux" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
 
-# create lab job template
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --become_enabled True
+# # add windows non-domain credentials to awx
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-local" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"password\":\"vagrant\"}"
 
-# associate credentials to lab template
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template associate --credential "lab-linux" --name "lab-template"
+# # add windows domain credentials to awx
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-domain" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"administrator\",\"password\":\"myTempPassword123\"}"
 
-# create splunk job template
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory" --become_enabled True
+# # create lab job template
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --become_enabled True
 
-# associate credentials to splunk template
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
+# # associate credentials to lab template
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template associate --credential "lab-linux" --name "lab-template"
 
-# # run the job lab template
-# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'lab-template' --monitor -f human
+# # create splunk job template
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory" --become_enabled True
 
-# # run the job splunk template
-# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'splunk-template' --monitor -f human
+# # associate credentials to splunk template
+# awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
 
-# local ssh key sync
+# # # run the job lab template
+# # awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'lab-template' --monitor -f human
 
-# change working directory
-cd ~/deployment/ansible
+# # # run the job splunk template
+# # awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'splunk-template' --monitor -f human
 
-# all ssh keys to known hosts
-ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --extra-vars "@vars_base.yml"
+# # local ssh key sync
+
+# # change working directory
+# cd ~/deployment/ansible
+
+# # all ssh keys to known hosts
+# ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --extra-vars "@vars_base.yml"
