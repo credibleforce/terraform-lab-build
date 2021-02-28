@@ -24,7 +24,7 @@ resource "aws_security_group" "sg" {
           self = false
         }]): {
         from_port   = inbound_port.source_port
-        to_port     = inbound_port.destination_port
+        to_port     = inbound_port.source_port
         protocol    = inbound_port.protocol
         cidr_blocks = lookup(inbound_port,"cidr_blocks",split(",",var.trusted_source)) 
         description = "allow inbound ${inbound_port.source_port}/${inbound_port.protocol} from ${var.trusted_source}"

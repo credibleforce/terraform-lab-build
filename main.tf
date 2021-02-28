@@ -93,8 +93,8 @@ locals {
                                         },
                                         { name="syslog_security_group", inbound_ports=  [ 
                                                                                             { source_port=22,destination_port=22,protocol="tcp" },
-                                                                                            { source_port=514,destination_port=443,protocol="tcp" },
-                                                                                            { source_port=514,destination_port=443,protocol="udp" }
+                                                                                            { source_port=514,destination_port=514,protocol="tcp" },
+                                                                                            { source_port=514,destination_port=514,protocol="udp" }
                                                                                         ]
                                         },
                                     ]
