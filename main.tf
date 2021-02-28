@@ -333,8 +333,8 @@ module "lab1_script_exec" {
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
-                                    #"/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    #"/home/${local.ansible_user}/ansible_splunk_deployment.sh",
+                                    "/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                    "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
                                 ]
     scripts                 =   []
 }

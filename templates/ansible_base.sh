@@ -94,7 +94,16 @@ sudo docker stop awx_task awx_web
 sudo docker start awx_task awx_web
 
 # sleep
-sleep 30
+sleep 60
+
+# add hashi_vault dependancies
+sudo virtualenv /opt/awx/envs/proservlab-cloud
+sudo python3 -m venv /opt/awx/envs/proservlab-cloud
+sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install psutil
+sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install -U hvac
+sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install -U hvac[parser]
+sudo docker cp /opt/awx/envs/proservlab-cloud awx_task:/var/lib/awx/venv/
+sudo docker cp /opt/awx/envs/proservlab-cloud awx_web:/var/lib/awx/venv/
 
 # awxcli (optional)
 sudo pip3 install awxkit
@@ -105,15 +114,16 @@ sudo git clone --branch develop --recursive https://github.com/mobia-security-se
 sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-lab /opt/repo/splunk-lab
 
 # sym link doesn't work (needs further test) just copy ansible directory - ideally structure of repo include ansible.cfg at the root for awx
-sudo mkdir -p /opt/awx/projects
-sudo cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk
-sudo cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
+sudo rm -rf /opt/awx/projects/* \
+    && mkdir -p /opt/awx/projects \
+    && cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk \
+    && cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
 
 # create an organization
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure organization create --name "Default"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
 
 # create an inventory place holder
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure inventory create --name "lab-inventory" --organization "Default"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure inventory create --name "lab-inventory" --organization "lab"
 
 # copy inventory to awx_task container
 sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
@@ -122,19 +132,19 @@ sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
 sudo docker exec -it awx_task /bin/bash -c "awx-manage inventory_import --source=lab.yml --inventory-name=lab-inventory --overwrite --overwrite-vars"
 
 # create a lab project
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "lab-project" --organization "Default" --scm_type "" --local_path "lab"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "lab-project" --organization "lab" --scm_type "" --local_path "lab"
 
 # create a splunk project
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "splunk-project" --organization "Default" --scm_type "" --local_path "splunk"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure project create --name "splunk-project" --organization "lab" --scm_type "" --local_path "splunk"
 
 # add ssh key credentials to awx 
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-linux" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-linux" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
 
 # add windows non-domain credentials to awx
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-local" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"administrator\",\"password\":\"myTempPassword123\"}"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-local" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"administrator\",\"password\":\"myTempPassword123\"}"
 
 # add windows domain credentials to awx
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-domain" --organization="Default" --credential_type="Machine" --inputs="{\"username\":\"administrator@lab.lan\",\"password\":\"myTempPassword123\"}"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"administrator@lab.lan\",\"password\":\"myTempPassword123\"}"
 
 # create lab job template
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
@@ -163,7 +173,7 @@ cd ~/deployment/ansible
 ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --extra-vars "@vars_base.yml"
 
 # setup domain
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra-vars "@vars_base.yml"
+#awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra-vars "@vars_base.yml"
 
 # setup splunk
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'splunk-template' --monitor -f human
+#awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates launch 'splunk-template' --monitor -f human
