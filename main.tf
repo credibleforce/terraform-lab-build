@@ -62,6 +62,7 @@ locals {
                                         #{name="splk-idx2", role="splunk_indexer", custom_security_group="splunk_security_group"},
                                         #{name="splk-hf1", role="splunk_heavy_forwarder", custom_security_group="splunk_security_group"},
                                         #{name="splk-uf1", role="splunk_universal_forwarder", custom_security_group="splunk_security_group"},
+                                        {name="lin-syslog1", role="lin_sc4s", custom_security_group="syslog_security_group"},
                                     ]
     ansible_user                = "centos"
     ansible_group               = "centos"
@@ -69,7 +70,7 @@ locals {
     ansible_deployment_group    = "deployer"
     ansible_hosts               = 0
     ansible_hosts_override      =   [
-                                        {name="ansible-srv1", custom_security_group="splunk_security_group"},
+                                        {name="ansible-srv1", custom_security_group="ansible_security_group"},
                                     ]
     ansible_private_dns         = length(module.lab1.ansible_instances)>0? module.lab1.ansible_instances[0].private_dns : null
     ansible_public_ip           = length(module.lab1.ansible_instances)>0? module.lab1.ansible_instances[0].public_ip : null
@@ -88,6 +89,12 @@ locals {
                                         { name="ansible_security_group", inbound_ports=  [ 
                                                                                             { source_port=22,destination_port=22,protocol="tcp" },
                                                                                             #{ source_port=443,destination_port=443,protocol="tcp" }
+                                                                                        ]
+                                        },
+                                        { name="syslog_security_group", inbound_ports=  [ 
+                                                                                            { source_port=22,destination_port=22,protocol="tcp" },
+                                                                                            { source_port=514,destination_port=443,protocol="tcp" },
+                                                                                            { source_port=514,destination_port=443,protocol="udp" }
                                                                                         ]
                                         },
                                     ]
