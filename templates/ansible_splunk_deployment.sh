@@ -8,6 +8,7 @@ cd splunk-deployment
 git clone --recurse-submodules --single-branch --branch 'develop' https://github.com/mobia-security-services/splunk-engagement-ansible.git
 cd splunk-engagement-ansible/ansible
 ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-standalone.yml --extra-vars @~/deployment/ansible/vars_base.yml
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/push-standalone-apps.yml --extra-vars @~/deployment/ansible/vars_base.yml
 #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-distributed.yml --extra-vars @~/deployment/ansible/vars_base.yml
 #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
 #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-searchcluster-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
