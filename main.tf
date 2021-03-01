@@ -62,7 +62,7 @@ locals {
                                         #{name="splk-idx2", role="splunk_indexer", custom_security_group="splunk_security_group"},
                                         #{name="splk-hf1", role="splunk_heavy_forwarder", custom_security_group="splunk_security_group"},
                                         #{name="splk-uf1", role="splunk_universal_forwarder", custom_security_group="splunk_security_group"},
-                                        {name="lin-syslog1", role="syslog_collector", custom_security_group="syslog_security_group"},
+                                        {name="lin-syslog1", role="syslog-collector", custom_security_group="syslog_security_group"},
                                     ]
     ansible_user                = "centos"
     ansible_group               = "centos"
