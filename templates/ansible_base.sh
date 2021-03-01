@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# ensure /usr/local/bin is in global path for /bin/sh (awx requirement)
+sudo /bin/bash -c 'cat >>/etc/profile.d/add_local_path.sh<<EOF
+PATH=$PATH:/usr/local/bin
+EOF'
+sudo chmod +x /etc/profile.d/add_local_path.sh
+
 # install ansible and git
 sudo yum install -y \
     epel-release \
@@ -10,11 +16,12 @@ sudo yum install -y \
 #sudo alternatives --set python /usr/bin/python3
 
 # Install local Ansible.
-sudo yum install -y ansible gcc python3-pip python3-devel krb5-devel krb5-libs krb5-workstation
+sudo yum install -y ansible gcc python3-pip python3-kerberos python3-devel krb5-devel krb5-libs krb5-workstation
 sudo python3 -m pip install --upgrade pip
 sudo python3 -m pip install \
     pywinrm \
-    requests \
+    requests
+sudo python3 -m pip install \
     pywinrm[kerberos] \
     pywinrm[credssp]
 
