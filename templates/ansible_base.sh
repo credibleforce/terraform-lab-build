@@ -13,14 +13,15 @@ sudo yum install -y \
     patch \
     python3 \
     python3-pip
-#sudo alternatives --set python /usr/bin/python3
+sudo alternatives --set python /usr/bin/python3
 
 # Install local Ansible.
 sudo yum install -y ansible gcc python3-pip python3-kerberos python3-devel krb5-devel krb5-libs krb5-workstation
 sudo python3 -m pip install --upgrade pip
 sudo python3 -m pip install \
     pywinrm \
-    requests
+    requests \
+    virtualenv
 sudo python3 -m pip install \
     pywinrm[kerberos] \
     pywinrm[credssp]
@@ -50,7 +51,6 @@ sudo yum install -y docker-ce docker-ce-cli containerd.io
 
 # install python docker-compose and link
 sudo python3 -m pip install docker docker-compose
-sudo ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # enable docker service at startup
 sudo systemctl enable docker
@@ -90,7 +90,7 @@ secret_key: 'awxsecret'
 EOF
 
 # install awx
-sudo ansible-playbook -vvv -i lab-inventory install.yml -e @vars.yml
+sudo -i ansible-playbook -vvv -i lab-inventory install.yml -e @vars.yml
 
 # sleep
 sleep 60
@@ -104,7 +104,7 @@ sudo docker start awx_task awx_web
 sleep 60
 
 # add hashi_vault dependancies
-sudo virtualenv /opt/awx/envs/proservlab-cloud
+sudo -i virtualenv /opt/awx/envs/proservlab-cloud
 sudo python3 -m venv /opt/awx/envs/proservlab-cloud
 sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install psutil
 sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install -U hvac
@@ -122,9 +122,9 @@ sudo git clone --branch develop --recursive https://github.com/mobia-security-se
 
 # sym link doesn't work (needs further test) just copy ansible directory - ideally structure of repo include ansible.cfg at the root for awx
 sudo rm -rf /opt/awx/projects/* \
-    && mkdir -p /opt/awx/projects \
-    && cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk \
-    && cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
+    && sudo mkdir -p /opt/awx/projects \
+    && sudo cp -pr /opt/repo/splunk-engagement-ansible/ansible /opt/awx/projects/splunk \
+    && sudo cp -pr /opt/repo/splunk-lab/ansible /opt/awx/projects/lab
 
 # create an organization
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
@@ -154,13 +154,13 @@ awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=passwo
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"administrator@lab.lan\",\"password\":\"myTempPassword123\"}"
 
 # create lab job template
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
 
 # associate credentials to lab template
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template associate --credential "lab-linux" --name "lab-template"
 
 # create splunk job template
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory"
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_templates create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory"
 
 # associate credentials to splunk template
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password=password --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
