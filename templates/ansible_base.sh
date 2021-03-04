@@ -106,7 +106,9 @@ sleep 60
 # add hashi_vault dependancies
 sudo --preserve-env=PATH virtualenv /opt/awx/envs/proservlab-cloud
 sudo python3 -m venv /opt/awx/envs/proservlab-cloud
+sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install --upgrade pip
 sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install psutil
+sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install -U pywinrm
 sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install -U hvac
 sudo /opt/awx/envs/proservlab-cloud/bin/pip3 install -U hvac[parser]
 sudo docker cp /opt/awx/envs/proservlab-cloud awx_task:/var/lib/awx/venv/
