@@ -1,4 +1,0 @@
----
-    - name: Add PSGallery as Trusted Powershell Repo
-      win_shell: |
-        Set-PackageSource -Name PSGallery -Trusted

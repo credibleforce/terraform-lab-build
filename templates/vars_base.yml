@@ -4,6 +4,11 @@ lab:
     centos:
         ansible_ssh_user: ${ansible_user}
     windows:
+        win_dns_domain: ${win_dns_domain}
+        win_netbios_domain: ${win_netbios_domain}
+        win_admin_user: ${win_admin_user}
+        win_admin_password: ${win_admin_password}
+        win_ca_common_name: ${win_ca_common_name}
         ansible_connection: winrm
         ansible_ssh_port: 5986
         ansible_ssh_user: ${win_user}
