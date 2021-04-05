@@ -124,24 +124,36 @@ Network subnet2 availability zone (e.g. us-east-1f)
   default = "us-east-1f"
 }
 
-variable win_user {
-    description = "windows connection username"
-    default = "administrator"
+variable "lab_base_name" {
+    description = "internal name for the lab"
 }
 
-variable win_password {
-    description = "windows connection password"
-    default = "myTempPassword123"
+variable "lab_base_tld" {
+    description = "internal tld for the lab"
 }
 
-variable ansible_deployment_user {
-    description = "ansible deployment user"
-    default = "deployer"
+variable "win_user" {
+    description = "windows admin user"
 }
 
-variable ansible_deployment_group {
-    description = "ansible deployment group"
-    default = "deployer"
+variable "win_password" {
+    description = "windows admin password"
+}
+
+variable "splunk_password" {
+    description = "splunk password"
+}
+
+variable "ansible_awx_password" {
+    description = "awx password"
+}
+
+variable "ansible_awx_pg_password" {
+    description = "awx pg password"
+}
+
+variable "ansible_awx_secret_key" {
+    description = "awx secret key"
 }
 
 variable internal_domain {

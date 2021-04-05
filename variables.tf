@@ -33,7 +33,6 @@ variable "ansible_awx_pg_password" {
 
 variable "ansible_awx_secret_key" {
     description = "awx secret key"
-    default     = "1-awx-secret-key"
 }
 
 

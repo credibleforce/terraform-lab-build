@@ -118,8 +118,6 @@ locals {
     win19_last_octet_base   = 10
     win19_hosts_override    = var.win19_hosts_override
 
-    ansible_deployment_user = var.ansible_deployment_user
-    ansible_deployment_group = var.ansible_deployment_user
     ansible_user            = var.ansible_user
     ansible_group           = var.ansible_group
     ansible_hosts           = var.ansible_hosts
@@ -139,30 +137,43 @@ locals {
     centos_last_octet_base  = 60
     centos_hosts_override   = var.centos_hosts_override
 
-    win_user                = var.win_user
-    win_password            = var.win_password
+    win_user                    = var.win_user
+    win_password                = var.win_password
+    win_dns_domain              = var.win_dns_domain
+    win_netbios_domain          = var.win_netbios_domain
+    win_ca_common_name          = var.win_ca_common_name
+    splunk_password             = var.splunk_password
+    ansible_awx_password        = var.ansible_awx_password
+    ansible_awx_pg_password     = var.ansible_awx_pg_password
+    ansible_awx_secret_key      = var.ansible_awx_secret_key
 
     ansible_template_vars = { 
         win_user                = local.win_user, 
         win_password            = local.win_password, 
-        internal_domain         = local.internal_domain, 
-        kali_hosts              = module.kali_instances.hosts, 
-        win08_hosts             = module.win08_instances.hosts, 
-        win10_hosts             = module.win10_instances.hosts, 
-        win12_hosts             = module.win12_instances.hosts, 
-        win16_hosts             = module.win16_instances.hosts, 
-        win19_hosts             = module.win19_instances.hosts, 
-        ansible_hosts           = module.ansible_instances.hosts, 
-        centos_hosts            = module.centos_instances.hosts 
-        ansible_deployment_user = local.ansible_deployment_user
+        win_dns_domain          = local.win_dns_domain
+        win_netbios_domain      = local.win_netbios_domain
+        win_ca_common_name      = local.win_ca_common_name
+        splunk_password         = local.splunk_password
+        ansible_awx_password    = local.ansible_awx_password
+        ansible_awx_pg_password = local.ansible_awx_pg_password
+        ansible_awx_secret_key  = local.ansible_awx_secret_key
         ansible_user            = local.ansible_user
         centos_user             = local.centos_user
         kali_user               = local.kali_user
+        internal_domain         = local.internal_domain, 
+        kali_hosts              = module.kali_instances.hosts
+        win08_hosts             = module.win08_instances.hosts
+        win10_hosts             = module.win10_instances.hosts
+        win12_hosts             = module.win12_instances.hosts
+        win16_hosts             = module.win16_instances.hosts
+        win19_hosts             = module.win19_instances.hosts
+        ansible_hosts           = module.ansible_instances.hosts
+        centos_hosts            = module.centos_instances.hosts 
     }
 
     ansible_inventory       = templatefile("${path.root}/templates/inventory.yml", local.ansible_template_vars)
     ansible_vars_base       = templatefile("${path.root}/templates/vars_base.yml", local.ansible_template_vars)
-    
+
     ansible_private_dns     = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].private_dns : null
     ansible_public_ip       = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].public_ip : null
 
