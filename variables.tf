@@ -11,11 +11,11 @@ variable "lab_base_tld" {
     description = "internal tld for the lab"
 }
 
-variable "win_user" {
+variable "win_admin_user" {
     description = "windows admin user"
 }
 
-variable "win_password" {
+variable "win_admin_password" {
     description = "windows admin password"
 }
 
@@ -35,4 +35,15 @@ variable "ansible_awx_secret_key" {
     description = "awx secret key"
 }
 
+variable "public_domain" {
+    description = "public domain used for external service hosting"
+}
+
+variable "win08_ami" {
+    description = "aws ami image for win08"
+}
+
+variable "win10_ami" {
+    description = "aws ami image for win10"
+}
 

@@ -132,11 +132,11 @@ variable "lab_base_tld" {
     description = "internal tld for the lab"
 }
 
-variable "win_user" {
+variable "win_admin_user" {
     description = "windows admin user"
 }
 
-variable "win_password" {
+variable "win_admin_password" {
     description = "windows admin password"
 }
 
@@ -162,6 +162,14 @@ variable internal_domain {
 
 variable public_domain {
     description = "public dns domain"
+}
+
+variable "win_netbios_domain" {
+    description = "windows netbios domain"
+}
+
+variable "win_ca_common_name" {
+    description = "windows ca common name"
 }
 
 variable student_id {

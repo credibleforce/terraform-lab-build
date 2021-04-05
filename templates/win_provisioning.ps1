@@ -218,9 +218,9 @@ try{
     Stop-Service WinRM
     Start-Service WinRM
 
-    Write-output $("Setting user password computer: {0}" -f "${win_user}") | Out-File -Append -FilePath $logFile
-    $admin = [adsi]("WinNT://./${win_user}, user")
-    $admin.PSBase.Invoke("SetPassword", "${win_password}")
+    Write-output $("Setting user password computer: {0}" -f "${win_admin_user}") | Out-File -Append -FilePath $logFile
+    $admin = [adsi]("WinNT://./${win_admin_user}, user")
+    $admin.PSBase.Invoke("SetPassword", "${win_admin_password}")
         
     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers
 }catch{

@@ -137,21 +137,20 @@ locals {
     centos_last_octet_base  = 60
     centos_hosts_override   = var.centos_hosts_override
 
-    win_user                    = var.win_user
-    win_password                = var.win_password
-    win_dns_domain              = var.win_dns_domain
+    win_admin_user                    = var.win_admin_user
+    win_admin_password                = var.win_admin_password
     win_netbios_domain          = var.win_netbios_domain
     win_ca_common_name          = var.win_ca_common_name
     splunk_password             = var.splunk_password
     ansible_awx_password        = var.ansible_awx_password
     ansible_awx_pg_password     = var.ansible_awx_pg_password
     ansible_awx_secret_key      = var.ansible_awx_secret_key
+    lab_base_tld                = var.lab_base_tld
+    lab_base_name               = var.lab_base_name
 
     ansible_template_vars = { 
-        win_user                = local.win_user, 
-        win_password            = local.win_password, 
-        win_dns_domain          = local.win_dns_domain
-        win_netbios_domain      = local.win_netbios_domain
+        win_admin_user          = local.win_admin_user, 
+        win_admin_password      = local.win_admin_password
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
         ansible_awx_password    = local.ansible_awx_password
@@ -160,7 +159,10 @@ locals {
         ansible_user            = local.ansible_user
         centos_user             = local.centos_user
         kali_user               = local.kali_user
-        internal_domain         = local.internal_domain, 
+        internal_domain         = local.internal_domain
+        win_netbios_domain      = local.win_netbios_domain
+        lab_base_tld            = var.lab_base_tld
+        lab_base_name           = var.lab_base_name
         kali_hosts              = module.kali_instances.hosts
         win08_hosts             = module.win08_instances.hosts
         win10_hosts             = module.win10_instances.hosts
@@ -282,8 +284,8 @@ module "win08_instances" {
     internal_domain         = local.internal_domain
     connection_settings     =   { 
                                     type = "winrm", 
-                                    user = local.win_user, 
-                                    password = local.win_password, 
+                                    user = local.win_admin_user, 
+                                    password = local.win_admin_password, 
                                     agent = false, 
                                     https = true, 
                                     insecure = true, 
@@ -300,8 +302,8 @@ module "win08_instances" {
     last_octet_base         = local.win08_last_octet_base
     volume_size             = local.win08_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_user                = local.win_user
-    win_password            = local.win_password
+    win_admin_user                = local.win_admin_user
+    win_admin_password            = local.win_admin_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -319,8 +321,8 @@ module "win10_instances" {
     internal_domain         = local.internal_domain
     connection_settings     =   { 
                                     type = "winrm", 
-                                    user = local.win_user, 
-                                    password = local.win_password, 
+                                    user = local.win_admin_user, 
+                                    password = local.win_admin_password, 
                                     agent = false, 
                                     https = true, 
                                     insecure = true, 
@@ -337,8 +339,8 @@ module "win10_instances" {
     last_octet_base         = local.win10_last_octet_base
     volume_size             = local.win10_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_user                = local.win_user
-    win_password            = local.win_password
+    win_admin_user                = local.win_admin_user
+    win_admin_password            = local.win_admin_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
 }
@@ -355,8 +357,8 @@ module "win12_instances" {
     internal_domain         = local.internal_domain
     connection_settings     =   { 
                                     type = "winrm", 
-                                    user = local.win_user, 
-                                    password = local.win_password, 
+                                    user = local.win_admin_user, 
+                                    password = local.win_admin_password, 
                                     agent = false, 
                                     https = true, 
                                     insecure = true, 
@@ -373,8 +375,8 @@ module "win12_instances" {
     last_octet_base         = local.win12_last_octet_base
     volume_size             = local.win12_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_user                = local.win_user
-    win_password            = local.win_password
+    win_admin_user          = local.win_admin_user
+    win_admin_password      = local.win_admin_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -392,8 +394,8 @@ module "win16_instances" {
     internal_domain         = local.internal_domain
     connection_settings     =   { 
                                     type = "winrm", 
-                                    user = local.win_user, 
-                                    password = local.win_password, 
+                                    user = local.win_admin_user, 
+                                    password = local.win_admin_password, 
                                     agent = false, 
                                     https = true, 
                                     insecure = true, 
@@ -410,8 +412,8 @@ module "win16_instances" {
     last_octet_base         = local.win16_last_octet_base
     volume_size             = local.win16_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_user                = local.win_user
-    win_password            = local.win_password
+    win_admin_user                = local.win_admin_user
+    win_admin_password            = local.win_admin_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -429,8 +431,8 @@ module "win19_instances" {
     internal_domain         = local.internal_domain
     connection_settings     =   { 
                                     type = "winrm", 
-                                    user = local.win_user, 
-                                    password = local.win_password, 
+                                    user = local.win_admin_user, 
+                                    password = local.win_admin_password, 
                                     agent = false, 
                                     https = true, 
                                     insecure = true, 
@@ -447,8 +449,8 @@ module "win19_instances" {
     last_octet_base         = local.win19_last_octet_base
     volume_size             = local.win19_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_user                = local.win_user
-    win_password            = local.win_password
+    win_admin_user                = local.win_admin_user
+    win_admin_password            = local.win_admin_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -563,7 +565,7 @@ module "ansible_file_copy" {
                                         type = "file"
                                     },
                                     { 
-                                        content = templatefile("${path.root}/templates/ansible_base.sh", local.ansible_lab_vars),
+                                        content = templatefile("${path.root}/templates/ansible_base.sh", local.ansible_template_vars),
                                         destination = "/home/${local.ansible_user}/ansible_base.sh",
                                         mode = 0755,
                                         type = "file"
@@ -583,7 +585,6 @@ module "ansible_script_exec" {
                                 }
     inlines                 =   [
                                     "/home/${local.ansible_user}/ansible_base.sh",
-                                    #"/home/${local.ansible_user}/ansible_deployment_user.sh"
                                 ]
     scripts                 =   []
 }

@@ -64,12 +64,12 @@ variable provisioning_file {
     description = "provisioning_file"
 }
 
-variable win_user {
+variable win_admin_user {
     description = "windows username"
     default = "administrator"
 }
 
-variable win_password {
+variable win_admin_password {
     description = "windows password"
     default = ""
     

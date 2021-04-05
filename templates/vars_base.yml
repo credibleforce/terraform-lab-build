@@ -1,24 +1,26 @@
 lab:
-    kali:
-        ansible_ssh_user: ${kali_user}
-    centos:
-        ansible_ssh_user: ${ansible_user}
-    windows:
-        win_dns_domain: ${win_dns_domain}
-        win_netbios_domain: ${win_netbios_domain}
-        win_admin_user: ${win_admin_user}
-        win_admin_password: ${win_admin_password}
-        win_ca_common_name: ${win_ca_common_name}
-        ansible_connection: winrm
-        ansible_ssh_port: 5986
-        ansible_ssh_user: ${win_user}
-        ansible_ssh_pass: ${win_password}
-        ansible_winrm_transport: ntlm
-        ansible_winrm_server_cert_validation: ignore
-        ansible_winrm_read_timeout_sec: 600
-    ansible:
-        ansible_ssh_user: ${centos_user}
-        admin_password: ${ansible_awx_password}
-    splunk:
-        ansible_ssh_user: ${centos_user}
-        admin_password: ${splunk_password}
+    settings:
+        kali:
+            ansible_ssh_user: ${kali_user}
+        centos:
+            ansible_ssh_user: ${ansible_user}
+        windows:
+            internal_domain: ${internal_domain}
+            win_dns_domain: ${internal_domain}
+            win_netbios_domain: ${win_netbios_domain}
+            win_admin_user: ${win_admin_user}
+            win_admin_password: ${win_admin_password}
+            win_ca_common_name: ${win_ca_common_name}
+            ansible_connection: winrm
+            ansible_ssh_port: 5986
+            ansible_ssh_user: ${win_admin_user}
+            ansible_ssh_pass: ${win_admin_password}
+            ansible_winrm_transport: ntlm
+            ansible_winrm_server_cert_validation: ignore
+            ansible_winrm_read_timeout_sec: 600
+        ansible:
+            ansible_ssh_user: ${centos_user}
+            admin_password: ${ansible_awx_password}
+        splunk:
+            ansible_ssh_user: ${centos_user}
+            admin_password: ${splunk_password}

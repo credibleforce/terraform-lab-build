@@ -2,10 +2,10 @@
 windows_domain_controller_info:
   dns_domain_name: ${internal_domain}
   domain_netbios_name: ${interal_domain_netbios}
-  domain_admin_password: ${win_password}
+  domain_admin_password: ${win_admin_password}
   domain_admin_user: "Administrator@${internal_domain}"
   safe_mode_username: Administrator
-  safe_mode_password: ${win_password}
+  safe_mode_password: ${win_admin_password}
   state: domain_controller
 
 # Windows CA
