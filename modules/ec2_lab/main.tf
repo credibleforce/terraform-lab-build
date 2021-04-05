@@ -162,13 +162,7 @@ locals {
 
     ansible_inventory       = templatefile("${path.root}/templates/inventory.yml", local.ansible_template_vars)
     ansible_vars_base       = templatefile("${path.root}/templates/vars_base.yml", local.ansible_template_vars)
-    ansible_vars_deployer   = templatefile("${path.root}/templates/vars_deployer.yml", local.ansible_template_vars)
-
-    ansible_base_vars = {
-        ansible_deployment_user     = local.ansible_deployment_user
-        ansible_deployment_group    = local.ansible_deployment_group
-    }
-
+    
     ansible_private_dns     = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].private_dns : null
     ansible_public_ip       = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].public_ip : null
 
@@ -557,23 +551,12 @@ module "ansible_file_copy" {
                                         destination = "/home/${local.ansible_user}/deployment/ansible/vars_base.yml",
                                         type = "file"
                                     },
-                                    # { 
-                                    #     content = local.ansible_vars_deployer, 
-                                    #     destination = "/home/${local.ansible_user}/deployment/ansible/vars_deployer.yml",
-                                    #     type = "file"
-                                    # },
                                     { 
-                                        content = templatefile("${path.root}/templates/ansible_base.sh", local.ansible_base_vars),
+                                        content = templatefile("${path.root}/templates/ansible_base.sh", local.ansible_lab_vars),
                                         destination = "/home/${local.ansible_user}/ansible_base.sh",
                                         mode = 0755,
                                         type = "file"
                                     },
-                                    # { 
-                                    #     content = templatefile("${path.root}/templates/ansible_deployment_user.sh", local.ansible_base_vars),
-                                    #     destination = "/home/${local.ansible_user}/ansible_deployment_user.sh",
-                                    #     mode = 0755,
-                                    #     type = "file"
-                                    # },
                                 ]
 }
 
