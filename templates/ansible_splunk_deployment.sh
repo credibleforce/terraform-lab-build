@@ -1,14 +1,17 @@
 #!/bin/bash
 
-export SPLUNK_PASSWORD="${splunk_password}"
+# export SPLUNK_PASSWORD="${splunk_password}"
 
-rm -rf splunk-deployment
-mkdir splunk-deployment
-cd splunk-deployment
-git clone --recurse-submodules --single-branch --branch 'develop' https://github.com/mobia-security-services/splunk-engagement-ansible.git
-cd splunk-engagement-ansible/ansible
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-standalone.yml --extra-vars @~/deployment/ansible/vars_base.yml
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/push-standalone-apps.yml --extra-vars @~/deployment/ansible/vars_base.yml
-#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-distributed.yml --extra-vars @~/deployment/ansible/vars_base.yml
-#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
-#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-searchcluster-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
+# rm -rf splunk-deployment
+# mkdir splunk-deployment
+# cd splunk-deployment
+# git clone --recurse-submodules --single-branch --branch 'develop' https://github.com/mobia-security-services/splunk-engagement-ansible.git
+# cd splunk-engagement-ansible/ansible
+# ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-standalone.yml --extra-vars @~/deployment/ansible/vars_base.yml
+# ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/push-standalone-apps.yml --extra-vars @~/deployment/ansible/vars_base.yml
+# #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-distributed.yml --extra-vars @~/deployment/ansible/vars_base.yml
+# #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
+# #ansible-playbook -vv -i ~/deployment/ansible/inventory.yml playbooks/install-searchcluster-indexcluster.yml --extra-vars @~/deployment/ansible/vars_base.yml
+
+# setup splunk
+awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure job_templates launch 'splunk-template' --monitor -f human

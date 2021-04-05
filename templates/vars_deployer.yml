@@ -12,3 +12,9 @@ windows:
     ansible_winrm_transport: ntlm
     ansible_winrm_server_cert_validation: ignore
     ansible_winrm_read_timeout_sec: 600
+ansible:
+    ansible_ssh_user: ${centos_user}
+    admin_password: ${ansible_password}
+splunk:
+    ansible_ssh_user: ${centos_user}
+    admin_password: ${splunk_password}

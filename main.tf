@@ -206,6 +206,9 @@ locals {
         win_admin_password      = local.win_password
         win_ca_common_name      = "${upper(local.lab_base_name)}-PKI"
         splunk_password         = "1-splunk-password"
+        ansible_awx_password        = "1-ansible-password"
+        ansible_awx_pg_password     = "1-awx-pg-password"
+        ansible_awx_secret_key      = "1-awx-secret-key"
     }
 }
 
