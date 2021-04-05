@@ -144,4 +144,4 @@ awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ans
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"${win_admin_user}@lab.lan\",\"password\":\"${win_admin_password}\"}"
 
 # all ssh keys to known hosts
-ansible-playbook -vv -i inventory.yml playbooks/ssh-keyscan.yml --extra-vars "@~/deployment/ansible/vars_base.yml"
+ansible-playbook -vv -i inventory.yml ~/deployment/ansible/playbooks/ssh-keyscan.yml --extra-vars "@~/deployment/ansible/vars_base.yml"

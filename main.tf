@@ -248,8 +248,8 @@ module "lab1" {
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
     student_id                  = "lab1"
-    win_admin_user                    = local.ansible_lab_vars.win_admin_user
-    win_admin_password                = local.ansible_lab_vars.win_admin_password
+    win_admin_user              = local.ansible_lab_vars.win_admin_user
+    win_admin_password          = local.ansible_lab_vars.win_admin_password
     internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
@@ -387,8 +387,8 @@ LAB 2
 #     public_domain               = local.public_domain
 #     internal_domain             = local.internal_domain
 #     student_id                  = "lab2"
-#     win_admin_user                    = local.ansible_lab_vars.win_admin_user
-#     win_admin_password                = local.ansible_lab_vars.win_admin_password
+#     win_admin_user              = local.ansible_lab_vars.win_admin_user
+#     win_admin_password          = local.ansible_lab_vars.win_admin_password
 #     interal_domain              = local.ansible_lab_vars.interal_domain
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
@@ -528,8 +528,8 @@ LAB 2
 #     public_domain               = local.public_domain
 #     internal_domain             = local.internal_domain
 #     student_id                  = "lab3"
-#     win_admin_user                    = local.ansible_lab_vars.win_admin_user
-#     win_admin_password                = local.ansible_lab_vars.win_admin_password
+#     win_admin_user              = local.ansible_lab_vars.win_admin_user
+#     win_admin_password          = local.ansible_lab_vars.win_admin_password
 #     interal_domain              = local.ansible_lab_vars.interal_domain
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
@@ -669,8 +669,8 @@ LAB 2
 #     public_domain               = local.public_domain
 #     internal_domain             = local.internal_domain
 #     student_id                  = "lab4"
-#     win_admin_user                    = local.ansible_lab_vars.win_admin_user
-#     win_admin_password                = local.ansible_lab_vars.win_admin_password
+#     win_admin_user              = local.ansible_lab_vars.win_admin_user
+#     win_admin_password          = local.ansible_lab_vars.win_admin_password
 #     interal_domain              = local.ansible_lab_vars.interal_domain
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
@@ -810,8 +810,8 @@ LAB 2
 #     public_domain               = local.public_domain
 #     internal_domain             = local.internal_domain
 #     student_id                  = "lab5"
-#     win_admin_user                    = local.ansible_lab_vars.win_admin_user
-#     win_admin_password                = local.ansible_lab_vars.win_admin_password
+#     win_admin_user              = local.ansible_lab_vars.win_admin_user
+#     win_admin_password          = local.ansible_lab_vars.win_admin_password
 #     interal_domain              = local.ansible_lab_vars.interal_domain
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
