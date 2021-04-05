@@ -126,7 +126,7 @@ locals {
     ansible_instance_type   = "t2.medium"
     ansible_prefix          = "ansible"
     ansible_role            = "ansible"
-    ansible_volume_size     = "25"
+    ansible_volume_size     = "60"
     ansible_last_octet_base = 50
     ansible_hosts_override  = var.ansible_hosts_override
 
@@ -135,7 +135,7 @@ locals {
     centos_instance_type    = "t2.medium"
     centos_prefix           = "centos"
     centos_role             = "centos"
-    centos_volume_size      = "25"
+    centos_volume_size      = "60"
     centos_last_octet_base  = 60
     centos_hosts_override   = var.centos_hosts_override
 
