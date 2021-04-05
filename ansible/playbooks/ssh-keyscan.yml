@@ -1,20 +1,27 @@
 ---
     - hosts: local:all
-      gather_facts: True
+      pre_tasks:
+          - name: Set windows credentials
+            set_fact:
+              ansible_ssh_user: "{{ lab.settings.windows.win_admin_user }}"
+              ansible_ssh_pass: "{{ lab.settings.windows.win_admin_password }}"
+            no_log: true
+            when: hostvars[inventory_hostname].ansible_connection is defined and hostvars[inventory_hostname].ansible_connection == 'winrm'
+      gather_facts: true
       tasks:
         - name: Remove any existing host keys
           delegate_to: localhost
           shell: |
-            ssh-keygen -f "~/.ssh/known_hosts" -R "{{inventory_hostname}}"
+            ssh-keygen -f "~/.ssh/known_hosts" -R "{{ inventory_hostname }}"
           ignore_errors: yes
-          when: 
+          when:
             - hostvars[inventory_hostname].ansible_connection is not defined or (hostvars[inventory_hostname].ansible_connection is defined and hostvars[inventory_hostname].ansible_connection=='ssh')
-        
+
         - name: get port, default 22
           delegate_to: localhost
           set_fact:
             ansible_ssh_port: "{{ hostvars[inventory_hostname]['ansible_ssh_port'] | default('22') }}"
-          when: 
+          when:
             - hostvars[inventory_hostname].ansible_connection is not defined or (hostvars[inventory_hostname].ansible_connection is defined and hostvars[inventory_hostname].ansible_connection=='ssh')
 
         - name: Ensure ssh host key known

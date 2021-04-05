@@ -20,13 +20,13 @@ all:
 %{ for host in distinct([ for r in concat(kali_hosts,ansible_hosts,centos_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
                   ${host}.${internal_domain}:
 %{ if contains([ for h in kali_hosts: h.tags.Name], host) ~}
-                    ansible_ssh_user: "{{ kali.ansible_ssh_user }}"
+                    ansible_ssh_user: "{{ lab.settings.kali.ansible_ssh_user }}"
 %{ endif ~}
 %{ if contains([ for h in ansible_hosts: h.tags.Name], host) ~}
-                    ansible_ssh_user: "{{ lab.ansible.ansible_ssh_user }}"
+                    ansible_ssh_user: "{{ lab.settings.ansible.ansible_ssh_user }}"
 %{ endif ~}
 %{ if contains([ for h in centos_hosts: h.tags.Name], host) ~}
-                    ansible_ssh_user: "{{ lab.centos.ansible_ssh_user }}"
+                    ansible_ssh_user: "{{ lab.settings.centos.ansible_ssh_user }}"
 %{ endif ~}
 %{ endfor ~}
 %{ endfor ~}
@@ -39,13 +39,13 @@ all:
                 hosts:
 %{ for host in distinct([ for r in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
                     ${host}.${internal_domain}:
-                      ansible_connection: "{{ lab.windows.ansible_connection }}"
-                      ansible_ssh_port: "{{ lab.windows.ansible_ssh_port }}"
-                      ansible_ssh_user: "{{ lab.windows.ansible_ssh_user }}"
-                      ansible_ssh_pass: "{{ lab.windows.ansible_ssh_pass }}"
-                      ansible_winrm_transport: "{{ lab.windows.ansible_winrm_transport }}"
-                      ansible_winrm_server_cert_validation: "{{ lab.windows.ansible_winrm_server_cert_validation }}"
-                      ansible_winrm_read_timeout_sec: "{{ lab.windows.ansible_winrm_read_timeout_sec }}"
+                      ansible_connection: "{{ lab.settings.windows.ansible_connection }}"
+                      ansible_ssh_port: "{{ lab.settings.windows.ansible_ssh_port }}"
+                      ansible_ssh_user: "{{ lab.settings.windows.ansible_ssh_user }}"
+                      ansible_ssh_pass: "{{ lab.settings.windows.ansible_ssh_pass }}"
+                      ansible_winrm_transport: "{{ lab.settings.windows.ansible_winrm_transport }}"
+                      ansible_winrm_server_cert_validation: "{{ lab.settings.windows.ansible_winrm_server_cert_validation }}"
+                      ansible_winrm_read_timeout_sec: "{{ lab.settings.windows.ansible_winrm_read_timeout_sec }}"
 %{ endfor ~}
 %{ endfor ~}
 %{ endif ~}
@@ -64,26 +64,26 @@ all:
 %{ if contains([ for h in kali_hosts: h.tags.Name], host) ~}
                     ansible_connection: ssh
                     ansible_system: Linux
-                    ansible_ssh_user: "{{ lab.kali.ansible_ssh_user }}"
+                    ansible_ssh_user: "{{ lab.settings.kali.ansible_ssh_user }}"
 %{ endif ~}       
 %{ if contains([ for h in ansible_hosts: h.tags.Name], host) ~}      
                     ansible_connection: ssh
                     ansible_system: Linux
-                    ansible_ssh_user: "{{ lab.ansible.ansible_ssh_user }}"
+                    ansible_ssh_user: "{{ lab.settings.ansible.ansible_ssh_user }}"
 %{ endif ~}
 %{ if contains([ for h in centos_hosts: h.tags.Name], host) ~}      
                     ansible_connection: ssh
                     ansible_system: Linux
-                    ansible_ssh_user: "{{ lab.centos.ansible_ssh_user }}"
+                    ansible_ssh_user: "{{ lab.settings.centos.ansible_ssh_user }}"
 %{ endif ~}
 %{ if contains([ for h in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): h.tags.Name], host) ~}
-                    ansible_connection: "{{ lab.windows.ansible_connection }}"
-                    ansible_ssh_port: "{{ lab.windows.ansible_ssh_port }}"
-                    ansible_ssh_user: "{{ lab.windows.ansible_ssh_user }}"
-                    ansible_ssh_pass: "{{ lab.windows.ansible_ssh_pass }}"
-                    ansible_winrm_transport: "{{ lab.windows.ansible_winrm_transport }}"
-                    ansible_winrm_server_cert_validation: "{{ lab.windows.ansible_winrm_server_cert_validation }}"
-                    ansible_winrm_read_timeout_sec: "{{ lab.windows.ansible_winrm_read_timeout_sec }}"
+                    ansible_connection: "{{ lab.settings.windows.ansible_connection }}"
+                    ansible_ssh_port: "{{ lab.settings.windows.ansible_ssh_port }}"
+                    ansible_ssh_user: "{{ lab.settings.windows.ansible_ssh_user }}"
+                    ansible_ssh_pass: "{{ lab.settings.windows.ansible_ssh_pass }}"
+                    ansible_winrm_transport: "{{ lab.settings.windows.ansible_winrm_transport }}"
+                    ansible_winrm_server_cert_validation: "{{ lab.settings.windows.ansible_winrm_server_cert_validation }}"
+                    ansible_winrm_read_timeout_sec: "{{ lab.settings.windows.ansible_winrm_read_timeout_sec }}"
 %{ endif ~}
 %{ endfor ~}
 %{ endfor ~}
