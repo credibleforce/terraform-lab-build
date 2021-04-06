@@ -23,6 +23,10 @@ variable "splunk_password" {
     description = "splunk password"
 }
 
+variable "splunkbase_token" {
+    description = "splunk base token"
+}
+
 variable "ansible_awx_password" {
     description = "awx password"
 }

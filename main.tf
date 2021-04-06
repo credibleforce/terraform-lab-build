@@ -215,6 +215,7 @@ locals {
         win_admin_password      = local.win_admin_password
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
+        splunkbase_token        = local.splunkbase_token
         ansible_awx_password    = local.ansible_awx_password
         ansible_awx_pg_password = local.ansible_awx_pg_password
         ansible_awx_secret_key  = local.ansible_awx_secret_key
