@@ -18,4 +18,4 @@ awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ans
 awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure job_template associate --credential "lab-linux" --name "lab-template"
 
 # setup domain
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra-vars "@~/deployment/ansible/vars_base.yml"
+#awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra-vars "@~/deployment/ansible/vars_base.yml"
