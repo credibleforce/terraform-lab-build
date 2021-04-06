@@ -6,6 +6,8 @@ PATH=$PATH:/usr/local/bin
 EOF'
 sudo chmod +x /etc/profile.d/add_local_path.sh
 
+export PATH=$PATH:/usr/local/bin
+
 # install ansible and git
 sudo yum install -y \
     epel-release \
@@ -117,16 +119,11 @@ sudo docker cp /opt/awx/envs/proservlab-cloud awx_web:/var/lib/awx/venv/
 # awxcli (optional)
 sudo pip3 install awxkit
 
-# sync splunk repo
-sudo mkdir /opt/repo
-sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-engagement-ansible /opt/repo/splunk-engagement-ansible
-sudo git clone --branch develop --recursive https://github.com/mobia-security-services/splunk-lab /opt/repo/splunk-lab
-
 # create an organization
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
 
 # create an inventory place holder
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure inventory create --name "lab-inventory" --organization "lab"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure inventory create --name "lab-inventory" --organization "lab"
 
 # copy inventory to awx_task container
 sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
@@ -135,13 +132,13 @@ sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
 sudo docker exec -it awx_task /bin/bash -c "awx-manage inventory_import --source=lab.yml --inventory-name=lab-inventory --overwrite --overwrite-vars"
 
 # add ssh key credentials to awx 
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure credential create --name="lab-linux" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure credential create --name="lab-linux" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
 
 # add windows non-domain credentials to awx
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-local" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"administrator\",\"${win_admin_user}\":\"${win_admin_password}\"}"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-local" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"${win_admin_user}\",\"password\":\"${win_admin_password}\"}"
 
 # add windows domain credentials to awx
-awx --conf.host=http://localhost:80 --conf.username=admin --conf.password="${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"${win_admin_user}@lab.lan\",\"password\":\"${win_admin_password}\"}"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"${win_admin_user}@lab.lan\",\"password\":\"${win_admin_password}\"}"
 
 # all ssh keys to known hosts
 #cd ~/deployment/ansible/
