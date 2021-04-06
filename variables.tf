@@ -24,7 +24,7 @@ variable "splunk_password" {
 }
 
 variable "splunkbase_token" {
-    description = "splunk base token"
+    description = "splunkbase token"
 }
 
 variable "ansible_awx_password" {

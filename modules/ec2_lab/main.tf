@@ -142,6 +142,7 @@ locals {
     win_netbios_domain          = var.win_netbios_domain
     win_ca_common_name          = var.win_ca_common_name
     splunk_password             = var.splunk_password
+    splunkbase_token            = var.splunkbase_token
     ansible_awx_password        = var.ansible_awx_password
     ansible_awx_pg_password     = var.ansible_awx_pg_password
     ansible_awx_secret_key      = var.ansible_awx_secret_key
@@ -153,6 +154,7 @@ locals {
         win_admin_password      = local.win_admin_password
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
+        splunkbase_token        = local.splunkbase_token
         ansible_awx_password    = local.ansible_awx_password
         ansible_awx_pg_password = local.ansible_awx_pg_password
         ansible_awx_secret_key  = local.ansible_awx_secret_key
@@ -174,7 +176,7 @@ locals {
     }
 
     ansible_inventory       = templatefile("${path.root}/templates/inventory.yml", local.ansible_template_vars)
-    ansible_vars_base       = templatefile("${path.root}/templates/vars_base.yml", local.ansible_template_vars)
+    ansible_vars_base       = templatefile("${path.root}/templates/lab_settings.yml", local.ansible_template_vars)
 
     ansible_private_dns     = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].private_dns : null
     ansible_public_ip       = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].public_ip : null
@@ -561,7 +563,7 @@ module "ansible_file_copy" {
                                     },
                                     { 
                                         content = local.ansible_vars_base, 
-                                        destination = "/home/${local.ansible_user}/deployment/ansible/vars_base.yml",
+                                        destination = "/home/${local.ansible_user}/deployment/ansible/lab_settings.yml",
                                         type = "file"
                                     },
                                     { 

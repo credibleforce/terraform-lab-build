@@ -142,4 +142,4 @@ awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${a
 
 # all ssh keys to known hosts
 #cd ~/deployment/ansible/
-#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/ssh-keyscan.yml --extra-vars "@~/deployment/ansible/vars_base.yml"
+#ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/ssh-keyscan.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
