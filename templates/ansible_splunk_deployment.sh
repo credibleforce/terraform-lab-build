@@ -16,10 +16,10 @@ sudo mkdir -p /opt/awx/projects \
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure project create --name "splunk-project" --organization "lab" --scm_type "" --local_path "splunk"
 
 # create splunk job template
-awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure job_templates create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure job_templates create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
 
 # associate credentials to splunk template
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
 
 # setup splunk
-awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure job_templates launch 'splunk-template' --monitor -f human --extra-vars "@~/deployment/ansible/vars_base.yml"
+awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure job_templates launch 'splunk-template' --monitor -f human --extra_vars "@~/deployment/ansible/vars_base.yml"
