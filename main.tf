@@ -255,6 +255,7 @@ module "lab1" {
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
     splunk_password             = local.ansible_lab_vars.splunk_password
+    splunkbase_token            = local.ansible_lab_vars.splunkbase_token
     ansible_awx_password        = local.ansible_lab_vars.ansible_awx_password
     ansible_awx_pg_password     = local.ansible_lab_vars.ansible_awx_pg_password
     ansible_awx_secret_key      = local.ansible_lab_vars.ansible_awx_secret_key
@@ -394,6 +395,7 @@ LAB 2
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
 #     splunk_password             = local.ansible_lab_vars.splunk_password
+#     splunkbase_token            = local.ansible_lab_vars.splunkbase_token
 #     ansible_awx_password        = local.ansible_lab_vars.ansible_awx_password
 #     ansible_awx_pg_password     = local.ansible_lab_vars.ansible_awx_pg_password
 #     ansible_awx_secret_key      = local.ansible_lab_vars.ansible_awx_secret_key
@@ -535,6 +537,7 @@ LAB 2
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
 #     splunk_password             = local.ansible_lab_vars.splunk_password
+#     splunkbase_token            = local.ansible_lab_vars.splunkbase_token
 #     ansible_awx_password        = local.ansible_lab_vars.ansible_awx_password
 #     ansible_awx_pg_password     = local.ansible_lab_vars.ansible_awx_pg_password
 #     ansible_awx_secret_key      = local.ansible_lab_vars.ansible_awx_secret_key
@@ -676,6 +679,7 @@ LAB 2
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
 #     splunk_password             = local.ansible_lab_vars.splunk_password
+#     splunkbase_token            = local.ansible_lab_vars.splunkbase_token
 #     ansible_awx_password        = local.ansible_lab_vars.ansible_awx_password
 #     ansible_awx_pg_password     = local.ansible_lab_vars.ansible_awx_pg_password
 #     ansible_awx_secret_key      = local.ansible_lab_vars.ansible_awx_secret_key
@@ -817,6 +821,7 @@ LAB 2
 #     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
 #     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
 #     splunk_password             = local.ansible_lab_vars.splunk_password
+#     splunkbase_token            = local.ansible_lab_vars.splunkbase_token
 #     ansible_awx_password        = local.ansible_lab_vars.ansible_awx_password
 #     ansible_awx_pg_password     = local.ansible_lab_vars.ansible_awx_pg_password
 #     ansible_awx_secret_key      = local.ansible_lab_vars.ansible_awx_secret_key
