@@ -18,6 +18,7 @@ locals {
     win_admin_user              = var.win_admin_user
     win_admin_password          = var.win_admin_password
     splunk_password             = var.splunk_password
+    splunkbase_token            = var.splunkbase_token
     ansible_awx_password        = var.ansible_awx_password
     ansible_awx_pg_password     = var.ansible_awx_pg_password
     ansible_awx_secret_key      = var.ansible_awx_secret_key
