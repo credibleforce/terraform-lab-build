@@ -202,6 +202,21 @@ locals {
                                             elb_source_protocol=null, 
                                             elb_destination_protocol=null 
                                         },
+                                        # public dns mapping for desktop
+                                        {   name="student", 
+                                            targets="win10-dsk1", 
+                                            cert=false, 
+                                            elb=false,
+                                            elb_type="application",
+                                            elb_port_sticky_sessions=null, 
+                                            elb_health_check_target=null, 
+                                            elb_source=local.trusted_source, 
+                                            elb_source_port=null, 
+                                            elb_destination_port=null, 
+                                            elb_protocol=null, 
+                                            elb_source_protocol=null, 
+                                            elb_destination_protocol=null 
+                                        },
                                     ]
 
     key_name                    = "${local.project_prefix}-key"
