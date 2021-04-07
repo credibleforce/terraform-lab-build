@@ -135,6 +135,8 @@ resource "aws_lb_listener" "listener" {
   }
 }
 
+# aws_lb_listener_rule - add source ip filter
+
 resource "aws_lb_target_group_attachment" "tga1" {
   count                     = length(local.elb_instances)
   depends_on                = [null_resource.module_dependency,aws_lb_listener.listener]
