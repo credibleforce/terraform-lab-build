@@ -119,23 +119,35 @@ sudo docker cp /opt/awx/envs/proservlab-cloud awx_web:/var/lib/awx/venv/
 # awxcli (optional)
 sudo pip3 install awxkit
 
+sleep 5
+
 # create an organization
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
+
+sleep 5
 
 # create an inventory place holder
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure inventory create --name "lab-inventory" --organization "lab"
 
+sleep 5
+
 # copy inventory to awx_task container
-sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_task:lab.yml"
+sudo docker cp "$HOME/deployment/ansible/inventory.yml" "awx_web:lab.yml"
 
 # import inventory using awx-manage
-sudo docker exec -it awx_task /bin/bash -c "awx-manage inventory_import --source=lab.yml --inventory-name=lab-inventory --overwrite --overwrite-vars"
+sudo docker exec -it awx_web /bin/bash -c "awx-manage inventory_import --source=lab.yml --inventory-name=lab-inventory --overwrite --overwrite-vars"
+
+sleep 5
 
 # add ssh key credentials to awx 
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure credential create --name="lab-linux" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
 
+sleep 5
+
 # add windows non-domain credentials to awx
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-local" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"${win_admin_user}\",\"password\":\"${win_admin_password}\"}"
+
+sleep 5
 
 # add windows domain credentials to awx
 awx --conf.host "http://localhost:80" --conf.username admin --conf.password "${ansible_awx_password}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"${win_admin_user}@lab.lan\",\"password\":\"${win_admin_password}\"}"
