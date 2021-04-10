@@ -19,5 +19,5 @@
 
     - name: Convert from crt to pem
       command: |
-        openssl x509 -in /opt/awx/certs/awx.key -out /opt/awx/certs/awx.crt -outform PEM
+        openssl x509 -in /opt/awx/certs/awx.crt -out /opt/awx/certs/awx.pem -outform PEM
       become: true
