@@ -13,7 +13,11 @@
       become: true
 
     - name: Generate an OpenSSL private key
-      shell: |
+      command: |
         openssl req -subj "/CN={{ hostname.stdout }}/O=LAB/C=CA" -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/awx/certs/awx.key -out /opt/awx/certs/awx.crt
+      become: true
+
+    - name: Convert from crt to pem
+      command: |
         openssl x509 -in /opt/awx/certs/awx.key -out /opt/awx/certs/awx.crt -outform PEM
       become: true

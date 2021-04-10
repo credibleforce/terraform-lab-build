@@ -28,6 +28,10 @@ sudo python3 -m pip install \
     pywinrm[kerberos] \
     pywinrm[credssp]
 
+# Stage awx certs
+cd ~/deployment/ansible
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-self-signed-ssl.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
+
 # Install awx
 # remove existing docker configuration
 sudo yum remove docker \
@@ -121,7 +125,6 @@ sudo docker cp /opt/awx/envs/proservlab-cloud awx_web:/var/lib/awx/venv/
 # awxcli (optional)
 sudo pip3 install awxkit
 
-# base configuration for awx
+# base configuration for awx projects
 cd ~/deployment/ansible/
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-self-signed-ssl.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
 ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-setup.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
