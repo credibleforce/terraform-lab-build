@@ -14,7 +14,8 @@ sudo yum install -y \
     git \
     patch \
     python3 \
-    python3-pip
+    python3-pip \
+    jq
 sudo alternatives --set python /usr/bin/python3
 
 # Install local Ansible.

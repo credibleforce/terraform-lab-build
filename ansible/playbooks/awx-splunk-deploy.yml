@@ -3,54 +3,63 @@
   pre_tasks:
   gather_facts: true
   tasks:
+    - name: Get AWX Token
+      command: |
+        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure awx login -f json | jq -r .token
+      retries: 10
+      delay: 10
+      ignore_errors: true
+      register: awx_token
+      until: awx_token is not failed
+
     - name: Create atomic redteam
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure project create --name "redcanary-project" --organization "lab" --scm_type "" --local_path "redcanary"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure project create --name "redcanary-project" --organization "lab" --scm_type "" --local_path "redcanary"
 
     - name: Create atomic redteam template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "redcanary-template" --project "redcanary-project" --playbook "playbook.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True --ask_limit_on_launch TRUE --extra_vars "@~/deployment/ansible/lab_settings.yml"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates create --name "redcanary-template" --project "redcanary-project" --playbook "playbook.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True --ask_limit_on_launch TRUE --extra_vars "@~/deployment/ansible/lab_settings.yml"
 
     - name: Associate credentials with atomic redteam template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_template associate --credential "lab-windows-domain" --name "redcanary-template"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_template associate --credential "lab-windows-domain" --name "redcanary-template"
 
     - name: Create a splunk project
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure project create --name "splunk-project" --organization "lab" --scm_type "" --local_path "splunk"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure project create --name "splunk-project" --organization "lab" --scm_type "" --local_path "splunk"
 
     - name: Create a splunk template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates create --name "splunk-template" --project "splunk-project" --playbook "playbooks/install-standalone.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
 
     - name: Create a splunk apps template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "splunk-apps-template" --project "splunk-project" --playbook "playbooks/push-standalone-apps.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates create --name "splunk-apps-template" --project "splunk-project" --playbook "playbooks/push-standalone-apps.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
 
     - name: Create a splunk mitre apps template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "splunk-mitre-apps-template" --project "splunk-project" --playbook "playbooks/push-standalone-mitre-apps.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates create --name "splunk-mitre-apps-template" --project "splunk-project" --playbook "playbooks/push-standalone-mitre-apps.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
 
     - name: Associate credentials to splunk template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
 
     - name: Associate credentials to splunk apps template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-apps-template"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-apps-template"
 
     - name: Associate credentials to splunk mitre apps template
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-mitre-apps-template"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-mitre-apps-template"
 
     - name: Setup splunk
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates launch "splunk-template" --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates launch "splunk-template" --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
 
     - name: Setup splunk apps
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates launch "splunk-apps-template" --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates launch "splunk-apps-template" --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
 
     - name: Setup splunk mitre apps
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates launch "splunk-mitre-apps-template" --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure job_templates launch "splunk-mitre-apps-template" --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"

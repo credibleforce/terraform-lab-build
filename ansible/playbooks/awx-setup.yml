@@ -3,22 +3,22 @@
   pre_tasks:
   gather_facts: true
   tasks:
-    - name: Check if AWX is ready
+    - name: Get AWX Token
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure settings list
+        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure awx login -f json | jq -r .token
       retries: 10
       delay: 10
       ignore_errors: true
-      register: result
-      until: result is not failed
+      register: awx_token
+      until: awx_token is not failed
 
     - name: Create awx organization
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure organization create --name "lab" --custom_virtualenv "/var/lib/awx/venv/proservlab-cloud"
 
     - name: Create awx inventory placeholder
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure inventory create --name "lab-inventory" --organization "lab"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure inventory create --name "lab-inventory" --organization "lab"
 
     - name: Copy inventory to awx docker
       command: |
@@ -31,12 +31,12 @@
 
     - name: Add ssh key credentials to awx
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure credential create --name="lab-linux" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure credential create --name="lab-linux" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"vagrant\",\"ssh_key_data\":\"@~/.ssh/id_rsa\"}"
 
     - name: Add windows non-domain credentials to awx
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure credential create --name="lab-windows-local" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"{{ lab.settings.windows.win_admin_user }}\",\"password\":\"{{ lab.settings.windows.win_admin_password }}\"}"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure credential create --name="lab-windows-local" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"{{ lab.settings.windows.win_admin_user }}\",\"password\":\"{{ lab.settings.windows.win_admin_password }}\"}"
 
     - name: Add windows domain credentials to awx
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"{{ lab.settings.windows.win_admin_user }}@{{ lab.settings.windows.internal_domain }}\",\"password\":\"{{ lab.settings.windows.win_admin_password }}\"}"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token.stdout }}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"{{ lab.settings.windows.win_admin_user }}@{{ lab.settings.windows.internal_domain }}\",\"password\":\"{{ lab.settings.windows.win_admin_password }}\"}"
