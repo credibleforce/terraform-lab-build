@@ -9,7 +9,7 @@
 
     - name: Create atomic redteam template
       command: |
-        awx --conf.host "http://localhost:80" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "redcanary-template" --project "redcanary-project" --playbook "playbook.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True --extra_vars "@~/deployment/ansible/lab_settings.yml"
+        awx --conf.host "http://localhost:80" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "redcanary-template" --project "redcanary-project" --playbook "playbook.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True --ask_limit_on_launch TRUE --extra_vars "@~/deployment/ansible/lab_settings.yml"
 
     - name: Associate credentials with atomic redteam template
       command: |

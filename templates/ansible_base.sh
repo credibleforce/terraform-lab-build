@@ -76,6 +76,8 @@ awx_web_hostname=awxweb
 postgres_data_dir="/opt/awx/pgdocker"
 host_port=80
 host_port_ssl=443
+ssl_certificate=/opt/awx/certs/awx.pem
+ssl_certificate_key=/opt/awx/certs/awx.key
 docker_compose_dir="~/.awx/awxcompose"
 pg_username=awx
 pg_database=awx
@@ -121,4 +123,5 @@ sudo pip3 install awxkit
 
 # base configuration for awx
 cd ~/deployment/ansible/
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-self-signed-ssl.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
 ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-setup.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
