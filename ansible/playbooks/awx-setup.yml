@@ -7,10 +7,10 @@
       command: |
         awx --conf.host "http://localhost:80" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure settings list
       retries: 10
-      delay: 3
+      delay: 10
       ignore_errors: true
       register: result
-      until: result.rc == 0
+      until: result is not failed
 
     - name: Create awx organization
       command: |
