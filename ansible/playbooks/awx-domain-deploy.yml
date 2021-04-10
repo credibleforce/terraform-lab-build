@@ -9,7 +9,6 @@
 
     - name: Create lab job template
       command: |
-        # create lab job template
         awx --conf.host "http://localhost:80" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure job_templates create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
 
     - name: Associate credentials to lab template
