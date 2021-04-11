@@ -31,3 +31,7 @@
     - name: Setup domain
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
+
+    - name: Restart AWX docker to update enterprise create
+      command: |
+        sudo docker restart awx_web
