@@ -14,7 +14,7 @@
 
     - name: Set awx token
       set_fact:
-        awx_token: (result.stdout | from_json).token
+        awx_token: "{{ (result.stdout | from_json).token }}"
 
     - name: Create atomic redteam
       command: |
