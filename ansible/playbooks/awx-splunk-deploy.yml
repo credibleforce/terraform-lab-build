@@ -10,7 +10,7 @@
       delay: 60
       ignore_errors: true
       register: result
-      until: result is not failed and (result.stdout | from_json).token
+      until: result is not failed and (result.stdout | from_json).token is defined
 
     - name: Set awx token
       set_fact:
