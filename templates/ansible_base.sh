@@ -110,7 +110,7 @@ sudo docker stop awx_task awx_web
 sudo docker start awx_task awx_web
 
 # sleep
-sleep 60
+sleep 120
 
 # add hashi_vault dependancies
 sudo --preserve-env=PATH virtualenv /opt/awx/envs/proservlab-cloud
