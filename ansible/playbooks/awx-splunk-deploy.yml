@@ -5,7 +5,7 @@
   tasks:
     - name: Get AWX Token
       command: |
-        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure awx login -f json | jq -r .token
+        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure login -f json | jq -r .token
       retries: 10
       delay: 10
       ignore_errors: true
