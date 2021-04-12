@@ -1,82 +1,44 @@
 all:
-    children:
-      local:
-        hosts:
-          localhost:
-        vars:
-          ansible_connection: local
-          ansible_python_interpreter: "{{ ansible_playbook_python }}"
-      lab:
-        children:
-          linux:
-            vars:
-              ansible_connection: ssh
-              ansible_system: Linux
-            children:
+  children:
+    local:
+      hosts:
+        localhost:
+      vars:
+        ansible_connection: local
+        ansible_python_interpreter: "{{ ansible_playbook_python }}"
+    lab:
+      children:
+        linux:
+          vars:
+            ansible_connection: ssh
+            ansible_system: Linux
+          children:
 %{ if length(kali_hosts) > 0 || length(ansible_hosts) > 0 || length(centos_hosts) > 0 ~}
 %{ for role in [for r1 in distinct(concat(distinct(split(",",join(",",[ for r2 in centos_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in ansible_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in kali_hosts: r2.tags.Role ]))))): r1 if length(regexall("^splunk_", r1)) == 0 && length(r1) > 0 ] ~}
-              ${role}:
-                hosts:
+            ${role}:
+              hosts:
 %{ for host in distinct([ for r in concat(kali_hosts,ansible_hosts,centos_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
-                  ${host}.${internal_domain}:
+                ${host}.${internal_domain}:
 %{ if contains([ for h in kali_hosts: h.tags.Name], host) ~}
-                    ansible_ssh_user: "{{ lab.settings.kali.ansible_ssh_user }}"
+                  ansible_ssh_user: "{{ lab.settings.kali.ansible_ssh_user }}"
 %{ endif ~}
 %{ if contains([ for h in ansible_hosts: h.tags.Name], host) ~}
-                    ansible_ssh_user: "{{ lab.settings.ansible.ansible_ssh_user }}"
+                  ansible_ssh_user: "{{ lab.settings.ansible.ansible_ssh_user }}"
 %{ endif ~}
 %{ if contains([ for h in centos_hosts: h.tags.Name], host) ~}
-                    ansible_ssh_user: "{{ lab.settings.centos.ansible_ssh_user }}"
+                  ansible_ssh_user: "{{ lab.settings.centos.ansible_ssh_user }}"
 %{ endif ~}
 %{ endfor ~}
 %{ endfor ~}
 %{ endif ~}
-          windows:
-            children:
+        windows:
+          children:
 %{ if length(win08_hosts) > 0 || length(win10_hosts) > 0  || length(win12_hosts) > 0 || length(win16_hosts) > 0 || length(win19_hosts) > 0 ~}
 %{ for role in [for r1 in distinct(concat(distinct(split(",",join(",",[ for r2 in win08_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win10_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win12_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win16_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win19_hosts: r2.tags.Role ]))))): r1 if length(regexall("^splunk_", r1)) == 0 && length(r1) > 0 ] ~}
-              ${role}:
-                hosts:
+            ${role}:
+              hosts:
 %{ for host in distinct([ for r in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
-                    ${host}.${internal_domain}:
-                      ansible_connection: "{{ lab.settings.windows.ansible_connection }}"
-                      ansible_ssh_port: "{{ lab.settings.windows.ansible_ssh_port }}"
-                      ansible_ssh_user: "{{ lab.settings.windows.ansible_ssh_user }}"
-                      ansible_ssh_pass: "{{ lab.settings.windows.ansible_ssh_pass }}"
-                      ansible_winrm_transport: "{{ lab.settings.windows.ansible_winrm_transport }}"
-                      ansible_winrm_server_cert_validation: "{{ lab.settings.windows.ansible_winrm_server_cert_validation }}"
-                      ansible_winrm_read_timeout_sec: "{{ lab.settings.windows.ansible_winrm_read_timeout_sec }}"
-%{ endfor ~}
-%{ endfor ~}
-%{ endif ~}
-          splunk:
-            children:
-%{ if length(kali_hosts) > 0 || length(ansible_hosts) > 0 || length(centos_hosts) > 0 || length(win10_hosts) > 0 || length(win16_hosts) > 0 ~}
-%{ for role in [for r1 in distinct(concat(distinct(split(",",join(",",[ for r2 in centos_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in ansible_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in kali_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win10_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win16_hosts: r2.tags.Role ]))))): r1 if length(regexall("^splunk_", r1)) > 0 && length(r1) > 0 ] ~}
-              ${role}:
-                vars:
-                  splunk:
-                    hostname: "{{ inventory_hostname }}"
-                    role: ${role}
-                hosts:
-%{ for host in distinct([ for r in concat(kali_hosts,ansible_hosts,centos_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
                   ${host}.${internal_domain}:
-%{ if contains([ for h in kali_hosts: h.tags.Name], host) ~}
-                    ansible_connection: ssh
-                    ansible_system: Linux
-                    ansible_ssh_user: "{{ lab.settings.kali.ansible_ssh_user }}"
-%{ endif ~}       
-%{ if contains([ for h in ansible_hosts: h.tags.Name], host) ~}      
-                    ansible_connection: ssh
-                    ansible_system: Linux
-                    ansible_ssh_user: "{{ lab.settings.ansible.ansible_ssh_user }}"
-%{ endif ~}
-%{ if contains([ for h in centos_hosts: h.tags.Name], host) ~}      
-                    ansible_connection: ssh
-                    ansible_system: Linux
-                    ansible_ssh_user: "{{ lab.settings.centos.ansible_ssh_user }}"
-%{ endif ~}
-%{ if contains([ for h in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): h.tags.Name], host) ~}
                     ansible_connection: "{{ lab.settings.windows.ansible_connection }}"
                     ansible_ssh_port: "{{ lab.settings.windows.ansible_ssh_port }}"
                     ansible_ssh_user: "{{ lab.settings.windows.ansible_ssh_user }}"
@@ -84,6 +46,44 @@ all:
                     ansible_winrm_transport: "{{ lab.settings.windows.ansible_winrm_transport }}"
                     ansible_winrm_server_cert_validation: "{{ lab.settings.windows.ansible_winrm_server_cert_validation }}"
                     ansible_winrm_read_timeout_sec: "{{ lab.settings.windows.ansible_winrm_read_timeout_sec }}"
+%{ endfor ~}
+%{ endfor ~}
+%{ endif ~}
+        splunk:
+          children:
+%{ if length(kali_hosts) > 0 || length(ansible_hosts) > 0 || length(centos_hosts) > 0 || length(win10_hosts) > 0 || length(win16_hosts) > 0 ~}
+%{ for role in [for r1 in distinct(concat(distinct(split(",",join(",",[ for r2 in centos_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in ansible_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in kali_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win10_hosts: r2.tags.Role ]))),distinct(split(",",join(",",[ for r2 in win16_hosts: r2.tags.Role ]))))): r1 if length(regexall("^splunk_", r1)) > 0 && length(r1) > 0 ] ~}
+            ${role}:
+              vars:
+                splunk:
+                  hostname: "{{ inventory_hostname }}"
+                  role: ${role}
+              hosts:
+%{ for host in distinct([ for r in concat(kali_hosts,ansible_hosts,centos_hosts): r.tags.Name if contains(split(",",r.tags.Role),role) ]) ~}
+                ${host}.${internal_domain}:
+%{ if contains([ for h in kali_hosts: h.tags.Name], host) ~}
+                  ansible_connection: ssh
+                  ansible_system: Linux
+                  ansible_ssh_user: "{{ lab.settings.kali.ansible_ssh_user }}"
+%{ endif ~}       
+%{ if contains([ for h in ansible_hosts: h.tags.Name], host) ~}      
+                  ansible_connection: ssh
+                  ansible_system: Linux
+                  ansible_ssh_user: "{{ lab.settings.ansible.ansible_ssh_user }}"
+%{ endif ~}
+%{ if contains([ for h in centos_hosts: h.tags.Name], host) ~}      
+                  ansible_connection: ssh
+                  ansible_system: Linux
+                  ansible_ssh_user: "{{ lab.settings.centos.ansible_ssh_user }}"
+%{ endif ~}
+%{ if contains([ for h in concat(win08_hosts,win10_hosts,win12_hosts,win16_hosts,win19_hosts): h.tags.Name], host) ~}
+                  ansible_connection: "{{ lab.settings.windows.ansible_connection }}"
+                  ansible_ssh_port: "{{ lab.settings.windows.ansible_ssh_port }}"
+                  ansible_ssh_user: "{{ lab.settings.windows.ansible_ssh_user }}"
+                  ansible_ssh_pass: "{{ lab.settings.windows.ansible_ssh_pass }}"
+                  ansible_winrm_transport: "{{ lab.settings.windows.ansible_winrm_transport }}"
+                  ansible_winrm_server_cert_validation: "{{ lab.settings.windows.ansible_winrm_server_cert_validation }}"
+                  ansible_winrm_read_timeout_sec: "{{ lab.settings.windows.ansible_winrm_read_timeout_sec }}"
 %{ endif ~}
 %{ endfor ~}
 %{ endfor ~}
