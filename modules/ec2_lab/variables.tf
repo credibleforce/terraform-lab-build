@@ -267,3 +267,7 @@ variable custom_security_groups {
 variable vault_passwd {
     description = "vault password for lab settings"
 }
+
+variable "splunk_user" {
+    description = "splunk user"
+}

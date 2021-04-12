@@ -285,12 +285,12 @@ data "local_file" "trusted-source" {
 
 resource "local_file" "lab_settings" {
     content                     = local.ansible_lab_settings
-    filename                    = "${path.root}/settings/lab_settings.yml"
+    filename                    = "${path.root}/settings/lab_settings.tmp"
 }
 
 resource "null_resource" "vault-encrypt" {
     provisioner "local-exec" {
-        command = "cat '${path.root}/settings/lab_settings.yml' | ${path.root}/scripts/convert_vault.py --vault-pass-file '${path.root}/settings/vault_passwd.txt' > '${path.root}/settings/lab_settings.yml'"
+        command = "${path.root}/scripts/convert_vault.py --vault-pass-file '${path.root}/settings/vault_passwd.txt' --input-file '${path.root}/settings/lab_settings.tmp' > '${path.root}/settings/lab_settings.yml'"
     }
     depends_on = [local_file.lab_settings]
 }
@@ -347,7 +347,6 @@ module "lab1" {
     public_key_path             = local.public_key_path
     ansible_group               = local.ansible_group
     custom_security_groups      = local.custom_security_groups
-
     splunk_user                 = local.splunk_user
     ansible_user                = local.ansible_user
     kali_user                   = local.kali_user
@@ -357,6 +356,7 @@ module "lab1" {
     win12_user                  = local.win12_user
     win16_user                  = local.win16_user
     win19_user                  = local.win19_user
+    vault_passwd                = local.vault_passwd
 }
 
 # // add additional dns records internally
@@ -437,8 +437,8 @@ module "lab1_script_exec" {
                                     private_key = file(replace(local.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
-                                    "/home/${local.ansible_user}/ansible_domain_deployment.sh",
-                                    "/home/${local.ansible_user}/ansible_splunk_deployment.sh",
+                                    #"/home/${local.ansible_user}/ansible_domain_deployment.sh",
+                                    #"/home/${local.ansible_user}/ansible_splunk_deployment.sh",
                                 ]
     scripts                 =   []
 }
@@ -498,7 +498,7 @@ LAB 2
 #     ansible_deployment_user     = local.ansible_deployment_user
 #     ansible_deployment_group    = local.ansible_deployment_user
 #     custom_security_groups      = local.custom_security_groups
-
+#
 #     splunk_user                 = local.splunk_user
 #     ansible_user                = local.ansible_user
 #     kali_user                   = local.kali_user
@@ -508,6 +508,7 @@ LAB 2
 #     win12_user                  = local.win12_user
 #     win16_user                  = local.win16_user
 #     win19_user                  = local.win19_user
+#     vault_passwd                = local.vault_passwd
 
 # }
 
@@ -660,6 +661,7 @@ LAB 2
 #     win12_user                  = local.win12_user
 #     win16_user                  = local.win16_user
 #     win19_user                  = local.win19_user
+#     vault_passwd                = local.vault_passwd
 # }
 
 # # // add additional dns records internally
@@ -811,6 +813,7 @@ LAB 2
 #     win12_user                  = local.win12_user
 #     win16_user                  = local.win16_user
 #     win19_user                  = local.win19_user
+#     vault_passwd                = local.vault_passwd
 # }
 
 # # // add additional dns records internally
@@ -962,6 +965,7 @@ LAB 2
 #     win12_user                  = local.win12_user
 #     win16_user                  = local.win16_user
 #     win19_user                  = local.win19_user
+#     vault_passwd                = local.vault_passwd
 # }
 
 # # // add additional dns records internally

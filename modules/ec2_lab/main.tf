@@ -589,7 +589,7 @@ module "ansible_script_exec" {
                                     private_key = file(replace(var.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
-                                    "/home/${local.ansible_user}/ansible_base.sh",
+                                    #"/home/${local.ansible_user}/ansible_base.sh",
                                 ]
     scripts                 =   []
 }
