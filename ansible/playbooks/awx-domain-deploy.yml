@@ -34,6 +34,10 @@
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-linux" --name "lab-template"
 
+    - name: Associate vault to lab template
+      command: |
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "lab-template"
+
     - name: Setup domain
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"

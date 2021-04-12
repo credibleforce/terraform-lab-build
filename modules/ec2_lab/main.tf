@@ -168,6 +168,7 @@ locals {
         win_netbios_domain      = local.win_netbios_domain
         lab_base_tld            = var.lab_base_tld
         lab_base_name           = var.lab_base_name
+        vault_passwd            = local.vault_passwd
         kali_hosts              = module.kali_instances.hosts
         win08_hosts             = module.win08_instances.hosts
         win10_hosts             = module.win10_instances.hosts
@@ -546,8 +547,20 @@ module "ansible_file_copy" {
                                         type = "file"
                                     },
                                     { 
-                                        source = "${path.root}/settings/lab_settings.yml", 
+                                        source = "${path.root}/settings/lab_settings.tmp", 
                                         destination = "/home/${local.ansible_user}/deployment/ansible/lab_settings.yml",
+                                        mode = 0600,
+                                        type = "file"
+                                    },
+                                    { 
+                                        source = "${path.root}/settings/vault_passwd.txt", 
+                                        destination = "/home/${local.ansible_user}/deployment/ansible/.vault_passwd.txt",
+                                        type = "file"
+                                    },
+                                    { 
+                                        source = "${path.root}/scripts/convert_vault.py", 
+                                        destination = "/home/${local.ansible_user}/deployment/ansible/convert_vault.py",
+                                        mode = 0755,
                                         type = "file"
                                     },
                                     { 
@@ -570,6 +583,11 @@ module "ansible_file_copy" {
                                         type = "file"
                                     },
                                     { 
+                                        content = templatefile("${path.root}/templates/awx_vars.yml", local.ansible_template_vars),
+                                        destination = "/home/${local.ansible_user}/deployment/ansible/vars.yml",
+                                        type = "file"
+                                    },
+                                    { 
                                         content = templatefile("${path.root}/templates/ansible_base.sh", local.ansible_template_vars),
                                         destination = "/home/${local.ansible_user}/ansible_base.sh",
                                         mode = 0755,
@@ -589,6 +607,8 @@ module "ansible_script_exec" {
                                     private_key = file(replace(var.public_key_path,".pub","")) 
                                 }
     inlines                 =   [
+                                    #"/home/${local.ansible_user}/deployment/ansible/convert_vault.py --input-file /home/${local.ansible_user}/deployment/ansible/lab_settings.tmp --vault-pass-file /home/${local.ansible_user}/deployment/ansible/.vault_passwd.txt > /home/${local.ansible_user}/deployment/ansible/lab_settings.yml",
+                                    #"rm -f /home/${local.ansible_user}/deployment/ansible/lab_settings.tmp",
                                     #"/home/${local.ansible_user}/ansible_base.sh",
                                 ]
     scripts                 =   []

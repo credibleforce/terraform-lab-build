@@ -14,7 +14,7 @@ sudo mkdir -p /opt/awx/projects \
 
 # base configuration for awx
 cd ~/deployment/ansible/
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-domain-deploy.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-domain-deploy.yml --vault-password-file ~/deployment/ansible/.vault_passwd.txt --extra-vars "@~/deployment/ansible/lab_settings.yml"
 
 # stop and start awx container to load updated certs
 sudo docker stop awx_web

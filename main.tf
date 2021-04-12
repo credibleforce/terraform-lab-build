@@ -288,13 +288,6 @@ resource "local_file" "lab_settings" {
     filename                    = "${path.root}/settings/lab_settings.tmp"
 }
 
-resource "null_resource" "vault-encrypt" {
-    provisioner "local-exec" {
-        command = "${path.root}/scripts/convert_vault.py --vault-pass-file '${path.root}/settings/vault_passwd.txt' --input-file '${path.root}/settings/lab_settings.tmp' > '${path.root}/settings/lab_settings.yml'"
-    }
-    depends_on = [local_file.lab_settings]
-}
-
 /*###############################################
 LAB 1
 ###############################################*/

@@ -56,13 +56,13 @@ def main():
     parser.add_argument('--vault-id',
                         help='Vault id used for the encryption',
                         default=None)
-    parser.add_argument('--vault-pass-file',
+    parser.add_argument('--vault-password-file',
                         help='Vault password file used for the encryption',
                         default=None)
     args = parser.parse_args()
     in_file = sys.stdin if args.input_file == '-' else open(args.input_file)
     d = yaml.load(in_file, Loader=AnsibleLoader)
-    vault_pass_file=args.vault_pass_file
+    vault_pass_file=args.vault_password_file
     vault_id=args.vault_id
 
     encrypt_dict(d, vault_pass_file, vault_id)

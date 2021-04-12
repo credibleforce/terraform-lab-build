@@ -51,6 +51,11 @@
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure credential create --name="lab-windows-domain" --organization="lab" --credential_type="Machine" --inputs="{\"username\":\"{{ lab.settings.windows.win_admin_user }}@{{ lab.settings.windows.internal_domain }}\",\"password\":\"{{ lab.settings.windows.win_admin_password }}\"}"
 
+    - name: Read vault_passwd
+      command: |
+        cat ~/deployment/ansible/.vault_passwd.txt
+      register: result
+
     - name: Add vault credentials to awx
       command: |
-        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure credential create --name="vault" --organization="lab" --credential_type="Vault" --inputs="{\"vault_password\":\"${vault_passwd}\"}"
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure credential create --name="lab-vault" --organization="lab" --credential_type="Vault" --inputs="{\"vault_password\":\"{{ result.stdout }}\"}"

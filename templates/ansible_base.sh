@@ -29,9 +29,14 @@ sudo python3 -m pip install \
     pywinrm[kerberos] \
     pywinrm[credssp]
 
+# Vault lab settings - extra-vars bug in awx prevents vaulted creds
+#~/deployment/ansible/convert_vault.py --input-file ~/deployment/ansible/lab_settings.tmp --vault-password-file ~/deployment/ansible/.vault_passwd.txt > ~/deployment/ansible/lab_settings.yml
+#~/deployment/ansible/convert_vault.py --input-file ~/deployment/ansible/vars.tmp --vault-password-file ~/deployment/ansible/.vault_passwd.txt > ~/deployment/ansible/vars.yml
+#rm -f ~/deployment/ansible/*.tmp
+
 # Stage awx certs
 cd ~/deployment/ansible
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-self-signed-ssl.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml --vault-password-file ~/deployment/ansible/.vault_passwd.txt  ~/deployment/ansible/playbooks/awx-self-signed-ssl.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
 
 # Install awx
 # remove existing docker configuration
@@ -92,14 +97,8 @@ create_preload_data=False
 project_data_dir=/opt/awx/projects
 EOF
 
-cat >vars.yml<<EOF
-admin_password: '${ansible_awx_password}'
-pg_password: '${ansible_awx_pg_password}'
-secret_key: '${ansible_awx_secret_key}'
-EOF
-
 # install awx
-sudo --preserve-env=PATH ansible-playbook -vvv -i lab-inventory install.yml -e @vars.yml
+sudo --preserve-env=PATH ansible-playbook -vvv -i lab-inventory install.yml --vault-password-file /home/centos/deployment/ansible/.vault_passwd.txt -e "@/home/centos/deployment/ansible/vars.yml"
 
 # sleep
 sleep 60
@@ -128,6 +127,5 @@ sudo pip3 install awxkit
 
 # base configuration for awx projects
 cd ~/deployment/ansible/
-echo -n '${vault_passwd}' > ~/.vault_passwd.txt
-chmod 600 ~/.vault_passwd.txt
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-setup.yml --vault-password-file "~/.vault_passwd.txt" --extra-vars "@~/deployment/ansible/lab_settings.yml"
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-setup.yml --vault-password-file ~/deployment/ansible/.vault_passwd.txt --extra-vars "@~/deployment/ansible/lab_settings.yml"
+#rm -f ~/deployment/ansible/.vault_passwd.txt
