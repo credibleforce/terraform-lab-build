@@ -3,7 +3,7 @@ lab:
         kali:
             ansible_ssh_user: ${kali_user}
         centos:
-            ansible_ssh_user: ${ansible_user}
+            ansible_ssh_user: ${centos_user}
         windows:
             internal_domain: ${internal_domain}
             win_dns_domain: ${internal_domain}
@@ -21,9 +21,9 @@ lab:
             ansible_winrm_server_cert_validation: ignore
             ansible_winrm_read_timeout_sec: 600
         ansible:
-            ansible_ssh_user: ${centos_user}
+            ansible_ssh_user: ${ansible_user}
             admin_password: ${ansible_awx_password}
         splunk:
-            ansible_ssh_user: ${centos_user}
+            ansible_ssh_user: ${splunk_user}
             admin_password: ${splunk_password}
             splunkbase_token: ${splunkbase_token}

@@ -22,6 +22,7 @@ locals {
     ansible_awx_password        = var.ansible_awx_password
     ansible_awx_pg_password     = var.ansible_awx_pg_password
     ansible_awx_secret_key      = var.ansible_awx_secret_key
+    vault_passwd                = var.vault_passwd
 
     
     win08_hosts                 = 0
@@ -74,7 +75,16 @@ locals {
                                         #{name="splk-uf1", role="splunk_universal_forwarder", custom_security_group="splunk_security_group"},
                                         #{name="lin-syslog1", role="syslog_collector", custom_security_group="syslog_security_group"},
                                     ]
-    ansible_user                = "centos"
+    splunk_user                 = var.splunk_user
+    ansible_user                = var.ansible_user
+    kali_user                   = var.kali_user
+    centos_user                 = var.centos_user
+    win08_user                  = var.win08_user
+    win10_user                  = var.win10_user
+    win12_user                  = var.win12_user
+    win16_user                  = var.win16_user
+    win19_user                  = var.win19_user
+
     ansible_group               = "centos"
     ansible_deployment_user     = "deployer"
     ansible_deployment_group    = "deployer"
@@ -235,7 +245,18 @@ locals {
         ansible_awx_password    = local.ansible_awx_password
         ansible_awx_pg_password = local.ansible_awx_pg_password
         ansible_awx_secret_key  = local.ansible_awx_secret_key
+        splunk_user             = local.splunk_user
+        ansible_user            = local.ansible_user
+        centos_user             = local.centos_user
+        kali_user               = local.kali_user
+        win08_user              = local.win08_user
+        win10_user              = local.win10_user
+        win12_user              = local.win12_user
+        win16_user              = local.win16_user
+        win19_user              = local.win19_user
     }
+
+    ansible_lab_settings       = templatefile("${path.root}/templates/lab_settings.yml", local.ansible_lab_vars)
 }
 
 module "environment" {
@@ -243,6 +264,35 @@ module "environment" {
     source                      = "./environments/dev"
     key_name                    = local.key_name
     public_key_path             = local.public_key_path
+}
+
+resource "null_resource" "vault-passwd" {
+    provisioner "local-exec" {
+        command                 = "echo -n '${local.vault_passwd}' > '${path.root}/settings/vault_passwd.txt'"
+    }
+}
+
+resource "null_resource" "trusted-local-source" {
+    provisioner "local-exec" {
+        command                 = "echo -n $(dig +short @resolver1.opendns.com myip.opendns.com)/32 > '${path.root}/settings/local-trusted-source.txt'"
+    }
+}
+
+data "local_file" "trusted-source" {
+    filename                    = "${path.root}/settings/local-trusted-source.txt"
+    depends_on                  = [null_resource.trusted-local-source]
+}
+
+resource "local_file" "lab_settings" {
+    content                     = local.ansible_lab_settings
+    filename                    = "${path.root}/settings/lab_settings.yml"
+}
+
+resource "null_resource" "vault-encrypt" {
+    provisioner "local-exec" {
+        command = "cat '${path.root}/settings/lab_settings.yml' | ${path.root}/scripts/convert_vault.py --vault-pass-file '${path.root}/settings/vault_passwd.txt' > '${path.root}/settings/lab_settings.yml'"
+    }
+    depends_on = [local_file.lab_settings]
 }
 
 /*###############################################
@@ -295,9 +345,18 @@ module "lab1" {
     ansible_hosts_override      = local.ansible_hosts_override
     aws_key_pair                = module.environment.key_pair
     public_key_path             = local.public_key_path
-    ansible_user                = local.ansible_user
     ansible_group               = local.ansible_group
     custom_security_groups      = local.custom_security_groups
+
+    splunk_user                 = local.splunk_user
+    ansible_user                = local.ansible_user
+    kali_user                   = local.kali_user
+    centos_user                 = local.centos_user
+    win08_user                  = local.win08_user
+    win10_user                  = local.win10_user
+    win12_user                  = local.win12_user
+    win16_user                  = local.win16_user
+    win19_user                  = local.win19_user
 }
 
 # // add additional dns records internally
@@ -435,11 +494,21 @@ LAB 2
 #     ansible_hosts_override      = local.ansible_hosts_override
 #     aws_key_pair                = module.environment.key_pair
 #     public_key_path             = local.public_key_path
-#     ansible_user                = local.ansible_user
 #     ansible_group               = local.ansible_group
 #     ansible_deployment_user     = local.ansible_deployment_user
 #     ansible_deployment_group    = local.ansible_deployment_user
 #     custom_security_groups      = local.custom_security_groups
+
+#     splunk_user                 = local.splunk_user
+#     ansible_user                = local.ansible_user
+#     kali_user                   = local.kali_user
+#     centos_user                 = local.centos_user
+#     win08_user                  = local.win08_user
+#     win10_user                  = local.win10_user
+#     win12_user                  = local.win12_user
+#     win16_user                  = local.win16_user
+#     win19_user                  = local.win19_user
+
 # }
 
 # # // add additional dns records internally
@@ -577,11 +646,20 @@ LAB 2
 #     ansible_hosts_override      = local.ansible_hosts_override
 #     aws_key_pair                = module.environment.key_pair
 #     public_key_path             = local.public_key_path
-#     ansible_user                = local.ansible_user
 #     ansible_group               = local.ansible_group
 #     ansible_deployment_user     = local.ansible_deployment_user
 #     ansible_deployment_group    = local.ansible_deployment_user
 #     custom_security_groups      = local.custom_security_groups
+#
+#     splunk_user                 = local.splunk_user
+#     ansible_user                = local.ansible_user
+#     kali_user                   = local.kali_user
+#     centos_user                 = local.centos_user
+#     win08_user                  = local.win08_user
+#     win10_user                  = local.win10_user
+#     win12_user                  = local.win12_user
+#     win16_user                  = local.win16_user
+#     win19_user                  = local.win19_user
 # }
 
 # # // add additional dns records internally
@@ -719,11 +797,20 @@ LAB 2
 #     ansible_hosts_override      = local.ansible_hosts_override
 #     aws_key_pair                = module.environment.key_pair
 #     public_key_path             = local.public_key_path
-#     ansible_user                = local.ansible_user
 #     ansible_group               = local.ansible_group
 #     ansible_deployment_user     = local.ansible_deployment_user
 #     ansible_deployment_group    = local.ansible_deployment_user
 #     custom_security_groups      = local.custom_security_groups
+#
+#     splunk_user                 = local.splunk_user
+#     ansible_user                = local.ansible_user
+#     kali_user                   = local.kali_user
+#     centos_user                 = local.centos_user
+#     win08_user                  = local.win08_user
+#     win10_user                  = local.win10_user
+#     win12_user                  = local.win12_user
+#     win16_user                  = local.win16_user
+#     win19_user                  = local.win19_user
 # }
 
 # # // add additional dns records internally
@@ -861,11 +948,20 @@ LAB 2
 #     ansible_hosts_override      = local.ansible_hosts_override
 #     aws_key_pair                = module.environment.key_pair
 #     public_key_path             = local.public_key_path
-#     ansible_user                = local.ansible_user
 #     ansible_group               = local.ansible_group
 #     ansible_deployment_user     = local.ansible_deployment_user
 #     ansible_deployment_group    = local.ansible_deployment_user
 #     custom_security_groups      = local.custom_security_groups
+#
+#     splunk_user                 = local.splunk_user
+#     ansible_user                = local.ansible_user
+#     kali_user                   = local.kali_user
+#     centos_user                 = local.centos_user
+#     win08_user                  = local.win08_user
+#     win10_user                  = local.win10_user
+#     win12_user                  = local.win12_user
+#     win16_user                  = local.win16_user
+#     win19_user                  = local.win19_user
 # }
 
 # # // add additional dns records internally

@@ -31,6 +31,11 @@ variable "kali_hosts" {
   default     = 0
 }
 
+variable "kali_user" {
+    description = "kali user"
+    default = "kali"
+}
+
 variable "kali_hosts_override" {
     description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
     default = []
@@ -39,6 +44,11 @@ variable "kali_hosts_override" {
 variable "win08_hosts" {
   description = "Number of hosts"
   default     = 0
+}
+
+variable "win08_user" {
+    description = "win08 user"
+    default = "administrator"
 }
 
 variable "win08_hosts_override" {
@@ -51,6 +61,11 @@ variable "win10_hosts" {
   default     = 0
 }
 
+variable "win10_user" {
+    description = "win10 user"
+    default = "administrator"
+}
+
 variable "win10_hosts_override" {
     description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
     default = []
@@ -59,6 +74,11 @@ variable "win10_hosts_override" {
 variable "win12_hosts" {
   description = "Number of hosts"
   default     = 0
+}
+
+variable "win12_user" {
+    description = "win12 user"
+    default = "administrator"
 }
 
 variable "win12_hosts_override" {
@@ -71,6 +91,11 @@ variable "win16_hosts" {
   default     = 0
 }
 
+variable "win16_user" {
+    description = "win16 user"
+    default = "administrator"
+}
+
 variable "win16_hosts_override" {
     description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
     default = []
@@ -79,6 +104,11 @@ variable "win16_hosts_override" {
 variable "win19_hosts" {
   description = "Number of hosts"
   default     = 0
+}
+
+variable "win19_user" {
+    description = "win19 user"
+    default = "administrator"
 }
 
 variable "win19_hosts_override" {
@@ -90,6 +120,12 @@ variable "ansible_hosts" {
   description = "Number of hosts"
   default     = 1
 }
+
+variable "ansible_user" {
+    description = "ansible user"
+    default = "centos"
+}
+
 variable "ansible_hosts_override" {
     description = "Override default hostname and tagging for hosts. Host count will be equal to number of overrides provided."
     default = []
@@ -98,6 +134,11 @@ variable "ansible_hosts_override" {
 variable "centos_hosts" {
   description = "Number of hosts"
   default     = 0
+}
+
+variable "centos_user" {
+    description = "centos user"
+    default = "centos"
 }
 
 variable "centos_hosts_override" {
@@ -213,11 +254,6 @@ variable aws_key_pair {
     description = "aws_key_pair"
 }
 
-variable ansible_user {
-    description = "ansible user is the account used to make the initial connect to the ec2 host. context for ongoing deployment is switched to ansible_deployment_user"
-    default = "centos"
-}
-
 variable ansible_group {
     description = "ansible group of the ansible_user above. context for ongoing deployment is switched to ansible_deployment_user and ansible_deployment_group"
     default = "centos"
@@ -226,4 +262,8 @@ variable ansible_group {
 variable custom_security_groups {
     description = "list of security groups (name, inbound_ports.source_port, inbound_ports.destination_port, inbound_ports.protocol)"
     default = []
+}
+
+variable vault_passwd {
+    description = "vault password for lab settings"
 }

@@ -111,14 +111,3 @@ data "aws_ami" "win19" {
     values = ["Windows_Server-2019-English-Full-Base-*"]
   }
 }
-
-resource "null_resource" "trusted-local-source" {
-    provisioner "local-exec" {
-        command = "echo $(dig +short @resolver1.opendns.com myip.opendns.com)/32 > /tmp/local-trusted-source.txt"
-    }
-}
-
-data "local_file" "trusted-source" {
-    filename = "/tmp/local-trusted-source.txt"
-    depends_on = [null_resource.trusted-local-source]
-}

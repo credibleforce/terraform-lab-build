@@ -128,4 +128,6 @@ sudo pip3 install awxkit
 
 # base configuration for awx projects
 cd ~/deployment/ansible/
-ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-setup.yml --extra-vars "@~/deployment/ansible/lab_settings.yml"
+echo -n '${vault_passwd}' > ~/.vault_passwd.txt
+chmod 600 ~/.vault_passwd.txt
+ansible-playbook -vv -i ~/deployment/ansible/inventory.yml ~/deployment/ansible/playbooks/awx-setup.yml --vault-password-file "~/.vault_passwd.txt" --extra-vars "@~/deployment/ansible/lab_settings.yml"

@@ -64,7 +64,7 @@ locals {
     win19_ami               = var.win19_ami
     centos_ami              = var.centos_ami
 
-    kali_user               = "kali"
+    kali_user               = var.kali_user
     kali_hosts              = var.kali_hosts
     kali_instance_type      = "t2.micro"
     kali_prefix             = "kali"
@@ -73,7 +73,7 @@ locals {
     kali_last_octet_base    = 200
     kali_hosts_override     = var.kali_hosts_override
 
-    win10_user              = "administrator"
+    win10_user              = var.win10_user
     win10_hosts             = var.win10_hosts
     win10_instance_type     = "t2.medium"
     win10_prefix            = "win10"
@@ -82,7 +82,7 @@ locals {
     win10_last_octet_base   = 100
     win10_hosts_override    = var.win10_hosts_override
 
-    win08_user              = "administrator"
+    win08_user              = var.win08_user
     win08_hosts             = var.win08_hosts
     win08_instance_type     = "t2.medium"
     win08_prefix            = "win08"
@@ -91,7 +91,7 @@ locals {
     win08_last_octet_base   = 40
     win08_hosts_override    = var.win08_hosts_override
 
-    win12_user              = "administrator"
+    win12_user              = var.win12_user
     win12_hosts             = var.win12_hosts
     win12_instance_type     = "t2.medium"
     win12_prefix            = "win12"
@@ -100,7 +100,7 @@ locals {
     win12_last_octet_base   = 30
     win12_hosts_override    = var.win12_hosts_override
 
-    win16_user              = "administrator"
+    win16_user              = var.win16_user
     win16_hosts             = var.win16_hosts
     win16_instance_type     = "t2.medium"
     win16_prefix            = "win16"
@@ -109,7 +109,7 @@ locals {
     win16_last_octet_base   = 20
     win16_hosts_override    = var.win16_hosts_override
 
-    win19_user              = "administrator"
+    win19_user              = var.win19_user
     win19_hosts             = var.win19_hosts
     win19_instance_type     = "t2.medium"
     win19_prefix            = "win19"
@@ -128,7 +128,7 @@ locals {
     ansible_last_octet_base = 50
     ansible_hosts_override  = var.ansible_hosts_override
 
-    centos_user             = "centos"
+    centos_user             = var.centos_user
     centos_hosts            = var.centos_hosts
     centos_instance_type    = "t2.medium"
     centos_prefix           = "centos"
@@ -149,8 +149,11 @@ locals {
     lab_base_tld                = var.lab_base_tld
     lab_base_name               = var.lab_base_name
 
+    vault_passwd                = var.vault_passwd
+
     ansible_template_vars = { 
-        win_admin_user          = local.win_admin_user, 
+        vault_passwd            = local.vault_passwd
+        win_admin_user          = local.win_admin_user
         win_admin_password      = local.win_admin_password
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
@@ -176,7 +179,7 @@ locals {
     }
 
     ansible_inventory       = templatefile("${path.root}/templates/inventory.yml", local.ansible_template_vars)
-    ansible_vars_base       = templatefile("${path.root}/templates/lab_settings.yml", local.ansible_template_vars)
+    #ansible_vars_base       = templatefile("${path.root}/templates/lab_settings.yml", local.ansible_template_vars)
 
     ansible_private_dns     = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].private_dns : null
     ansible_public_ip       = length(module.ansible_instances.hosts)>0? module.ansible_instances.hosts[0].public_ip : null
@@ -190,7 +193,7 @@ locals {
     win16_instances             = [for h in module.win16_instances.hosts:   { name= h.tags.Name, student_id=h.tags.StudentId, instance_id = h.id, arn = h.arn, public_ip = h.public_ip, public_dns = h.public_dns, private_ip = h.private_ip, private_dns = format("%s.%s",h.tags.Name,var.internal_domain), aws_private_dns = h.private_dns }]
     instances               = concat(local.kali_instances,local.centos_instances,local.ansible_instances,local.win10_instances,local.win16_instances)
 }
-  
+
 module "ec2_network" {
     module_name             = "ec2_network"
     source                  = "../../modules/ec2_network"
@@ -543,6 +546,11 @@ module "ansible_file_copy" {
                                         type = "file"
                                     },
                                     { 
+                                        source = "${path.root}/settings/lab_settings.yml", 
+                                        destination = "/home/${local.ansible_user}/deployment/ansible/lab_settings.yml",
+                                        type = "file"
+                                    },
+                                    { 
                                         source = replace(var.public_key_path,".pub",""),
                                         destination = "/home/${local.ansible_user}/.ssh/id_rsa",
                                         mode = 0600,
@@ -559,11 +567,6 @@ module "ansible_file_copy" {
                                     { 
                                         content = local.ansible_inventory, 
                                         destination = "/home/${local.ansible_user}/deployment/ansible/inventory.yml",
-                                        type = "file"
-                                    },
-                                    { 
-                                        content = local.ansible_vars_base, 
-                                        destination = "/home/${local.ansible_user}/deployment/ansible/lab_settings.yml",
                                         type = "file"
                                     },
                                     { 
