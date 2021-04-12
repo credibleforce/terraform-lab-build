@@ -34,9 +34,9 @@
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-windows-domain" --name "redcanary-template"
 
-    - name: Associate vault with atomic redteam template
-      command: |
-        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "redcanary-template"
+    # - name: Associate vault with atomic redteam template
+    #   command: |
+    #     awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "redcanary-template"
 
     - name: Create a splunk project
       command: |
@@ -58,25 +58,25 @@
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-template"
 
-    - name: Associate vault with splunk template
-      command: |
-        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "splunk-template"
+    # - name: Associate vault with splunk template
+    #   command: |
+    #     awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "splunk-template"
 
     - name: Associate credentials to splunk apps template
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-apps-template"
 
-    - name: Associate vault with splunk apps template
-      command: |
-        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "splunk-apps-template"
+    # - name: Associate vault with splunk apps template
+    #   command: |
+    #     awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "splunk-apps-template"
 
     - name: Associate credentials to splunk mitre apps template
       command: |
         awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-linux" --name "splunk-mitre-apps-template"
 
-    - name: Associate vault with splunk mitre apps template
-      command: |
-        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "splunk-mitre-apps-template"
+    # - name: Associate vault with splunk mitre apps template
+    #   command: |
+    #     awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "splunk-mitre-apps-template"
 
     - name: Setup splunk
       command: |

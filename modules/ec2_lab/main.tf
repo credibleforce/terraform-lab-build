@@ -609,7 +609,7 @@ module "ansible_script_exec" {
     inlines                 =   [
                                     #"/home/${local.ansible_user}/deployment/ansible/convert_vault.py --input-file /home/${local.ansible_user}/deployment/ansible/lab_settings.tmp --vault-pass-file /home/${local.ansible_user}/deployment/ansible/.vault_passwd.txt > /home/${local.ansible_user}/deployment/ansible/lab_settings.yml",
                                     #"rm -f /home/${local.ansible_user}/deployment/ansible/lab_settings.tmp",
-                                    #"/home/${local.ansible_user}/ansible_base.sh",
+                                    "/home/${local.ansible_user}/ansible_base.sh",
                                 ]
     scripts                 =   []
 }
