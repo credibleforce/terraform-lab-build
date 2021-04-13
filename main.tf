@@ -242,7 +242,7 @@ locals {
         win_admin_user          = local.win_admin_user
         win_admin_password      = local.win_admin_password
         win_student_user        = local.win_student_user
-        win_student_password    = local.win_student_user
+        win_student_password    = local.win_student_password
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
         splunkbase_token        = local.splunkbase_token
