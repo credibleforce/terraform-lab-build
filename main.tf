@@ -461,13 +461,12 @@ module "lab2" {
     aws_region                  = var.aws_region
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
-    internal_domain             = local.internal_domain
     student_id                  = "lab2"
     win_admin_user              = local.ansible_lab_vars.win_admin_user
     win_admin_password          = local.ansible_lab_vars.win_admin_password
     win_student_user            = local.ansible_lab_vars.win_student_user
     win_student_password        = local.ansible_lab_vars.win_student_password
-    interal_domain              = local.ansible_lab_vars.interal_domain
+    internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
     splunk_password             = local.ansible_lab_vars.splunk_password
@@ -496,10 +495,7 @@ module "lab2" {
     aws_key_pair                = module.environment.key_pair
     public_key_path             = local.public_key_path
     ansible_group               = local.ansible_group
-    ansible_deployment_user     = local.ansible_deployment_user
-    ansible_deployment_group    = local.ansible_deployment_user
     custom_security_groups      = local.custom_security_groups
-
     splunk_user                 = local.splunk_user
     ansible_user                = local.ansible_user
     kali_user                   = local.kali_user
@@ -510,7 +506,6 @@ module "lab2" {
     win16_user                  = local.win16_user
     win19_user                  = local.win19_user
     vault_passwd                = local.vault_passwd
-
 }
 
 # // add additional dns records internally
@@ -616,13 +611,12 @@ module "lab3" {
     aws_region                  = var.aws_region
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
-    internal_domain             = local.internal_domain
     student_id                  = "lab3"
     win_admin_user              = local.ansible_lab_vars.win_admin_user
     win_admin_password          = local.ansible_lab_vars.win_admin_password
     win_student_user            = local.ansible_lab_vars.win_student_user
     win_student_password        = local.ansible_lab_vars.win_student_password
-    interal_domain              = local.ansible_lab_vars.interal_domain
+    internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
     splunk_password             = local.ansible_lab_vars.splunk_password
@@ -651,10 +645,7 @@ module "lab3" {
     aws_key_pair                = module.environment.key_pair
     public_key_path             = local.public_key_path
     ansible_group               = local.ansible_group
-    ansible_deployment_user     = local.ansible_deployment_user
-    ansible_deployment_group    = local.ansible_deployment_user
     custom_security_groups      = local.custom_security_groups
-
     splunk_user                 = local.splunk_user
     ansible_user                = local.ansible_user
     kali_user                   = local.kali_user
@@ -770,13 +761,12 @@ module "lab4" {
     aws_region                  = var.aws_region
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
-    internal_domain             = local.internal_domain
     student_id                  = "lab4"
     win_admin_user              = local.ansible_lab_vars.win_admin_user
     win_admin_password          = local.ansible_lab_vars.win_admin_password
     win_student_user            = local.ansible_lab_vars.win_student_user
     win_student_password        = local.ansible_lab_vars.win_student_password
-    interal_domain              = local.ansible_lab_vars.interal_domain
+    internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
     splunk_password             = local.ansible_lab_vars.splunk_password
@@ -805,10 +795,7 @@ module "lab4" {
     aws_key_pair                = module.environment.key_pair
     public_key_path             = local.public_key_path
     ansible_group               = local.ansible_group
-    ansible_deployment_user     = local.ansible_deployment_user
-    ansible_deployment_group    = local.ansible_deployment_user
     custom_security_groups      = local.custom_security_groups
-
     splunk_user                 = local.splunk_user
     ansible_user                = local.ansible_user
     kali_user                   = local.kali_user
@@ -924,13 +911,12 @@ module "lab5" {
     aws_region                  = var.aws_region
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
-    internal_domain             = local.internal_domain
     student_id                  = "lab5"
     win_admin_user              = local.ansible_lab_vars.win_admin_user
     win_admin_password          = local.ansible_lab_vars.win_admin_password
     win_student_user            = local.ansible_lab_vars.win_student_user
     win_student_password        = local.ansible_lab_vars.win_student_password
-    interal_domain              = local.ansible_lab_vars.interal_domain
+    internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
     splunk_password             = local.ansible_lab_vars.splunk_password
@@ -959,10 +945,7 @@ module "lab5" {
     aws_key_pair                = module.environment.key_pair
     public_key_path             = local.public_key_path
     ansible_group               = local.ansible_group
-    ansible_deployment_user     = local.ansible_deployment_user
-    ansible_deployment_group    = local.ansible_deployment_user
     custom_security_groups      = local.custom_security_groups
-
     splunk_user                 = local.splunk_user
     ansible_user                = local.ansible_user
     kali_user                   = local.kali_user
@@ -1078,13 +1061,12 @@ module "lab6" {
     aws_region                  = var.aws_region
     project_prefix              = local.project_prefix
     public_domain               = local.public_domain
-    internal_domain             = local.internal_domain
     student_id                  = "lab6"
     win_admin_user              = local.ansible_lab_vars.win_admin_user
     win_admin_password          = local.ansible_lab_vars.win_admin_password
     win_student_user            = local.ansible_lab_vars.win_student_user
     win_student_password        = local.ansible_lab_vars.win_student_password
-    interal_domain              = local.ansible_lab_vars.interal_domain
+    internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name
     splunk_password             = local.ansible_lab_vars.splunk_password
@@ -1113,10 +1095,7 @@ module "lab6" {
     aws_key_pair                = module.environment.key_pair
     public_key_path             = local.public_key_path
     ansible_group               = local.ansible_group
-    ansible_deployment_user     = local.ansible_deployment_user
-    ansible_deployment_group    = local.ansible_deployment_user
     custom_security_groups      = local.custom_security_groups
-
     splunk_user                 = local.splunk_user
     ansible_user                = local.ansible_user
     kali_user                   = local.kali_user
