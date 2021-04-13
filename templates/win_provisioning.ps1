@@ -221,7 +221,16 @@ try{
     Write-output $("Setting user password computer: {0}" -f "${win_admin_user}") | Out-File -Append -FilePath $logFile
     $admin = [adsi]("WinNT://./${win_admin_user}, user")
     $admin.PSBase.Invoke("SetPassword", "${win_admin_password}")
-        
+
+    # remove all non-default accounts
+    $AccountsToKeep = @('Administrator','DefaultAccount','Guest','WDAGUtilityAccount')
+    Get-CimInstance -ClassName Win32_UserAccount -Filter "LocalAccount='True'"  | Where-Object { $_.Name -notin $AccountsToKeep } | % { Remove-LocalUser -Name $_.Name }
+    Get-CimInstance -ClassName Win32_UserAccount -Filter "LocalAccount='True'"  | Where-Object { $_.Name -notin $AccountsToKeep } | Remove-CimInstance -ErrorAction SilentlyContinue
+    
+    # create student account
+    New-LocalUser "${win_student_user}" -Password ("${win_student_password}" | ConvertTo-SecureString -AsPlainText -Force) -FullName "Student User" -Description "Student User" -AccountNeverExpires -PasswordNeverExpires
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "${win_student_user}"
+
     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope AllUsers
 }catch{
     Write-output $("Error: {0}" -f $_) | Out-File -Append -FilePath $logFile

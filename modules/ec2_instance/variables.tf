@@ -72,7 +72,16 @@ variable win_admin_user {
 variable win_admin_password {
     description = "windows password"
     default = ""
-    
+}
+
+variable win_student_user {
+    description = "windows student username"
+    default = "student"
+}
+
+variable win_student_password {
+    description = "windows student password"
+    default = ""
 }
 
 variable connection_settings {

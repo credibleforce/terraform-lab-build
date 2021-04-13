@@ -17,6 +17,8 @@ locals {
     trusted_source              = trimspace(data.local_file.trusted-source.content)
     win_admin_user              = var.win_admin_user
     win_admin_password          = var.win_admin_password
+    win_student_user            = var.win_student_user
+    win_student_password        = var.win_student_password
     splunk_password             = var.splunk_password
     splunkbase_token            = var.splunkbase_token
     ansible_awx_password        = var.ansible_awx_password
@@ -239,6 +241,8 @@ locals {
         win_netbios_domain      = local.win_netbios_domain
         win_admin_user          = local.win_admin_user
         win_admin_password      = local.win_admin_password
+        win_student_user        = local.win_student_user
+        win_student_password    = local.win_student_user
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
         splunkbase_token        = local.splunkbase_token
@@ -310,6 +314,8 @@ module "lab1" {
     student_id                  = "lab1"
     win_admin_user              = local.ansible_lab_vars.win_admin_user
     win_admin_password          = local.ansible_lab_vars.win_admin_password
+    win_student_user            = local.ansible_lab_vars.win_student_user
+    win_student_password        = local.ansible_lab_vars.win_student_password
     internal_domain             = local.ansible_lab_vars.internal_domain
     win_netbios_domain          = local.ansible_lab_vars.win_netbios_domain
     win_ca_common_name          = local.ansible_lab_vars.win_ca_common_name

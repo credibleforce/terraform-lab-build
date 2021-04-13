@@ -19,6 +19,14 @@ variable "win_admin_password" {
     description = "windows admin password"
 }
 
+variable "win_student_user" {
+    description = "windows student user"
+}
+
+variable "win_student_password" {
+    description = "windows student password"
+}
+
 variable "splunk_password" {
     description = "splunk password"
 }

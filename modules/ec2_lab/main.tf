@@ -137,8 +137,10 @@ locals {
     centos_last_octet_base  = 60
     centos_hosts_override   = var.centos_hosts_override
 
-    win_admin_user                    = var.win_admin_user
-    win_admin_password                = var.win_admin_password
+    win_admin_user              = var.win_admin_user
+    win_admin_password          = var.win_admin_password
+    win_student_user            = var.win_student_user
+    win_student_password        = var.win_student_password
     win_netbios_domain          = var.win_netbios_domain
     win_ca_common_name          = var.win_ca_common_name
     splunk_password             = var.splunk_password
@@ -155,6 +157,8 @@ locals {
         vault_passwd            = local.vault_passwd
         win_admin_user          = local.win_admin_user
         win_admin_password      = local.win_admin_password
+        win_student_user        = local.win_student_user
+        win_student_password    = local.win_student_password
         win_ca_common_name      = local.win_ca_common_name
         splunk_password         = local.splunk_password
         splunkbase_token        = local.splunkbase_token
@@ -308,8 +312,10 @@ module "win08_instances" {
     last_octet_base         = local.win08_last_octet_base
     volume_size             = local.win08_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_admin_user                = local.win_admin_user
-    win_admin_password            = local.win_admin_password
+    win_admin_user          = local.win_admin_user
+    win_admin_password      = local.win_admin_password
+    win_student_user        = local.win_student_user
+    win_student_password    = local.win_student_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -345,8 +351,10 @@ module "win10_instances" {
     last_octet_base         = local.win10_last_octet_base
     volume_size             = local.win10_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_admin_user                = local.win_admin_user
-    win_admin_password            = local.win_admin_password
+    win_admin_user          = local.win_admin_user
+    win_admin_password      = local.win_admin_password
+    win_student_user        = local.win_student_user
+    win_student_password    = local.win_student_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
 }
@@ -383,6 +391,8 @@ module "win12_instances" {
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
     win_admin_user          = local.win_admin_user
     win_admin_password      = local.win_admin_password
+    win_student_user        = local.win_student_user
+    win_student_password    = local.win_student_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -418,8 +428,10 @@ module "win16_instances" {
     last_octet_base         = local.win16_last_octet_base
     volume_size             = local.win16_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_admin_user                = local.win_admin_user
-    win_admin_password            = local.win_admin_password
+    win_admin_user          = local.win_admin_user
+    win_admin_password      = local.win_admin_password
+    win_student_user        = local.win_student_user
+    win_student_password    = local.win_student_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     
@@ -455,8 +467,10 @@ module "win19_instances" {
     last_octet_base         = local.win19_last_octet_base
     volume_size             = local.win19_volume_size
     provisioning_file       = "${path.root}/templates/win_provisioning.ps1"
-    win_admin_user                = local.win_admin_user
-    win_admin_password            = local.win_admin_password
+    win_admin_user          = local.win_admin_user
+    win_admin_password      = local.win_admin_password
+    win_student_user        = local.win_student_user
+    win_student_password    = local.win_student_password
     custom_security_groups  = module.custom_security_groups.security_groups
     student_id              = var.student_id
     

@@ -67,7 +67,7 @@ resource "aws_instance" "host" {
         StudentId          = local.student_id
     }
 
-    user_data               = templatefile(var.provisioning_file, { "win_admin_user" : "${var.win_admin_user}", "win_admin_password":"${var.win_admin_password}", "short_name": "${local.override_hosts ? local.hosts_override[count.index].name : format("%s%d",var.host_prefix,count.index + 1)}", "full_name": "${local.override_hosts ? format("%s.%s",local.hosts_override[count.index].name, var.internal_domain) : format("%s%d.%s",var.host_prefix,count.index + 1,var.internal_domain)}"})
+    user_data               = templatefile(var.provisioning_file, { "win_admin_user" : "${var.win_admin_user}", "win_admin_password":"${var.win_admin_password}", "win_student_user":"${var.win_student_user}", "win_student_password": "${var.win_student_password}", "short_name": "${local.override_hosts ? local.hosts_override[count.index].name : format("%s%d",var.host_prefix,count.index + 1)}", "full_name": "${local.override_hosts ? format("%s.%s",local.hosts_override[count.index].name, var.internal_domain) : format("%s%d.%s",var.host_prefix,count.index + 1,var.internal_domain)}"})
 
     provisioner "remote-exec" {
         inline = [
