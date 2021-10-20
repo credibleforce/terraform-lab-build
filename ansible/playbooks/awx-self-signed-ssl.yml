@@ -1,0 +1,23 @@
+---
+- hosts: local
+  tasks:
+    - name: Get hostname for certificate
+      command: hostname
+      register: hostname
+
+    - name: Create awx certificate directory
+      file:
+        path: /opt/awx/certs
+        state: directory
+        mode: '0755'
+      become: true
+
+    - name: Generate an OpenSSL private key
+      command: |
+        openssl req -subj "/CN={{ hostname.stdout }}/O=LAB/C=CA" -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/awx/certs/awx.key -out /opt/awx/certs/awx.crt
+      become: true
+
+    - name: Convert from crt to pem
+      command: |
+        openssl x509 -in /opt/awx/certs/awx.crt -out /opt/awx/certs/awx.pem -outform PEM
+      become: true

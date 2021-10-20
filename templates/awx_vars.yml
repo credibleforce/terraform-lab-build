@@ -1,0 +1,3 @@
+admin_password: '${ansible_awx_password}'
+pg_password: '${ansible_awx_pg_password}'
+secret_key: '${ansible_awx_secret_key}'

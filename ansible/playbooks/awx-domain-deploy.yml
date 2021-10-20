@@ -1,0 +1,43 @@
+---
+- hosts: local
+  pre_tasks:
+  gather_facts: true
+  tasks:
+    - name: Get AWX Token
+      command: |
+        awx --conf.host "https://localhost:443" --conf.username admin --conf.password "{{ lab.settings.ansible.admin_password }}" --conf.insecure login -f json
+      retries: 100
+      delay: 10
+      register: result
+      ignore_errors: true
+      until:
+        - result is defined and not result.failed
+        - result.stdout is defined
+
+    - name: debug result
+      debug:
+        msg: "{{ result }}"
+
+    - name: Set awx token
+      set_fact:
+        awx_token: "{{ (result.stdout | from_json).token }}"
+
+    - name: Create a lab project
+      command: |
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure project create --name "lab-project" --organization "lab" --scm_type "" --local_path "lab"
+
+    - name: Create lab job template
+      command: |
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_templates create --name "lab-template" --project "lab-project" --playbook "playbooks/build-env.yml" --job_type "run" --inventory "lab-inventory" --ask_variables_on_launch True
+
+    - name: Associate credentials to lab template
+      command: |
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-linux" --name "lab-template"
+
+    # - name: Associate vault to lab template
+    #   command: |
+    #     awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_template associate --credential "lab-vault" --name "lab-template"
+
+    - name: Setup domain
+      command: |
+        awx --conf.host "https://localhost:443" --conf.token "{{ awx_token }}" --conf.insecure job_templates launch 'lab-template' --monitor -f human --extra_vars "@~/deployment/ansible/lab_settings.yml"
